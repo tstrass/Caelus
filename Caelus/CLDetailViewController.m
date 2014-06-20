@@ -15,7 +15,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *getTempButton;
 @property (weak, nonatomic) IBOutlet UILabel *tempLabel;
 
-@property (weak, nonatomic) NSMutableData *responseData;
+@property (nonatomic, strong) NSMutableData *responseData;
 @end
 
 @implementation CLDetailViewController
@@ -48,6 +48,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.responseData = [[NSMutableData alloc]init];
 	// Do any additional setup after loading the view, typically from a nib.
     [self configureView];
 }
@@ -78,11 +79,10 @@
 #pragma mark - IBActions
 
 - (IBAction)buttonPressed:(id)sender {
-    NSString *weatherRequest = [NSString stringWithFormat:@"http://api.openweathermap.org/data/2.5/weather?q=%@,usa", self.textField.text];
+    NSString *weatherRequest = [NSString stringWithFormat:@"http://api.openweathermap.org/data/2.5/weather?q=boston,usa"];
     NSLog(@"weatherRequest: %@", weatherRequest);
     NSURL *apiURL = [NSURL URLWithString:weatherRequest];
     NSURLRequest *request = [NSURLRequest requestWithURL:apiURL];
-
     NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
 }
 
@@ -110,6 +110,16 @@
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
     // The request is complete and data has been received
     // You can parse the stuff in your instance variable now
+    NSLog(@"JSON is %@", self.responseData);
+    
+    NSError* error;
+    NSDictionary* json = [NSJSONSerialization
+                          JSONObjectWithData:self.responseData //1
+                          
+                          options:kNilOptions
+                          error:&error];
+    
+    NSLog(@"parsed json: %@", json);
 
 }
 
