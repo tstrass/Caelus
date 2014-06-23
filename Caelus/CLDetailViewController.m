@@ -15,10 +15,13 @@
 @property (weak, nonatomic) IBOutlet UIButton *getTempButton;
 @property (weak, nonatomic) IBOutlet UILabel *tempLabel;
 
-@property (nonatomic, strong) NSMutableData *responseData;
+@property (strong, nonatomic) NSString *location;
+@property (strong, nonatomic) NSMutableData *responseData;
 @end
 
 @implementation CLDetailViewController
+
+#define OK 200
 
 #pragma mark - Managing the detail item
 
@@ -69,15 +72,34 @@
     self.masterPopoverController = nil;
 }
 
+#pragma mark - Layout
+- (void)layoutTempLabelWithTemp:(NSNumber *)temp {
+    // make sure that we have a location and a temperature
+    if (self.location && temp) {
+        [self.tempLabel setText:[NSString stringWithFormat:@"Current temperature in %@ is %@", self.location, [temp stringValue]]];
+        [self.tempLabel setAdjustsFontSizeToFitWidth:YES];
+        [self.tempLabel setMinimumScaleFactor:0.3];
+    } else {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"An error occured. Please try again." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [alert show];
+    }
+}
+
 
 #pragma mark - IBActions
 
 - (IBAction)buttonPressed:(id)sender {
-    NSString *weatherRequest = [NSString stringWithFormat:@"http://api.openweathermap.org/data/2.5/weather?q=boston,usa"];
-    NSURL *apiURL = [NSURL URLWithString:weatherRequest];
-    NSURLRequest *request = [NSURLRequest requestWithURL:apiURL];
-    NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
-    NSLog(@"connection: %@", connection);
+    NSString *location = self.textField.text;
+    if (location.length > 0) {
+        NSString *weatherRequest = [NSString stringWithFormat:@"http://api.openweathermap.org/data/2.5/weather?q=%@,usa", location];
+        NSURL *apiURL = [NSURL URLWithString:weatherRequest];
+        NSURLRequest *request = [NSURLRequest requestWithURL:apiURL];
+        NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
+        NSLog(@"connection: %@", connection);
+    } else {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error" message:@"You must enter a city name in the text field." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [alertView show];
+    }
 }
 
 #pragma mark - NSURLConnection Delegate Methods
@@ -104,6 +126,7 @@
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
     // The request is complete and data has been received
     // You can parse the stuff in your instance variable now
+    
     NSLog(@"JSON is %@", self.responseData);
     
     NSError* error;
@@ -112,14 +135,32 @@
                           options:kNilOptions
                           error:&error];
     NSLog(@"parsed json:\n%@", json);
-    NSDictionary *mainInfo = [json objectForKey:@"main"];
-    NSNumber *number = [mainInfo objectForKey:@"temp"];
-    [self.tempLabel setText:[NSString stringWithFormat:@"Current temperature is %@", [number stringValue]]];
+    [self parseJSONDict:json];
 }
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
     // The request has failed for some reason!
     // Check the error var
+}
+
+- (void)parseJSONDict:(NSDictionary *)dict {
+    if (dict) {
+        NSNumber *statusCode = [dict objectForKey:@"cod"];
+        if (statusCode.intValue != OK) {
+            NSString *errorMessage = [dict objectForKey:@"message"];
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:errorMessage delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            [alert show];
+            [self.textField setText:@""];
+        } else {
+            NSDictionary *mainInfo = [dict objectForKey:@"main"];
+            NSNumber *temp = [mainInfo objectForKey:@"temp"];
+            [self setLocation:[dict objectForKey:@"name"]];
+            [self layoutTempLabelWithTemp:temp];
+        }
+    } else {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"An error occured. Please try again." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [alert show];
+    }
 }
 
 @end
