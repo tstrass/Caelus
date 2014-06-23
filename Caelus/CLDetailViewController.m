@@ -49,7 +49,6 @@
     [self.locationManager setDelegate:self];
     [self.locationManager setDesiredAccuracy:kCLLocationAccuracyBest];
     [self.locationManager startUpdatingLocation];
-    [self formatLocationLabel];
 }
 
 #pragma mark - Formatting Subviews
@@ -82,6 +81,8 @@
     CLGeocoder *geoCoder = [[CLGeocoder alloc] init];
     [geoCoder reverseGeocodeLocation:[locations lastObject] completionHandler:^(NSArray *placemarks, NSError *error) {
         self.location = (placemarks.count > 0) ? [[placemarks objectAtIndex:0] locality] : @"Not Found";
+        [self formatLocationLabel];
+        if (![self.location isEqualToString:@"Not Found"]) [self makeRequestWithLocation:self.location];
     }];
 }
 
@@ -95,15 +96,21 @@
 - (IBAction)buttonPressed:(id)sender {
     NSString *location = self.textField.text;
     if (location.length > 0) {
-        NSString *weatherRequest = [NSString stringWithFormat:@"http://api.openweathermap.org/data/2.5/weather?q=%@,usa", location];
-        NSURL *apiURL = [NSURL URLWithString:weatherRequest];
-        NSURLRequest *request = [NSURLRequest requestWithURL:apiURL];
-        NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
-        NSLog(@"connection: %@", connection);
+        [self makeRequestWithLocation:location];
     } else {
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error" message:@"You must enter a city name in the text field." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [alertView show];
     }
+}
+
+#pragma mark - Request Set Up Methods
+- (void)makeRequestWithLocation:(NSString *)location {
+    //[location stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
+    NSString *weatherRequest = [NSString stringWithFormat:@"http://api.openweathermap.org/data/2.5/weather?q=%@", [location stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+    NSURL *apiURL = [NSURL URLWithString:weatherRequest];
+    NSURLRequest *request = [NSURLRequest requestWithURL:apiURL];
+    NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
+    NSLog(@"connection: %@", connection);
 }
 
 #pragma mark - NSURLConnection Delegate Methods
@@ -160,7 +167,15 @@
         } else {
             NSDictionary *mainInfo = [dict objectForKey:@"main"];
             NSNumber *kelvinTemp = [mainInfo objectForKey:@"temp"];
-            [self setLocation:[dict objectForKey:@"name"]];
+            
+            NSString *location = [dict objectForKey:@"name"];
+            NSString *country = [[dict objectForKey:@"sys"] objectForKey:@"country"];
+            //only append the country abbreviation if the city and country both exist in the JSON
+            if (![location isEqualToString:@""] && ![country isEqualToString:@""]) {
+                location = [NSString stringWithFormat:@"%@, %@", location, country];
+            }
+            
+            [self setLocation:location];
             [self layoutTempLabelWithTemp:[self farenheitFromKelvin:kelvinTemp]];
         }
     } else {
