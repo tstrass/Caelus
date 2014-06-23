@@ -11,12 +11,19 @@
 @interface CLDetailViewController ()
 @property (strong, nonatomic) UIPopoverController *masterPopoverController;
 - (void)configureView;
+
+//UI objects in storyboard
+@property (weak, nonatomic) IBOutlet UILabel *currentLocationLabel;
 @property (weak, nonatomic) IBOutlet UITextField *textField;
 @property (weak, nonatomic) IBOutlet UIButton *getTempButton;
 @property (weak, nonatomic) IBOutlet UILabel *tempLabel;
 
-@property (strong, nonatomic) NSString *location;
+//Data from API
 @property (strong, nonatomic) NSMutableData *responseData;
+
+//Geolocation
+@property (strong, nonatomic) CLLocationManager *locationManager;
+@property (strong, nonatomic) NSString *location;
 @end
 
 @implementation CLDetailViewController
@@ -52,6 +59,33 @@
 {
     [super viewDidLoad];
     [self configureView];
+    
+    [self.locationManager setDelegate:self];
+    [self.locationManager setDesiredAccuracy:kCLLocationAccuracyBest];
+    [self.locationManager startUpdatingLocation];
+    [self formatLocationLabel];
+}
+
+#pragma mark - Formatting Subviews
+- (void)formatLocationLabel {
+    [self.currentLocationLabel setText:[NSString stringWithFormat:@"Current Location: %@", self.location]];
+    [self.currentLocationLabel setAdjustsFontSizeToFitWidth:YES];
+    [self.currentLocationLabel setMinimumScaleFactor:0.3];
+}
+
+- (void)layoutTempLabelWithTemp:(NSNumber *)temp {
+    // make sure that we have a location and a temperature
+    if ([self.location  isEqual: @""]) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"Error: City name is invalid" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [alert show];
+    } else if (!temp) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:[NSString stringWithFormat:@"Error: Could not retrieve temperature for %@", self.location] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [alert show];
+    } else {
+        [self.tempLabel setText:[NSString stringWithFormat:@"Current temperature in %@ is %d°F", self.location, [temp intValue]]];
+        [self.tempLabel setAdjustsFontSizeToFitWidth:YES];
+        [self.tempLabel setMinimumScaleFactor:0.3];
+    }
 }
 
 #pragma mark - Split view
@@ -70,20 +104,19 @@
     self.masterPopoverController = nil;
 }
 
-#pragma mark - Layout
-- (void)layoutTempLabelWithTemp:(NSNumber *)temp {
-    // make sure that we have a location and a temperature
-    if ([self.location  isEqual: @""]) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"Error: City name is invalid" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-        [alert show];
-    } else if (!temp) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:[NSString stringWithFormat:@"Error: Could not retrieve temperature for %@", self.location] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-        [alert show];
-    } else {
-        [self.tempLabel setText:[NSString stringWithFormat:@"Current temperature in %@ is %d°F", self.location, [temp intValue]]];
-        [self.tempLabel setAdjustsFontSizeToFitWidth:YES];
-        [self.tempLabel setMinimumScaleFactor:0.3];
-    }
+#pragma mark - CLLocationManager Delegate Methods
+
+- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
+    [self.locationManager stopUpdatingLocation];
+    
+    CLGeocoder *geoCoder = [[CLGeocoder alloc] init];
+    [geoCoder reverseGeocodeLocation:[locations lastObject] completionHandler:^(NSArray *placemarks, NSError *error) {
+        self.location = (placemarks.count > 0) ? [[placemarks objectAtIndex:0] locality] : @"Not Found";
+    }];
+}
+
+- (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error {
+    NSLog(@"self.locationManager:%@ didFailWithError:%@", manager, error);
 }
 
 
