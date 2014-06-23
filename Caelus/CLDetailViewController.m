@@ -76,7 +76,7 @@
 - (void)layoutTempLabelWithTemp:(NSNumber *)temp {
     // make sure that we have a location and a temperature
     if (self.location && temp) {
-        [self.tempLabel setText:[NSString stringWithFormat:@"Current temperature in %@ is %@", self.location, [temp stringValue]]];
+        [self.tempLabel setText:[NSString stringWithFormat:@"Current temperature in %@ is %d°F", self.location, [temp intValue]]];
         [self.tempLabel setAdjustsFontSizeToFitWidth:YES];
         [self.tempLabel setMinimumScaleFactor:0.3];
     } else {
@@ -143,6 +143,8 @@
     // Check the error var
 }
 
+#pragma mark - Data Parsing
+
 - (void)parseJSONDict:(NSDictionary *)dict {
     if (dict) {
         NSNumber *statusCode = [dict objectForKey:@"cod"];
@@ -153,14 +155,18 @@
             [self.textField setText:@""];
         } else {
             NSDictionary *mainInfo = [dict objectForKey:@"main"];
-            NSNumber *temp = [mainInfo objectForKey:@"temp"];
+            NSNumber *kelvinTemp = [mainInfo objectForKey:@"temp"];
             [self setLocation:[dict objectForKey:@"name"]];
-            [self layoutTempLabelWithTemp:temp];
+            [self layoutTempLabelWithTemp:[self farenheitFromKelvin:kelvinTemp]];
         }
     } else {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"An error occured. Please try again." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [alert show];
     }
+}
+
+- (NSNumber *)farenheitFromKelvin:(NSNumber *)kelvin {
+    return [NSNumber numberWithFloat:([kelvin floatValue] - 273.15) * 1.8 + 32.0];
 }
 
 @end
