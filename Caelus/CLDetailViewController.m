@@ -51,8 +51,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-//    self.responseData = [[NSMutableData alloc]init];
-	// Do any additional setup after loading the view, typically from a nib.
     [self configureView];
 }
 
@@ -75,13 +73,16 @@
 #pragma mark - Layout
 - (void)layoutTempLabelWithTemp:(NSNumber *)temp {
     // make sure that we have a location and a temperature
-    if (self.location && temp) {
+    if ([self.location  isEqual: @""]) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"Error: City name is invalid" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [alert show];
+    } else if (!temp) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:[NSString stringWithFormat:@"Error: Could not retrieve temperature for %@", self.location] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [alert show];
+    } else {
         [self.tempLabel setText:[NSString stringWithFormat:@"Current temperature in %@ is %d°F", self.location, [temp intValue]]];
         [self.tempLabel setAdjustsFontSizeToFitWidth:YES];
         [self.tempLabel setMinimumScaleFactor:0.3];
-    } else {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"An error occured. Please try again." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-        [alert show];
     }
 }
 
