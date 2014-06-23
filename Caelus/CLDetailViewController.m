@@ -15,10 +15,13 @@
 @property (weak, nonatomic) IBOutlet UIButton *getTempButton;
 @property (weak, nonatomic) IBOutlet UILabel *tempLabel;
 
-@property (weak, nonatomic) NSMutableData *responseData;
+@property (strong, nonatomic) NSString *location;
+@property (strong, nonatomic) NSMutableData *responseData;
 @end
 
 @implementation CLDetailViewController
+
+#define OK 200
 
 #pragma mark - Managing the detail item
 
@@ -48,14 +51,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
     [self configureView];
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 #pragma mark - Split view
@@ -74,16 +70,37 @@
     self.masterPopoverController = nil;
 }
 
+#pragma mark - Layout
+- (void)layoutTempLabelWithTemp:(NSNumber *)temp {
+    // make sure that we have a location and a temperature
+    if ([self.location  isEqual: @""]) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"Error: City name is invalid" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [alert show];
+    } else if (!temp) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:[NSString stringWithFormat:@"Error: Could not retrieve temperature for %@", self.location] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [alert show];
+    } else {
+        [self.tempLabel setText:[NSString stringWithFormat:@"Current temperature in %@ is %d°F", self.location, [temp intValue]]];
+        [self.tempLabel setAdjustsFontSizeToFitWidth:YES];
+        [self.tempLabel setMinimumScaleFactor:0.3];
+    }
+}
+
 
 #pragma mark - IBActions
 
 - (IBAction)buttonPressed:(id)sender {
-    NSString *weatherRequest = [NSString stringWithFormat:@"http://api.openweathermap.org/data/2.5/weather?q=%@,usa", self.textField.text];
-    NSLog(@"weatherRequest: %@", weatherRequest);
-    NSURL *apiURL = [NSURL URLWithString:weatherRequest];
-    NSURLRequest *request = [NSURLRequest requestWithURL:apiURL];
-
-    NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
+    NSString *location = self.textField.text;
+    if (location.length > 0) {
+        NSString *weatherRequest = [NSString stringWithFormat:@"http://api.openweathermap.org/data/2.5/weather?q=%@,usa", location];
+        NSURL *apiURL = [NSURL URLWithString:weatherRequest];
+        NSURLRequest *request = [NSURLRequest requestWithURL:apiURL];
+        NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
+        NSLog(@"connection: %@", connection);
+    } else {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error" message:@"You must enter a city name in the text field." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [alertView show];
+    }
 }
 
 #pragma mark - NSURLConnection Delegate Methods
@@ -93,7 +110,7 @@
     // so that we can append data to it in the didReceiveData method
     // Furthermore, this method is called each time there is a redirect so reinitializing it
     // also serves to clear it
-    //self.responseData = [[NSMutableData alloc] init];
+    self.responseData = [[NSMutableData alloc] init];
 }
 
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
@@ -110,12 +127,47 @@
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
     // The request is complete and data has been received
     // You can parse the stuff in your instance variable now
-
+    
+    NSLog(@"JSON is %@", self.responseData);
+    
+    NSError* error;
+    NSDictionary* json = [NSJSONSerialization
+                          JSONObjectWithData:self.responseData
+                          options:kNilOptions
+                          error:&error];
+    NSLog(@"parsed json:\n%@", json);
+    [self parseJSONDict:json];
 }
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
     // The request has failed for some reason!
     // Check the error var
+}
+
+#pragma mark - Data Parsing
+
+- (void)parseJSONDict:(NSDictionary *)dict {
+    if (dict) {
+        NSNumber *statusCode = [dict objectForKey:@"cod"];
+        if (statusCode.intValue != OK) {
+            NSString *errorMessage = [dict objectForKey:@"message"];
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:errorMessage delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            [alert show];
+            [self.textField setText:@""];
+        } else {
+            NSDictionary *mainInfo = [dict objectForKey:@"main"];
+            NSNumber *kelvinTemp = [mainInfo objectForKey:@"temp"];
+            [self setLocation:[dict objectForKey:@"name"]];
+            [self layoutTempLabelWithTemp:[self farenheitFromKelvin:kelvinTemp]];
+        }
+    } else {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"An error occured. Please try again." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [alert show];
+    }
+}
+
+- (NSNumber *)farenheitFromKelvin:(NSNumber *)kelvin {
+    return [NSNumber numberWithFloat:([kelvin floatValue] - 273.15) * 1.8 + 32.0];
 }
 
 @end
