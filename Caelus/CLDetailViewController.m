@@ -48,7 +48,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.responseData = [[NSMutableData alloc]init];
+//    self.responseData = [[NSMutableData alloc]init];
 	// Do any additional setup after loading the view, typically from a nib.
     [self configureView];
 }
@@ -74,10 +74,10 @@
 
 - (IBAction)buttonPressed:(id)sender {
     NSString *weatherRequest = [NSString stringWithFormat:@"http://api.openweathermap.org/data/2.5/weather?q=boston,usa"];
-    NSLog(@"weatherRequest: %@", weatherRequest);
     NSURL *apiURL = [NSURL URLWithString:weatherRequest];
     NSURLRequest *request = [NSURLRequest requestWithURL:apiURL];
     NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
+    NSLog(@"connection: %@", connection);
 }
 
 #pragma mark - NSURLConnection Delegate Methods
@@ -87,7 +87,7 @@
     // so that we can append data to it in the didReceiveData method
     // Furthermore, this method is called each time there is a redirect so reinitializing it
     // also serves to clear it
-    //self.responseData = [[NSMutableData alloc] init];
+    self.responseData = [[NSMutableData alloc] init];
 }
 
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
