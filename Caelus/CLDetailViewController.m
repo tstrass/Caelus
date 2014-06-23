@@ -53,12 +53,6 @@
     [self configureView];
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
 #pragma mark - Split view
 
 - (void)splitViewController:(UISplitViewController *)splitController willHideViewController:(UIViewController *)viewController withBarButtonItem:(UIBarButtonItem *)barButtonItem forPopoverController:(UIPopoverController *)popoverController
@@ -114,13 +108,13 @@
     
     NSError* error;
     NSDictionary* json = [NSJSONSerialization
-                          JSONObjectWithData:self.responseData //1
-                          
+                          JSONObjectWithData:self.responseData
                           options:kNilOptions
                           error:&error];
-    
-    NSLog(@"parsed json: %@", json);
-
+    NSLog(@"parsed json:\n%@", json);
+    NSDictionary *mainInfo = [json objectForKey:@"main"];
+    NSNumber *number = [mainInfo objectForKey:@"temp"];
+    [self.tempLabel setText:[NSString stringWithFormat:@"Current temperature is %@", [number stringValue]]];
 }
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
