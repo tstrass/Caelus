@@ -5,8 +5,8 @@
 //  Created by Thomas Strassner on 6/20/14.
 //  Copyright (c) 2014 Enterprise Holdings, Inc. All rights reserved.
 //
-
 #import "CLDetailViewController.h"
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 @interface CLDetailViewController ()
 @property (strong, nonatomic) UIPopoverController *masterPopoverController;
@@ -18,7 +18,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *getTempButton;
 @property (weak, nonatomic) IBOutlet UILabel *tempLabel;
 
-//Data from API
+//Data from weather API
 @property (strong, nonatomic) NSMutableData *responseData;
 
 //Geolocation
@@ -30,7 +30,9 @@
 
 #define OK 200
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark - Managing the detail item
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 - (void)configureView
 {
@@ -59,7 +61,7 @@
 }
 
 - (void)layoutTempLabelWithTemp:(NSNumber *)temp {
-    // make sure that we have a location and a temperature
+    // make sure that we have a location and a temperature, alert user if not
     if ([self.location  isEqual: @""]) {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"Error: City name is invalid" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [alert show];
@@ -73,11 +75,14 @@
     }
 }
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark - CLLocationManager Delegate Methods
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
     [self.locationManager stopUpdatingLocation];
     
+    // get the city name from the location found by the Location Manager
     CLGeocoder *geoCoder = [[CLGeocoder alloc] init];
     [geoCoder reverseGeocodeLocation:[locations lastObject] completionHandler:^(NSArray *placemarks, NSError *error) {
         self.location = (placemarks.count > 0) ? [[placemarks objectAtIndex:0] locality] : @"Not Found";
@@ -90,11 +95,13 @@
     NSLog(@"self.locationManager:%@ didFailWithError:%@", manager, error);
 }
 
-
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark - IBActions
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 - (IBAction)buttonPressed:(id)sender {
     NSString *location = self.textField.text;
+    // validate user input
     if (location.length > 0) {
         [self makeRequestWithLocation:location];
     } else {
@@ -103,9 +110,12 @@
     }
 }
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark - Request Set Up Methods
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 - (void)makeRequestWithLocation:(NSString *)location {
-    //[location stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
+    // encode city search for URL and make URL request
     NSString *weatherRequest = [NSString stringWithFormat:@"http://api.openweathermap.org/data/2.5/weather?q=%@", [location stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
     NSURL *apiURL = [NSURL URLWithString:weatherRequest];
     NSURLRequest *request = [NSURLRequest requestWithURL:apiURL];
@@ -113,7 +123,9 @@
     NSLog(@"connection: %@", connection);
 }
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark - NSURLConnection Delegate Methods
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response {
     // A response has been received, this is where we initialize the instance var you created
@@ -152,11 +164,15 @@
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
     // The request has failed for some reason!
     // Check the error var
+    NSLog(@"NSURLConnection:%@ didFailWithError:%@", connection, error);
 }
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark - Data Parsing
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 - (void)parseJSONDict:(NSDictionary *)dict {
+    // parse JSON, ensure that all fields we need are populated
     if (dict) {
         NSNumber *statusCode = [dict objectForKey:@"cod"];
         if (statusCode.intValue != OK) {
@@ -183,6 +199,10 @@
         [alert show];
     }
 }
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+#pragma mark - Utilities
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 - (NSNumber *)farenheitFromKelvin:(NSNumber *)kelvin {
     return [NSNumber numberWithFloat:([kelvin floatValue] - 273.15) * 1.8 + 32.0];
