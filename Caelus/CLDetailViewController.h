@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <CoreLocation/CoreLocation.h>
 
-@interface CLDetailViewController : UIViewController <UISplitViewControllerDelegate, NSURLConnectionDelegate>
+@interface CLDetailViewController : UIViewController <UISplitViewControllerDelegate, NSURLConnectionDelegate, CLLocationManagerDelegate>
 
 @property (strong, nonatomic) id detailItem;
 
