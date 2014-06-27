@@ -16,16 +16,17 @@
 @property (weak, nonatomic) IBOutlet UILabel *currentLocationLabel;
 @property (weak, nonatomic) IBOutlet UILabel *tempLabel;
 
-// Data from weather API
-@property (strong, nonatomic) NSMutableData *responseData;
-
 // Current weather data
+@property (strong, nonatomic) NSURLConnection *currentWeatherConnection;
+@property (strong, nonatomic) NSMutableData *currentWeatherResponseData;
 @property (strong, nonatomic) NSDictionary *currentWeatherDict;
 @property (strong, nonatomic) NSNumber *fTemp;
 @property (strong, nonatomic) NSString *city;
 @property (strong, nonatomic) NSString *country;
 
 // Astronomy data
+@property (strong, nonatomic) NSURLConnection *astronomyConnection;
+@property (strong, nonatomic) NSMutableData *astronomyResponseData;
 @property (strong, nonatomic) NSDictionary *astronomyDict;
 @property (strong, nonatomic) NSDictionary *sunrise;
 @property (strong, nonatomic) NSDictionary *sunset;
@@ -60,10 +61,8 @@
 //    [self.locationManager startUpdatingLocation];
     
     [self makeCurrentWeatherRequestWithLocation:nil]; // temporary, for testing
-    [self parseCurrentWeatherJSON];
     
     [self makeAstronomyRequestWithLocation:nil];
-    [self parseAstronomyJSON];
     
     [self formatViewForWeather];
 }
@@ -126,8 +125,8 @@
     NSString *weatherRequest = [NSString stringWithFormat:@"http://api.wunderground.com/api/f29e980ec760f4cc/conditions/q/CA/San_Francisco.json"];
     NSURL *apiURL = [NSURL URLWithString:weatherRequest];
     NSURLRequest *request = [NSURLRequest requestWithURL:apiURL];
-    NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
-    NSLog(@"connection: %@", connection);
+    self.currentWeatherConnection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
+    NSLog(@"connection: %@", self.currentWeatherConnection);
 }
 
 - (void)makeAstronomyRequestWithLocation:(NSString *)location {
@@ -135,8 +134,8 @@
     NSString *astronomyRequest = [NSString stringWithFormat:@"http://api.wunderground.com/api/f29e980ec760f4cc/astronomy/q/CA/San_Francisco.json"];
     NSURL *apiURL = [NSURL URLWithString:astronomyRequest];
     NSURLRequest *request = [NSURLRequest requestWithURL:apiURL];
-    NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
-    NSLog(@"connection: %@", connection);
+    self.astronomyConnection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
+    NSLog(@"connection: %@", self.astronomyConnection);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -148,12 +147,20 @@
     // so that we can append data to it in the didReceiveData method
     // Furthermore, this method is called each time there is a redirect so reinitializing it
     // also serves to clear it
-    self.responseData = [[NSMutableData alloc] init];
+    if (connection == self.currentWeatherConnection) {
+        self.currentWeatherResponseData = [[NSMutableData alloc] init];
+    } else if (connection == self.astronomyConnection) {
+        self.astronomyResponseData = [[NSMutableData alloc] init];
+    }
 }
 
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
     // Append the new data to the instance variable you declared
-    [self.responseData appendData:data];
+    if (connection == self.currentWeatherConnection) {
+        [self.currentWeatherResponseData appendData:data];
+    } else if (connection == self.astronomyConnection) {
+        [self.astronomyResponseData appendData:data];
+    }
 }
 
 - (NSCachedURLResponse *)connection:(NSURLConnection *)connection
@@ -165,8 +172,13 @@
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
     // The request is complete and data has been received
     // You can parse the stuff in your instance variable now
-    
-    NSLog(@"JSON is %@", self.responseData);
+    if (connection == self.currentWeatherConnection) {
+        // NSLog(@"current weather JSON is %@", self.currentWeatherResponseData);
+        [self parseCurrentWeatherJSON];
+    } else if (connection == self.astronomyConnection) {
+        // NSLog(@"astronomy JSON is %@", self.astronomyResponseData);
+        [self parseAstronomyJSON];
+    }
 }
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
@@ -182,7 +194,7 @@
 - (void)parseCurrentWeatherJSON {
     // parse JSON, ensure that all fields we need are populated
     NSError* error;
-    NSDictionary* dict = [NSJSONSerialization JSONObjectWithData:self.responseData options:kNilOptions error:&error];
+    NSDictionary* dict = [NSJSONSerialization JSONObjectWithData:self.currentWeatherResponseData options:kNilOptions error:&error];
     NSLog(@"parsed current weather json:\n%@", dict);
     
     if (dict) {
@@ -205,7 +217,7 @@
 - (void)parseAstronomyJSON {
     // parse JSON, ensure that all fields we need are populated
     NSError* error;
-    NSDictionary* dict = [NSJSONSerialization JSONObjectWithData:self.responseData options:kNilOptions error:&error];
+    NSDictionary* dict = [NSJSONSerialization JSONObjectWithData:self.astronomyResponseData options:kNilOptions error:&error];
     NSLog(@"parsed astronomy json:\n%@", dict);
     
     if (dict) {
