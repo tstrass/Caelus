@@ -14,8 +14,6 @@
 
 //UI objects in storyboard
 @property (weak, nonatomic) IBOutlet UILabel *currentLocationLabel;
-@property (weak, nonatomic) IBOutlet UITextField *textField;
-@property (weak, nonatomic) IBOutlet UIButton *getTempButton;
 @property (weak, nonatomic) IBOutlet UILabel *tempLabel;
 
 //Data from weather API
@@ -27,8 +25,6 @@
 @end
 
 @implementation CLDetailViewController
-
-#define OK 200
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark - Managing the detail item
@@ -51,6 +47,7 @@
     [self.locationManager setDelegate:self];
     [self.locationManager setDesiredAccuracy:kCLLocationAccuracyBest];
     [self.locationManager startUpdatingLocation];
+    [self makeRequestWithLocation:nil]; // temporary, for testing
 }
 
 #pragma mark - Formatting Subviews
@@ -96,27 +93,12 @@
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-#pragma mark - IBActions
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-- (IBAction)buttonPressed:(id)sender {
-    NSString *location = self.textField.text;
-    // validate user input
-    if (location.length > 0) {
-        [self makeRequestWithLocation:location];
-    } else {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error" message:@"You must enter a city name in the text field." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-        [alertView show];
-    }
-}
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark - Request Set Up Methods
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 - (void)makeRequestWithLocation:(NSString *)location {
     // encode city search for URL and make URL request
-    NSString *weatherRequest = [NSString stringWithFormat:@"http://api.openweathermap.org/data/2.5/weather?q=%@", [location stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+    NSString *weatherRequest = [NSString stringWithFormat:@"http://api.wunderground.com/api/f29e980ec760f4cc/conditions/q/CA/San_Francisco.json"];
     NSURL *apiURL = [NSURL URLWithString:weatherRequest];
     NSURLRequest *request = [NSURLRequest requestWithURL:apiURL];
     NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
@@ -174,38 +156,20 @@
 - (void)parseJSONDict:(NSDictionary *)dict {
     // parse JSON, ensure that all fields we need are populated
     if (dict) {
-        NSNumber *statusCode = [dict objectForKey:@"cod"];
-        if (statusCode.intValue != OK) {
-            NSString *errorMessage = [dict objectForKey:@"message"];
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:errorMessage delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-            [alert show];
-            [self.textField setText:@""];
-        } else {
-            NSDictionary *mainInfo = [dict objectForKey:@"main"];
-            NSNumber *kelvinTemp = [mainInfo objectForKey:@"temp"];
-            
-            NSString *location = [dict objectForKey:@"name"];
-            NSString *country = [[dict objectForKey:@"sys"] objectForKey:@"country"];
-            //only append the country abbreviation if the city and country both exist in the JSON
-            if (![location isEqualToString:@""] && ![country isEqualToString:@""]) {
-                location = [NSString stringWithFormat:@"%@, %@", location, country];
-            }
-            
-            [self setLocation:location];
-            [self layoutTempLabelWithTemp:[self farenheitFromKelvin:kelvinTemp]];
+        NSDictionary *currentObservation = [dict objectForKey:@"current_observation"];
+        NSNumber *fTemp = [currentObservation objectForKey:@"temp_f"];
+    
+        NSDictionary *observationLocation = [currentObservation objectForKey:@"observation_location"];
+        NSString *city = [observationLocation objectForKey:@"city"];
+        NSString *country = [observationLocation objectForKey:@"country"];
+        //only append the country abbreviation if the city and country both exist in the JSON
+        if (![city isEqualToString:@""] && ![country isEqualToString:@""]) {
+            city = [NSString stringWithFormat:@"%@, %@", city, country];
         }
-    } else {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"An error occured. Please try again." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-        [alert show];
+        
+        [self setLocation:city];
+        [self layoutTempLabelWithTemp:fTemp];
     }
-}
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-#pragma mark - Utilities
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-- (NSNumber *)farenheitFromKelvin:(NSNumber *)kelvin {
-    return [NSNumber numberWithFloat:([kelvin floatValue] - 273.15) * 1.8 + 32.0];
 }
 
 @end
