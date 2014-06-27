@@ -12,14 +12,25 @@
 @property (strong, nonatomic) UIPopoverController *masterPopoverController;
 - (void)configureView;
 
-//UI objects in storyboard
+// UI objects in storyboard
 @property (weak, nonatomic) IBOutlet UILabel *currentLocationLabel;
 @property (weak, nonatomic) IBOutlet UILabel *tempLabel;
 
-//Data from weather API
+// Data from weather API
 @property (strong, nonatomic) NSMutableData *responseData;
 
-//Geolocation
+// Current weather data
+@property (strong, nonatomic) NSDictionary *currentWeatherDict;
+@property (strong, nonatomic) NSNumber *fTemp;
+@property (strong, nonatomic) NSString *city;
+@property (strong, nonatomic) NSString *country;
+
+// Astronomy data
+@property (strong, nonatomic) NSDictionary *astronomyDict;
+@property (strong, nonatomic) NSDictionary *sunrise;
+@property (strong, nonatomic) NSDictionary *sunset;
+
+// Geolocation
 @property (strong, nonatomic) CLLocationManager *locationManager;
 @property (strong, nonatomic) NSString *location;
 @end
@@ -43,33 +54,47 @@
 {
     [super viewDidLoad];
     [self configureView];
-    self.locationManager = [[CLLocationManager alloc]init];
-    [self.locationManager setDelegate:self];
-    [self.locationManager setDesiredAccuracy:kCLLocationAccuracyBest];
-    [self.locationManager startUpdatingLocation];
-    [self makeRequestWithLocation:nil]; // temporary, for testing
+//    self.locationManager = [[CLLocationManager alloc]init];
+//    [self.locationManager setDelegate:self];
+//    [self.locationManager setDesiredAccuracy:kCLLocationAccuracyBest];
+//    [self.locationManager startUpdatingLocation];
+    
+    [self makeCurrentWeatherRequestWithLocation:nil]; // temporary, for testing
+    [self parseCurrentWeatherJSON];
+    
+    [self makeAstronomyRequestWithLocation:nil];
+    [self parseAstronomyJSON];
+    
+    [self formatViewForWeather];
 }
 
-#pragma mark - Formatting Subviews
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+#pragma mark - Format
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 - (void)formatLocationLabel {
     [self.currentLocationLabel setText:[NSString stringWithFormat:@"Current Location: %@", self.location]];
     [self.currentLocationLabel setAdjustsFontSizeToFitWidth:YES];
     [self.currentLocationLabel setMinimumScaleFactor:0.3];
 }
 
-- (void)layoutTempLabelWithTemp:(NSNumber *)temp {
+- (void)layoutTempLabel {
     // make sure that we have a location and a temperature, alert user if not
     if ([self.location  isEqual: @""]) {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"Error: City name is invalid" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [alert show];
-    } else if (!temp) {
+    } else if (!self.fTemp) {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:[NSString stringWithFormat:@"Error: Could not retrieve temperature for %@", self.location] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [alert show];
     } else {
-        [self.tempLabel setText:[NSString stringWithFormat:@"Current temperature in %@ is %d°F", self.location, [temp intValue]]];
+        [self.tempLabel setText:[NSString stringWithFormat:@"Current temperature in %@ is %d°F", self.location, [self.fTemp intValue]]];
         [self.tempLabel setAdjustsFontSizeToFitWidth:YES];
         [self.tempLabel setMinimumScaleFactor:0.3];
     }
+}
+
+- (void)formatViewForWeather {
+    [self.view setBackgroundColor:[CLDetailViewController backgroundColorFromTemp:self.fTemp]];
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -84,7 +109,7 @@
     [geoCoder reverseGeocodeLocation:[locations lastObject] completionHandler:^(NSArray *placemarks, NSError *error) {
         self.location = (placemarks.count > 0) ? [[placemarks objectAtIndex:0] locality] : @"Not Found";
         [self formatLocationLabel];
-        if (![self.location isEqualToString:@"Not Found"]) [self makeRequestWithLocation:self.location];
+        if (![self.location isEqualToString:@"Not Found"]) [self makeCurrentWeatherRequestWithLocation:self.location];
     }];
 }
 
@@ -96,10 +121,19 @@
 #pragma mark - Request Set Up Methods
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-- (void)makeRequestWithLocation:(NSString *)location {
+- (void)makeCurrentWeatherRequestWithLocation:(NSString *)location {
     // encode city search for URL and make URL request
     NSString *weatherRequest = [NSString stringWithFormat:@"http://api.wunderground.com/api/f29e980ec760f4cc/conditions/q/CA/San_Francisco.json"];
     NSURL *apiURL = [NSURL URLWithString:weatherRequest];
+    NSURLRequest *request = [NSURLRequest requestWithURL:apiURL];
+    NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
+    NSLog(@"connection: %@", connection);
+}
+
+- (void)makeAstronomyRequestWithLocation:(NSString *)location {
+    // encode city search for URL and make URL request
+    NSString *astronomyRequest = [NSString stringWithFormat:@"http://api.wunderground.com/api/f29e980ec760f4cc/astronomy/q/CA/San_Francisco.json"];
+    NSURL *apiURL = [NSURL URLWithString:astronomyRequest];
     NSURLRequest *request = [NSURLRequest requestWithURL:apiURL];
     NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
     NSLog(@"connection: %@", connection);
@@ -133,14 +167,6 @@
     // You can parse the stuff in your instance variable now
     
     NSLog(@"JSON is %@", self.responseData);
-    
-    NSError* error;
-    NSDictionary* json = [NSJSONSerialization
-                          JSONObjectWithData:self.responseData
-                          options:kNilOptions
-                          error:&error];
-    NSLog(@"parsed json:\n%@", json);
-    [self parseJSONDict:json];
 }
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
@@ -153,23 +179,55 @@
 #pragma mark - Data Parsing
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-- (void)parseJSONDict:(NSDictionary *)dict {
+- (void)parseCurrentWeatherJSON {
     // parse JSON, ensure that all fields we need are populated
-    if (dict) {
-        NSDictionary *currentObservation = [dict objectForKey:@"current_observation"];
-        NSNumber *fTemp = [currentObservation objectForKey:@"temp_f"];
+    NSError* error;
+    NSDictionary* dict = [NSJSONSerialization JSONObjectWithData:self.responseData options:kNilOptions error:&error];
+    NSLog(@"parsed current weather json:\n%@", dict);
     
-        NSDictionary *observationLocation = [currentObservation objectForKey:@"observation_location"];
-        NSString *city = [observationLocation objectForKey:@"city"];
-        NSString *country = [observationLocation objectForKey:@"country"];
+    if (dict) {
+        [self setCurrentWeatherDict:[dict objectForKey:@"current_observation"]];
+        [self setFTemp:[self.currentWeatherDict objectForKey:@"temp_f"]];
+    
+        NSDictionary *displayLocation = [self.currentWeatherDict objectForKey:@"display_location"];
+        [self setCity:[displayLocation objectForKey:@"city"]];
+        [self setCountry:[displayLocation objectForKey:@"country"]];
         //only append the country abbreviation if the city and country both exist in the JSON
-        if (![city isEqualToString:@""] && ![country isEqualToString:@""]) {
-            city = [NSString stringWithFormat:@"%@, %@", city, country];
+        if (![self.city isEqualToString:@""] && ![self.country isEqualToString:@""]) {
+            [self setLocation:[NSString stringWithFormat:@"%@, %@", self.city, self.country]];
+        } else {
+            [self setLocation:self.city];
         }
-        
-        [self setLocation:city];
-        [self layoutTempLabelWithTemp:fTemp];
+//        [self layoutTempLabel];
     }
 }
+
+- (void)parseAstronomyJSON {
+    // parse JSON, ensure that all fields we need are populated
+    NSError* error;
+    NSDictionary* dict = [NSJSONSerialization JSONObjectWithData:self.responseData options:kNilOptions error:&error];
+    NSLog(@"parsed astronomy json:\n%@", dict);
+    
+    if (dict) {
+    }
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+#pragma mark - Utilities for data presentation
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/**
+ *  Determine the background color, based on various weather attributes
+ *
+ *  @param temp - temperature in farenheit
+ *
+ *  @return background color
+ */
++ (UIColor *)backgroundColorFromTemp:(NSNumber *)temp {
+    UIColor *backgroundColor = [[UIColor alloc] init];
+    backgroundColor = [UIColor colorWithRed:1.000 green:0.981 blue:0.273 alpha:1.000];
+    return backgroundColor;
+}
+
 
 @end
