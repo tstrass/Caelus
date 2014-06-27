@@ -27,9 +27,11 @@
 // Astronomy data
 @property (strong, nonatomic) NSURLConnection *astronomyConnection;
 @property (strong, nonatomic) NSMutableData *astronomyResponseData;
-@property (strong, nonatomic) NSDictionary *astronomyDict;
-@property (strong, nonatomic) NSDictionary *sunrise;
-@property (strong, nonatomic) NSDictionary *sunset;
+@property (strong, nonatomic) NSDictionary *sunDict;
+@property (strong, nonatomic) NSNumber *sunriseHour;
+@property (strong, nonatomic) NSNumber *sunriseMinute;
+@property (strong, nonatomic) NSNumber *sunsetHour;
+@property (strong, nonatomic) NSNumber *sunsetMinute;
 
 // Geolocation
 @property (strong, nonatomic) CLLocationManager *locationManager;
@@ -60,11 +62,21 @@
 //    [self.locationManager setDesiredAccuracy:kCLLocationAccuracyBest];
 //    [self.locationManager startUpdatingLocation];
     
-    [self makeCurrentWeatherRequestWithLocation:nil]; // temporary, for testing
     
-    [self makeAstronomyRequestWithLocation:nil];
+//    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+//    dispatch_group_t group = dispatch_group_create();
     
-    [self formatViewForWeather];
+//    dispatch_group_async(group, queue, ^{
+        [self makeCurrentWeatherRequestWithLocation:nil]; // temporary, for testing
+//    });
+    
+//    dispatch_group_async(group, queue, ^{
+        [self makeAstronomyRequestWithLocation:nil];
+//    });
+    
+//    dispatch_group_notify(group, queue, ^{
+        [self formatViewForWeather];
+//    });
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -93,7 +105,8 @@
 }
 
 - (void)formatViewForWeather {
-    [self.view setBackgroundColor:[CLDetailViewController backgroundColorFromTemp:self.fTemp]];
+    [self.view setBackgroundColor:[self backgroundColorFromWeatherData]];
+    [self layoutTempLabel];
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -210,7 +223,6 @@
         } else {
             [self setLocation:self.city];
         }
-//        [self layoutTempLabel];
     }
 }
 
@@ -221,6 +233,15 @@
     NSLog(@"parsed astronomy json:\n%@", dict);
     
     if (dict) {
+        [self setSunDict:[dict objectForKey:@"sun_phase"]]; // We're only interested in data about the sun
+        
+        NSDictionary *sunriseDict = [self.sunDict objectForKey:@"sunrise"];
+        [self setSunriseHour:[sunriseDict objectForKey:@"hour"]];
+        [self setSunriseMinute:[sunriseDict objectForKey:@"minute"]];
+        
+        NSDictionary *sunsetDict = [self.sunDict objectForKey:@"sunset"];
+        [self setSunsetHour:[sunsetDict objectForKey:@"hour"]];
+        [self setSunsetMinute:[sunsetDict objectForKey:@"minute"]];
     }
 }
 
@@ -235,7 +256,9 @@
  *
  *  @return background color
  */
-+ (UIColor *)backgroundColorFromTemp:(NSNumber *)temp {
+- (UIColor *)backgroundColorFromWeatherData {
+    
+    NSLog(@"Determining background color with temp:%d, sunrise:%d:%d, sunset:%d:%d", [self.fTemp intValue], [self.sunriseHour intValue], [self.sunriseMinute intValue], [self.sunsetHour intValue], [self.sunsetMinute intValue]);
     UIColor *backgroundColor = [[UIColor alloc] init];
     backgroundColor = [UIColor colorWithRed:1.000 green:0.981 blue:0.273 alpha:1.000];
     return backgroundColor;
