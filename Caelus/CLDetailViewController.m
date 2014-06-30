@@ -36,6 +36,11 @@
 // Geolocation
 @property (strong, nonatomic) CLLocationManager *locationManager;
 @property (strong, nonatomic) NSString *location;
+
+//Tracking Parsing
+@property BOOL weatherParsingComplete;
+@property BOOL astronomyParsingComplete;
+
 @end
 
 @implementation CLDetailViewController
@@ -188,6 +193,7 @@
     if (connection == self.currentWeatherConnection) {
         [self parseCurrentWeatherJSON: ^(BOOL finished) {
             if (finished) {
+                self.weatherParsingComplete = YES;
                 [self layoutWeatherView];
 
             } else {
@@ -199,6 +205,7 @@
         // NSLog(@"astronomy JSON is %@", self.astronomyResponseData);
         [self parseAstronomyJSON: ^(BOOL finished) {
             if (finished) {
+                self.astronomyParsingComplete = YES;
                 [self layoutWeatherView];
                 
             } else {
@@ -273,22 +280,19 @@
  */
 
 -(void)layoutWeatherView {
-    
     UIColor *backgroundColor = [[UIColor alloc] init];
-    
-    if (self.fTemp == nil || self.sunriseHour == nil || self.sunriseMinute == nil || self.sunsetHour == nil || self.sunsetMinute == nil) {
-        NSLog(@"not done parsing");
-        backgroundColor = [UIColor blackColor];
-        [self.view setBackgroundColor:backgroundColor];
-    } else {
-        NSLog(@"Determining background color with temp:%d, sunrise:%d:%d, sunset:%d:%d", [self.fTemp intValue], [self.sunriseHour intValue], [self.sunriseMinute intValue], [self.sunsetHour intValue], [self.sunsetMinute intValue]);
+    if (self.weatherParsingComplete && self.astronomyParsingComplete) {
         backgroundColor = [UIColor colorWithRed:1.000 green:0.981 blue:0.273 alpha:1.000];
         [UIView animateWithDuration:1.0 animations:^{
             self.view.layer.backgroundColor = backgroundColor.CGColor;
             [self layoutTempLabel];
         }];
+        
+    } else {
+        NSLog(@"not done parsing");
+        backgroundColor = [UIColor blackColor];
+        [self.view setBackgroundColor:backgroundColor];
     }
-    
 }
 //
 //- (UIColor *)backgroundColorFromWeatherData {
