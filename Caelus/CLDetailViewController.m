@@ -75,7 +75,7 @@
 //    });
     
 //    dispatch_group_notify(group, queue, ^{
-        [self formatViewForWeather];
+//        [self formatViewForWeather];
 //    });
 }
 
@@ -104,10 +104,10 @@
     }
 }
 
-- (void)formatViewForWeather {
-    [self.view setBackgroundColor:[self backgroundColorFromWeatherData]];
-    [self layoutTempLabel];
-}
+//- (void)formatViewForWeather {
+//    [self.view setBackgroundColor:[self backgroundColorFromWeatherData]];
+//    [self layoutTempLabel];
+//}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark - CLLocationManager Delegate Methods
@@ -186,11 +186,25 @@
     // The request is complete and data has been received
     // You can parse the stuff in your instance variable now
     if (connection == self.currentWeatherConnection) {
-        // NSLog(@"current weather JSON is %@", self.currentWeatherResponseData);
-        [self parseCurrentWeatherJSON];
+        [self parseCurrentWeatherJSON: ^(BOOL finished) {
+            if (finished) {
+                self.view.backgroundColor = [self backgroundColorFromWeatherData];
+
+            } else {
+                NSLog(@"error parsing");
+            }
+        }];
+        
     } else if (connection == self.astronomyConnection) {
         // NSLog(@"astronomy JSON is %@", self.astronomyResponseData);
-        [self parseAstronomyJSON];
+        [self parseAstronomyJSON: ^(BOOL finished) {
+            if (finished) {
+                self.view.backgroundColor = [self backgroundColorFromWeatherData];
+                
+            } else {
+                NSLog(@"error parsing");
+            }
+        }];
     }
 }
 
@@ -204,12 +218,11 @@
 #pragma mark - Data Parsing
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-- (void)parseCurrentWeatherJSON {
+- (void)parseCurrentWeatherJSON:(weatherParsingComplete)compBlock {
     // parse JSON, ensure that all fields we need are populated
     NSError* error;
     NSDictionary* dict = [NSJSONSerialization JSONObjectWithData:self.currentWeatherResponseData options:kNilOptions error:&error];
     NSLog(@"parsed current weather json:\n%@", dict);
-    
     if (dict) {
         [self setCurrentWeatherDict:[dict objectForKey:@"current_observation"]];
         [self setFTemp:[self.currentWeatherDict objectForKey:@"temp_f"]];
@@ -224,9 +237,10 @@
             [self setLocation:self.city];
         }
     }
+    compBlock(YES);
 }
 
-- (void)parseAstronomyJSON {
+- (void)parseAstronomyJSON:(astronomyParsingComplete)compBlock {
     // parse JSON, ensure that all fields we need are populated
     NSError* error;
     NSDictionary* dict = [NSJSONSerialization JSONObjectWithData:self.astronomyResponseData options:kNilOptions error:&error];
@@ -243,6 +257,7 @@
         [self setSunsetHour:[sunsetDict objectForKey:@"hour"]];
         [self setSunsetMinute:[sunsetDict objectForKey:@"minute"]];
     }
+    compBlock(YES);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -257,10 +272,16 @@
  *  @return background color
  */
 - (UIColor *)backgroundColorFromWeatherData {
-    
-    NSLog(@"Determining background color with temp:%d, sunrise:%d:%d, sunset:%d:%d", [self.fTemp intValue], [self.sunriseHour intValue], [self.sunriseMinute intValue], [self.sunsetHour intValue], [self.sunsetMinute intValue]);
     UIColor *backgroundColor = [[UIColor alloc] init];
-    backgroundColor = [UIColor colorWithRed:1.000 green:0.981 blue:0.273 alpha:1.000];
+
+    if (self.fTemp == nil || self.sunriseHour == nil || self.sunriseMinute == nil || self.sunsetHour == nil || self.sunsetMinute == nil) {
+        NSLog(@"not done parsing");
+        backgroundColor = [UIColor blackColor];
+    } else {
+        NSLog(@"Determining background color with temp:%d, sunrise:%d:%d, sunset:%d:%d", [self.fTemp intValue], [self.sunriseHour intValue], [self.sunriseMinute intValue], [self.sunsetHour intValue], [self.sunsetMinute intValue]);
+        backgroundColor = [UIColor colorWithRed:1.000 green:0.981 blue:0.273 alpha:1.000];
+        [self layoutTempLabel];
+    }
     return backgroundColor;
 }
 
