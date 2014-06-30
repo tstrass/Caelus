@@ -16,9 +16,12 @@
 @property (weak, nonatomic) IBOutlet UILabel *currentLocationLabel;
 @property (weak, nonatomic) IBOutlet UILabel *tempLabel;
 
+//Requests
+@property (strong, nonatomic) NSMutableArray *requestsArray;
+
 // Current weather data
 @property (strong, nonatomic) NSURLConnection *currentWeatherConnection;
-@property (strong, nonatomic) NSMutableData *currentWeatherResponseData;
+@property (strong, nonatomic) NSData *currentWeatherResponseData;
 @property (strong, nonatomic) NSDictionary *currentWeatherDict;
 @property (strong, nonatomic) NSNumber *fTemp;
 @property (strong, nonatomic) NSString *city;
@@ -26,7 +29,7 @@
 
 // Astronomy data
 @property (strong, nonatomic) NSURLConnection *astronomyConnection;
-@property (strong, nonatomic) NSMutableData *astronomyResponseData;
+@property (strong, nonatomic) NSData *astronomyResponseData;
 @property (strong, nonatomic) NSDictionary *sunDict;
 @property (strong, nonatomic) NSNumber *sunriseHour;
 @property (strong, nonatomic) NSNumber *sunriseMinute;
@@ -62,21 +65,12 @@
 //    [self.locationManager setDesiredAccuracy:kCLLocationAccuracyBest];
 //    [self.locationManager startUpdatingLocation];
     
+    self.requestsArray = [[NSMutableArray alloc] init];
+
+    [self makeCurrentWeatherRequestWithLocation:nil];
+    [self makeAstronomyRequestWithLocation:nil];
     
-//    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
-//    dispatch_group_t group = dispatch_group_create();
-    
-//    dispatch_group_async(group, queue, ^{
-        [self makeCurrentWeatherRequestWithLocation:nil]; // temporary, for testing
-//    });
-    
-//    dispatch_group_async(group, queue, ^{
-        [self makeAstronomyRequestWithLocation:nil];
-//    });
-    
-//    dispatch_group_notify(group, queue, ^{
-        [self formatViewForWeather];
-//    });
+    [self sendRequestsAndParseData];
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -133,22 +127,37 @@
 #pragma mark - Request Set Up Methods
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+- (void)sendRequestsAndParseData {
+    __block NSInteger outstandingRequests = self.requestsArray.count;
+    for (NSURLRequest *request in self.requestsArray) {
+        [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+            if ([self.requestsArray indexOfObject:request] == 0) {
+                [self setCurrentWeatherResponseData:data];
+                [self parseCurrentWeatherJSON];
+            } else if ([self.requestsArray indexOfObject:request] == 1) {
+                [self setAstronomyResponseData:data];
+                [self parseAstronomyJSON];
+            }
+            outstandingRequests--;
+            if (outstandingRequests == 0) [self formatViewForWeather];
+        }];
+    }
+}
+
 - (void)makeCurrentWeatherRequestWithLocation:(NSString *)location {
     // encode city search for URL and make URL request
     NSString *weatherRequest = [NSString stringWithFormat:@"http://api.wunderground.com/api/f29e980ec760f4cc/conditions/q/CA/San_Francisco.json"];
     NSURL *apiURL = [NSURL URLWithString:weatherRequest];
-    NSURLRequest *request = [NSURLRequest requestWithURL:apiURL];
-    self.currentWeatherConnection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
-    NSLog(@"connection: %@", self.currentWeatherConnection);
+    NSURLRequest *request = [[NSURLRequest alloc] initWithURL:apiURL];
+    [self.requestsArray addObject:request];
 }
 
 - (void)makeAstronomyRequestWithLocation:(NSString *)location {
     // encode city search for URL and make URL request
     NSString *astronomyRequest = [NSString stringWithFormat:@"http://api.wunderground.com/api/f29e980ec760f4cc/astronomy/q/CA/San_Francisco.json"];
     NSURL *apiURL = [NSURL URLWithString:astronomyRequest];
-    NSURLRequest *request = [NSURLRequest requestWithURL:apiURL];
-    self.astronomyConnection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
-    NSLog(@"connection: %@", self.astronomyConnection);
+    NSURLRequest *request = [[NSURLRequest alloc] initWithURL:apiURL];
+    [self.requestsArray addObject:request];
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -170,9 +179,9 @@
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
     // Append the new data to the instance variable you declared
     if (connection == self.currentWeatherConnection) {
-        [self.currentWeatherResponseData appendData:data];
+        //[self.currentWeatherResponseData appendData:data];
     } else if (connection == self.astronomyConnection) {
-        [self.astronomyResponseData appendData:data];
+        //[self.astronomyResponseData appendData:data];
     }
 }
 
