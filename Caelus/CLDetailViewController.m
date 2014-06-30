@@ -67,6 +67,8 @@
     
     self.requestsArray = [[NSMutableArray alloc] init];
 
+    [self.view setBackgroundColor:[UIColor blackColor]];
+    
     [self makeCurrentWeatherRequestWithLocation:nil];
     [self makeAstronomyRequestWithLocation:nil];
     
@@ -99,8 +101,10 @@
 }
 
 - (void)formatViewForWeather {
-    [self.view setBackgroundColor:[self backgroundColorFromWeatherData]];
-    [self layoutTempLabel];
+    [UIView animateWithDuration:1.0 animations:^{
+        [self.view setBackgroundColor:[self backgroundColorFromWeatherData]];
+        [self layoutTempLabel];
+    }];
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
