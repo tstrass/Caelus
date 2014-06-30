@@ -188,7 +188,7 @@
     if (connection == self.currentWeatherConnection) {
         [self parseCurrentWeatherJSON: ^(BOOL finished) {
             if (finished) {
-                self.view.backgroundColor = [self backgroundColorFromWeatherData];
+                [self layoutWeatherView];
 
             } else {
                 NSLog(@"error parsing");
@@ -199,7 +199,7 @@
         // NSLog(@"astronomy JSON is %@", self.astronomyResponseData);
         [self parseAstronomyJSON: ^(BOOL finished) {
             if (finished) {
-                self.view.backgroundColor = [self backgroundColorFromWeatherData];
+                [self layoutWeatherView];
                 
             } else {
                 NSLog(@"error parsing");
@@ -271,19 +271,39 @@
  *
  *  @return background color
  */
-- (UIColor *)backgroundColorFromWeatherData {
-    UIColor *backgroundColor = [[UIColor alloc] init];
 
+-(void)layoutWeatherView {
+    
+    UIColor *backgroundColor = [[UIColor alloc] init];
+    
     if (self.fTemp == nil || self.sunriseHour == nil || self.sunriseMinute == nil || self.sunsetHour == nil || self.sunsetMinute == nil) {
         NSLog(@"not done parsing");
         backgroundColor = [UIColor blackColor];
+        [self.view setBackgroundColor:backgroundColor];
     } else {
         NSLog(@"Determining background color with temp:%d, sunrise:%d:%d, sunset:%d:%d", [self.fTemp intValue], [self.sunriseHour intValue], [self.sunriseMinute intValue], [self.sunsetHour intValue], [self.sunsetMinute intValue]);
         backgroundColor = [UIColor colorWithRed:1.000 green:0.981 blue:0.273 alpha:1.000];
-        [self layoutTempLabel];
+        [UIView animateWithDuration:1.0 animations:^{
+            self.view.layer.backgroundColor = backgroundColor.CGColor;
+            [self layoutTempLabel];
+        }];
     }
-    return backgroundColor;
+    
 }
+//
+//- (UIColor *)backgroundColorFromWeatherData {
+//    UIColor *backgroundColor = [[UIColor alloc] init];
+//
+//    if (self.fTemp == nil || self.sunriseHour == nil || self.sunriseMinute == nil || self.sunsetHour == nil || self.sunsetMinute == nil) {
+//        NSLog(@"not done parsing");
+//        backgroundColor = [UIColor blackColor];
+//    } else {
+//        NSLog(@"Determining background color with temp:%d, sunrise:%d:%d, sunset:%d:%d", [self.fTemp intValue], [self.sunriseHour intValue], [self.sunriseMinute intValue], [self.sunsetHour intValue], [self.sunsetMinute intValue]);
+//        backgroundColor = [UIColor colorWithRed:1.000 green:0.981 blue:0.273 alpha:1.000];
+//        [self layoutTempLabel];
+//    }
+//    return backgroundColor;
+//}
 
 
 @end
