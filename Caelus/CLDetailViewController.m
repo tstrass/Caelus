@@ -16,9 +16,12 @@
 @property (weak, nonatomic) IBOutlet UILabel *currentLocationLabel;
 @property (weak, nonatomic) IBOutlet UILabel *tempLabel;
 
+//Requests
+@property (strong, nonatomic) NSMutableArray *requestsArray;
+
 // Current weather data
 @property (strong, nonatomic) NSURLConnection *currentWeatherConnection;
-@property (strong, nonatomic) NSMutableData *currentWeatherResponseData;
+@property (strong, nonatomic) NSData *currentWeatherResponseData;
 @property (strong, nonatomic) NSDictionary *currentWeatherDict;
 @property (strong, nonatomic) NSNumber *fTemp;
 @property (strong, nonatomic) NSString *city;
@@ -26,7 +29,7 @@
 
 // Astronomy data
 @property (strong, nonatomic) NSURLConnection *astronomyConnection;
-@property (strong, nonatomic) NSMutableData *astronomyResponseData;
+@property (strong, nonatomic) NSData *astronomyResponseData;
 @property (strong, nonatomic) NSDictionary *sunDict;
 @property (strong, nonatomic) NSNumber *sunriseHour;
 @property (strong, nonatomic) NSNumber *sunriseMinute;
@@ -36,11 +39,6 @@
 // Geolocation
 @property (strong, nonatomic) CLLocationManager *locationManager;
 @property (strong, nonatomic) NSString *location;
-
-//Tracking Parsing
-@property BOOL weatherParsingComplete;
-@property BOOL astronomyParsingComplete;
-
 @end
 
 @implementation CLDetailViewController
@@ -67,21 +65,14 @@
 //    [self.locationManager setDesiredAccuracy:kCLLocationAccuracyBest];
 //    [self.locationManager startUpdatingLocation];
     
+    self.requestsArray = [[NSMutableArray alloc] init];
+
+    [self.view setBackgroundColor:[UIColor blackColor]];
     
-//    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
-//    dispatch_group_t group = dispatch_group_create();
+    [self makeCurrentWeatherRequestWithLocation:nil];
+    [self makeAstronomyRequestWithLocation:nil];
     
-//    dispatch_group_async(group, queue, ^{
-        [self makeCurrentWeatherRequestWithLocation:nil]; // temporary, for testing
-//    });
-    
-//    dispatch_group_async(group, queue, ^{
-        [self makeAstronomyRequestWithLocation:nil];
-//    });
-    
-//    dispatch_group_notify(group, queue, ^{
-//        [self formatViewForWeather];
-//    });
+    [self sendRequestsAndParseData];
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -109,10 +100,12 @@
     }
 }
 
-//- (void)formatViewForWeather {
-//    [self.view setBackgroundColor:[self backgroundColorFromWeatherData]];
-//    [self layoutTempLabel];
-//}
+- (void)formatViewForWeather {
+    [UIView animateWithDuration:1.0 animations:^{
+        [self.view setBackgroundColor:[self backgroundColorFromWeatherData]];
+        [self layoutTempLabel];
+    }];
+}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark - CLLocationManager Delegate Methods
@@ -138,22 +131,37 @@
 #pragma mark - Request Set Up Methods
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+- (void)sendRequestsAndParseData {
+    __block NSInteger outstandingRequests = self.requestsArray.count;
+    for (NSURLRequest *request in self.requestsArray) {
+        [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+            if ([self.requestsArray indexOfObject:request] == 0) {
+                [self setCurrentWeatherResponseData:data];
+                [self parseCurrentWeatherJSON];
+            } else if ([self.requestsArray indexOfObject:request] == 1) {
+                [self setAstronomyResponseData:data];
+                [self parseAstronomyJSON];
+            }
+            outstandingRequests--;
+            if (outstandingRequests == 0) [self formatViewForWeather];
+        }];
+    }
+}
+
 - (void)makeCurrentWeatherRequestWithLocation:(NSString *)location {
     // encode city search for URL and make URL request
     NSString *weatherRequest = [NSString stringWithFormat:@"http://api.wunderground.com/api/f29e980ec760f4cc/conditions/q/CA/San_Francisco.json"];
     NSURL *apiURL = [NSURL URLWithString:weatherRequest];
-    NSURLRequest *request = [NSURLRequest requestWithURL:apiURL];
-    self.currentWeatherConnection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
-    NSLog(@"connection: %@", self.currentWeatherConnection);
+    NSURLRequest *request = [[NSURLRequest alloc] initWithURL:apiURL];
+    [self.requestsArray addObject:request];
 }
 
 - (void)makeAstronomyRequestWithLocation:(NSString *)location {
     // encode city search for URL and make URL request
     NSString *astronomyRequest = [NSString stringWithFormat:@"http://api.wunderground.com/api/f29e980ec760f4cc/astronomy/q/CA/San_Francisco.json"];
     NSURL *apiURL = [NSURL URLWithString:astronomyRequest];
-    NSURLRequest *request = [NSURLRequest requestWithURL:apiURL];
-    self.astronomyConnection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
-    NSLog(@"connection: %@", self.astronomyConnection);
+    NSURLRequest *request = [[NSURLRequest alloc] initWithURL:apiURL];
+    [self.requestsArray addObject:request];
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -175,9 +183,9 @@
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
     // Append the new data to the instance variable you declared
     if (connection == self.currentWeatherConnection) {
-        [self.currentWeatherResponseData appendData:data];
+        //[self.currentWeatherResponseData appendData:data];
     } else if (connection == self.astronomyConnection) {
-        [self.astronomyResponseData appendData:data];
+        //[self.astronomyResponseData appendData:data];
     }
 }
 
@@ -191,27 +199,11 @@
     // The request is complete and data has been received
     // You can parse the stuff in your instance variable now
     if (connection == self.currentWeatherConnection) {
-        [self parseCurrentWeatherJSON: ^(BOOL finished) {
-            if (finished) {
-                self.weatherParsingComplete = YES;
-                [self layoutWeatherView];
-
-            } else {
-                NSLog(@"error parsing");
-            }
-        }];
-        
+        // NSLog(@"current weather JSON is %@", self.currentWeatherResponseData);
+        [self parseCurrentWeatherJSON];
     } else if (connection == self.astronomyConnection) {
         // NSLog(@"astronomy JSON is %@", self.astronomyResponseData);
-        [self parseAstronomyJSON: ^(BOOL finished) {
-            if (finished) {
-                self.astronomyParsingComplete = YES;
-                [self layoutWeatherView];
-                
-            } else {
-                NSLog(@"error parsing");
-            }
-        }];
+        [self parseAstronomyJSON];
     }
 }
 
@@ -225,11 +217,12 @@
 #pragma mark - Data Parsing
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-- (void)parseCurrentWeatherJSON:(weatherParsingComplete)compBlock {
+- (void)parseCurrentWeatherJSON {
     // parse JSON, ensure that all fields we need are populated
     NSError* error;
     NSDictionary* dict = [NSJSONSerialization JSONObjectWithData:self.currentWeatherResponseData options:kNilOptions error:&error];
     NSLog(@"parsed current weather json:\n%@", dict);
+    
     if (dict) {
         [self setCurrentWeatherDict:[dict objectForKey:@"current_observation"]];
         [self setFTemp:[self.currentWeatherDict objectForKey:@"temp_f"]];
@@ -244,10 +237,9 @@
             [self setLocation:self.city];
         }
     }
-    compBlock(YES);
 }
 
-- (void)parseAstronomyJSON:(astronomyParsingComplete)compBlock {
+- (void)parseAstronomyJSON {
     // parse JSON, ensure that all fields we need are populated
     NSError* error;
     NSDictionary* dict = [NSJSONSerialization JSONObjectWithData:self.astronomyResponseData options:kNilOptions error:&error];
@@ -264,7 +256,6 @@
         [self setSunsetHour:[sunsetDict objectForKey:@"hour"]];
         [self setSunsetMinute:[sunsetDict objectForKey:@"minute"]];
     }
-    compBlock(YES);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -278,36 +269,13 @@
  *
  *  @return background color
  */
-
--(void)layoutWeatherView {
+- (UIColor *)backgroundColorFromWeatherData {
+    
+    NSLog(@"Determining background color with temp:%d, sunrise:%d:%d, sunset:%d:%d", [self.fTemp intValue], [self.sunriseHour intValue], [self.sunriseMinute intValue], [self.sunsetHour intValue], [self.sunsetMinute intValue]);
     UIColor *backgroundColor = [[UIColor alloc] init];
-    if (self.weatherParsingComplete && self.astronomyParsingComplete) {
-        backgroundColor = [UIColor colorWithRed:1.000 green:0.981 blue:0.273 alpha:1.000];
-        [UIView animateWithDuration:1.0 animations:^{
-            self.view.layer.backgroundColor = backgroundColor.CGColor;
-            [self layoutTempLabel];
-        }];
-        
-    } else {
-        NSLog(@"not done parsing");
-        backgroundColor = [UIColor blackColor];
-        [self.view setBackgroundColor:backgroundColor];
-    }
+    backgroundColor = [UIColor colorWithRed:1.000 green:0.981 blue:0.273 alpha:1.000];
+    return backgroundColor;
 }
-//
-//- (UIColor *)backgroundColorFromWeatherData {
-//    UIColor *backgroundColor = [[UIColor alloc] init];
-//
-//    if (self.fTemp == nil || self.sunriseHour == nil || self.sunriseMinute == nil || self.sunsetHour == nil || self.sunsetMinute == nil) {
-//        NSLog(@"not done parsing");
-//        backgroundColor = [UIColor blackColor];
-//    } else {
-//        NSLog(@"Determining background color with temp:%d, sunrise:%d:%d, sunset:%d:%d", [self.fTemp intValue], [self.sunriseHour intValue], [self.sunriseMinute intValue], [self.sunsetHour intValue], [self.sunsetMinute intValue]);
-//        backgroundColor = [UIColor colorWithRed:1.000 green:0.981 blue:0.273 alpha:1.000];
-//        [self layoutTempLabel];
-//    }
-//    return backgroundColor;
-//}
 
 
 @end
