@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import <CoreLocation/CoreLocation.h>
+typedef void(^weatherParsingComplete)(BOOL);
+typedef void(^astronomyParsingComplete)(BOOL);
 
 @interface CLDetailViewController : UIViewController <UISplitViewControllerDelegate, NSURLConnectionDelegate, CLLocationManagerDelegate>
 
