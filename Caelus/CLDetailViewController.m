@@ -8,6 +8,8 @@
 #import "CLDetailViewController.h"
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+#import "CLAstronomy.h"
+
 @interface CLDetailViewController ()
 @property (strong, nonatomic) UIPopoverController *masterPopoverController;
 - (void)configureView;
@@ -16,7 +18,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *currentLocationLabel;
 @property (weak, nonatomic) IBOutlet UILabel *tempLabel;
 
-//Requests
+// Requests
 @property (strong, nonatomic) NSMutableArray *requestsArray;
 
 // Current weather data
@@ -31,10 +33,9 @@
 @property (strong, nonatomic) NSURLConnection *astronomyConnection;
 @property (strong, nonatomic) NSData *astronomyResponseData;
 @property (strong, nonatomic) NSDictionary *sunDict;
-@property (strong, nonatomic) NSNumber *sunriseHour;
-@property (strong, nonatomic) NSNumber *sunriseMinute;
-@property (strong, nonatomic) NSNumber *sunsetHour;
-@property (strong, nonatomic) NSNumber *sunsetMinute;
+@property (strong, nonatomic) CLAstronomy *astronomy;
+
+@property (nonatomic) NSInteger currentMinuteTime;
 
 // Geolocation
 @property (strong, nonatomic) CLLocationManager *locationManager;
@@ -42,6 +43,9 @@
 @end
 
 @implementation CLDetailViewController
+
+#define DUSK_MINUTE = self.sunsetMinuteTime + 30;
+#define DAWN_MINUTE = self.sunriseMinuteTime - 30;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark - Managing the detail item
@@ -165,55 +169,6 @@
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-#pragma mark - NSURLConnection Delegate Methods
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response {
-    // A response has been received, this is where we initialize the instance var you created
-    // so that we can append data to it in the didReceiveData method
-    // Furthermore, this method is called each time there is a redirect so reinitializing it
-    // also serves to clear it
-    if (connection == self.currentWeatherConnection) {
-        self.currentWeatherResponseData = [[NSMutableData alloc] init];
-    } else if (connection == self.astronomyConnection) {
-        self.astronomyResponseData = [[NSMutableData alloc] init];
-    }
-}
-
-- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
-    // Append the new data to the instance variable you declared
-    if (connection == self.currentWeatherConnection) {
-        //[self.currentWeatherResponseData appendData:data];
-    } else if (connection == self.astronomyConnection) {
-        //[self.astronomyResponseData appendData:data];
-    }
-}
-
-- (NSCachedURLResponse *)connection:(NSURLConnection *)connection
-                  willCacheResponse:(NSCachedURLResponse*)cachedResponse {
-    // Return nil to indicate not necessary to store a cached response for this connection
-    return nil;
-}
-
-- (void)connectionDidFinishLoading:(NSURLConnection *)connection {
-    // The request is complete and data has been received
-    // You can parse the stuff in your instance variable now
-    if (connection == self.currentWeatherConnection) {
-        // NSLog(@"current weather JSON is %@", self.currentWeatherResponseData);
-        [self parseCurrentWeatherJSON];
-    } else if (connection == self.astronomyConnection) {
-        // NSLog(@"astronomy JSON is %@", self.astronomyResponseData);
-        [self parseAstronomyJSON];
-    }
-}
-
-- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
-    // The request has failed for some reason!
-    // Check the error var
-    NSLog(@"NSURLConnection:%@ didFailWithError:%@", connection, error);
-}
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark - Data Parsing
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -249,12 +204,12 @@
         [self setSunDict:[dict objectForKey:@"sun_phase"]]; // We're only interested in data about the sun
         
         NSDictionary *sunriseDict = [self.sunDict objectForKey:@"sunrise"];
-        [self setSunriseHour:[sunriseDict objectForKey:@"hour"]];
-        [self setSunriseMinute:[sunriseDict objectForKey:@"minute"]];
-        
         NSDictionary *sunsetDict = [self.sunDict objectForKey:@"sunset"];
-        [self setSunsetHour:[sunsetDict objectForKey:@"hour"]];
-        [self setSunsetMinute:[sunsetDict objectForKey:@"minute"]];
+        
+        self.astronomy = [[CLAstronomy alloc] initWithSunriseHour:[sunriseDict objectForKey:@"hour"]
+                                                    SunriseMinute:[sunriseDict objectForKey:@"minute"]
+                                                       SunsetHour:[sunsetDict objectForKey:@"hour"]
+                                                     SunsetMinute:[sunsetDict objectForKey:@"minute"]];
     }
 }
 
@@ -263,19 +218,17 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /**
- *  Determine the background color, based on various weather attributes
- *
- *  @param temp - temperature in farenheit
+ *  Determine the background color, based on temp and sunniness
  *
  *  @return background color
  */
 - (UIColor *)backgroundColorFromWeatherData {
     
-    NSLog(@"Determining background color with temp:%d, sunrise:%d:%d, sunset:%d:%d", [self.fTemp intValue], [self.sunriseHour intValue], [self.sunriseMinute intValue], [self.sunsetHour intValue], [self.sunsetMinute intValue]);
+    NSLog(@"Determining background color with temp:%d, sunrise:%d:%d, sunset:%d:%d", [self.fTemp intValue], [self.astronomy.sunriseHour intValue], [self.astronomy.sunriseMinute intValue], [self.astronomy.sunsetHour intValue], [self.astronomy.sunsetMinute intValue]);
     UIColor *backgroundColor = [[UIColor alloc] init];
+    
     backgroundColor = [UIColor colorWithRed:1.000 green:0.981 blue:0.273 alpha:1.000];
     return backgroundColor;
 }
-
 
 @end
