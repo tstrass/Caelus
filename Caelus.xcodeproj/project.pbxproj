@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E20001A819630E3B007659E3 /* CLAstronomy.m in Sources */ = {isa = PBXBuildFile; fileRef = E20001A719630E3B007659E3 /* CLAstronomy.m */; };
 		E2B95EC41958B084008528D4 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2B95EC31958B084008528D4 /* CoreLocation.framework */; };
 		E2E1EEEE1954BB9600A0B541 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2E1EEED1954BB9600A0B541 /* Foundation.framework */; };
 		E2E1EEF01954BB9600A0B541 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2E1EEEF1954BB9600A0B541 /* CoreGraphics.framework */; };
@@ -37,6 +38,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		E20001A619630E3B007659E3 /* CLAstronomy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLAstronomy.h; sourceTree = "<group>"; };
+		E20001A719630E3B007659E3 /* CLAstronomy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLAstronomy.m; sourceTree = "<group>"; };
 		E2B95EC31958B084008528D4 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		E2B95EC51958B4AF008528D4 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		E2E1EEEA1954BB9600A0B541 /* Caelus.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Caelus.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -88,6 +91,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E20001A919630E4C007659E3 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				E20001A619630E3B007659E3 /* CLAstronomy.h */,
+				E20001A719630E3B007659E3 /* CLAstronomy.m */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
 		E2E1EEE11954BB9600A0B541 = {
 			isa = PBXGroup;
 			children = (
@@ -133,6 +145,7 @@
 				E2E1EF091954BB9600A0B541 /* CLDetailViewController.m */,
 				E2E1EF0B1954BB9600A0B541 /* Images.xcassets */,
 				E2E1EEF41954BB9600A0B541 /* Supporting Files */,
+				E20001A919630E4C007659E3 /* Model */,
 			);
 			path = Caelus;
 			sourceTree = "<group>";
@@ -265,6 +278,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E20001A819630E3B007659E3 /* CLAstronomy.m in Sources */,
 				E2E1EF0A1954BB9600A0B541 /* CLDetailViewController.m in Sources */,
 				E2E1EEFA1954BB9600A0B541 /* main.m in Sources */,
 				E2E1EF071954BB9600A0B541 /* CLMasterViewController.m in Sources */,
