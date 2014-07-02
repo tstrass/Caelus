@@ -8,11 +8,12 @@
 
 #import <Foundation/Foundation.h>
 
+typedef NS_ENUM (NSInteger, LightPeriod) {
+	DAWN, SUNRISE, DAY, SUNSET, DUSK, NIGHT
+};
+
 @interface CLAstronomy : NSObject
 // specifies which period of the day it is currently
-typedef enum {
-    DAWN, SUNRISE, DAY, SUNSET, DUSK, NIGHT
-} LightPeriod;
 
 // always use this custom initializer
 - (id)initWithSunriseHour:(NSNumber *)riseHour
