@@ -19,6 +19,7 @@
 // UI objects in storyboard
 @property (weak, nonatomic) IBOutlet UILabel *currentLocationLabel;
 @property (weak, nonatomic) IBOutlet UILabel *tempLabel;
+@property (weak, nonatomic) IBOutlet UIScrollView *hourlyScrollView;
 
 // Requests
 @property (strong, nonatomic) NSMutableArray *requestsArray;
@@ -74,8 +75,8 @@
 
 	[self.view setBackgroundColor:[UIColor blackColor]];
 
-	//[self makeCurrentWeatherRequestWithLocation:nil];
-	//[self makeAstronomyRequestWithLocation:nil];
+	[self makeCurrentWeatherRequestWithLocation:nil];
+	[self makeAstronomyRequestWithLocation:nil];
     [self makeHourlyWeatherRequestWithLocation:nil];
 
 	[self sendRequestsAndParseData];
@@ -84,6 +85,27 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark - Format
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// temporary: to display raw hourly weather data
+- (void)layoutHourlyScrollView {
+    [self.hourlyScrollView setBackgroundColor:[UIColor whiteColor]];
+    CGFloat labelWidth = self.hourlyScrollView.frame.size.width - 10;
+    int counter = 0;
+    for (CLWeatherHour *weatherHour in self.hourlyWeather.weatherHours) {
+        UILabel *hourLabel = [[UILabel alloc] init];
+        [hourLabel setNumberOfLines:2];
+        [hourLabel setText:[NSString stringWithFormat:@"%@ %ld:00\n  %lu°F, %@ (%lu%% cloudy)", weatherHour.weekdayNameAbbrev, (long)weatherHour.hour, (long)weatherHour.temp, weatherHour.condition, (long)weatherHour.cloudCover]];
+        [hourLabel setFont:[UIFont fontWithName:@"Times New Roman" size:10]];
+        [hourLabel sizeToFit];
+        [hourLabel setFrame:CGRectMake(5, 5, labelWidth, hourLabel.frame.size.height)];
+        
+        UIView *hourView = [[UIView alloc] initWithFrame:CGRectMake(0, counter * 30, labelWidth+10, hourLabel.frame.size.height + 5)];
+        [hourView addSubview:hourLabel];
+        [self.hourlyScrollView addSubview:hourView];
+        counter++;
+    }
+    [self.hourlyScrollView setContentSize:CGSizeMake(self.hourlyScrollView.frame.size.width, counter * 30)];
+}
 
 - (void)formatLocationLabel {
 	[self.currentLocationLabel setText:[NSString stringWithFormat:@"Current Location: %@", self.location]];
@@ -139,17 +161,21 @@
 #pragma mark - Request Set Up Methods
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+// TODO: error handling
 - (void)sendRequestsAndParseData {
 	__block NSInteger outstandingRequests = self.requestsArray.count;
+    
 	for (NSURLRequest *request in self.requestsArray) {
-		[NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler: ^(NSURLResponse *response, NSData *data, NSError *connectionError) {
-		    if ([self.requestsArray indexOfObject:request] == 2) {
+		[NSURLConnection sendAsynchronousRequest:request
+                                           queue:[NSOperationQueue mainQueue]
+                               completionHandler: ^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+		    if ([self.requestsArray indexOfObject:request] == 0) {
 		        [self setCurrentWeatherResponseData:data];
 		        [self parseCurrentWeatherJSON];
 			} else if ([self.requestsArray indexOfObject:request] == 1) {
 		        [self setAstronomyResponseData:data];
 		        [self parseAstronomyJSON];
-			} else if ([self.requestsArray indexOfObject:request] == 0) {
+			} else if ([self.requestsArray indexOfObject:request] == 2) {
                 [self setHourlyWeatherResponseData:data];
                 [self parseHourlyWeatherJSON];
             }
@@ -241,6 +267,8 @@
                                                            error:&error];    
     if (dict) {
         self.hourlyWeather = [[CLHourlyWeather alloc] initWithJSONDict:dict];
+        [self layoutHourlyScrollView];
+
     }
 }
 
