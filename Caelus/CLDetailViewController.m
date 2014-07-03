@@ -8,7 +8,9 @@
 #import "CLDetailViewController.h"
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+// Model
 #import "CLAstronomy.h"
+#import "CLHourlyWeather.h"
 
 @interface CLDetailViewController ()
 @property (strong, nonatomic) UIPopoverController *masterPopoverController;
@@ -17,12 +19,12 @@
 // UI objects in storyboard
 @property (weak, nonatomic) IBOutlet UILabel *currentLocationLabel;
 @property (weak, nonatomic) IBOutlet UILabel *tempLabel;
+@property (weak, nonatomic) IBOutlet UIScrollView *hourlyScrollView;
 
 // Requests
 @property (strong, nonatomic) NSMutableArray *requestsArray;
 
 // Current weather data
-@property (strong, nonatomic) NSURLConnection *currentWeatherConnection;
 @property (strong, nonatomic) NSData *currentWeatherResponseData;
 @property (strong, nonatomic) NSDictionary *currentWeatherDict;
 @property (strong, nonatomic) NSNumber *fTemp;
@@ -30,12 +32,14 @@
 @property (strong, nonatomic) NSString *country;
 
 // Astronomy data
-@property (strong, nonatomic) NSURLConnection *astronomyConnection;
 @property (strong, nonatomic) NSData *astronomyResponseData;
 @property (strong, nonatomic) NSDictionary *sunDict;
 @property (strong, nonatomic) CLAstronomy *astronomy;
 
-@property (nonatomic) NSInteger currentMinuteTime;
+// Hourly weather data
+@property (strong, nonatomic) NSData *hourlyWeatherResponseData;
+@property (strong, nonatomic) NSDictionary *hourlyWeatherDict;
+@property (strong, nonatomic) CLHourlyWeather *hourlyWeather;
 
 // Geolocation
 @property (strong, nonatomic) CLLocationManager *locationManager;
@@ -73,6 +77,7 @@
 
 	[self makeCurrentWeatherRequestWithLocation:nil];
 	[self makeAstronomyRequestWithLocation:nil];
+    [self makeHourlyWeatherRequestWithLocation:nil];
 
 	[self sendRequestsAndParseData];
 }
@@ -80,6 +85,27 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark - Format
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// temporary: to display raw hourly weather data
+- (void)layoutHourlyScrollView {
+    [self.hourlyScrollView setBackgroundColor:[UIColor whiteColor]];
+    CGFloat labelWidth = self.hourlyScrollView.frame.size.width - 10;
+    int counter = 0;
+    for (CLWeatherHour *weatherHour in self.hourlyWeather.weatherHours) {
+        UILabel *hourLabel = [[UILabel alloc] init];
+        [hourLabel setNumberOfLines:2];
+        [hourLabel setText:[NSString stringWithFormat:@"%@ %ld:00\n  %lu°F, %@ (%lu%% cloudy)", weatherHour.weekdayNameAbbrev, (long)weatherHour.hour, (long)weatherHour.temp, weatherHour.condition, (long)weatherHour.cloudCover]];
+        [hourLabel setFont:[UIFont fontWithName:@"Times New Roman" size:10]];
+        [hourLabel sizeToFit];
+        [hourLabel setFrame:CGRectMake(5, 5, labelWidth, hourLabel.frame.size.height)];
+        
+        UIView *hourView = [[UIView alloc] initWithFrame:CGRectMake(0, counter * 30, labelWidth+10, hourLabel.frame.size.height + 5)];
+        [hourView addSubview:hourLabel];
+        [self.hourlyScrollView addSubview:hourView];
+        counter++;
+    }
+    [self.hourlyScrollView setContentSize:CGSizeMake(self.hourlyScrollView.frame.size.width, counter * 30)];
+}
 
 - (void)formatLocationLabel {
 	[self.currentLocationLabel setText:[NSString stringWithFormat:@"Current Location: %@", self.location]];
@@ -135,18 +161,24 @@
 #pragma mark - Request Set Up Methods
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+// TODO: error handling
 - (void)sendRequestsAndParseData {
 	__block NSInteger outstandingRequests = self.requestsArray.count;
+    
 	for (NSURLRequest *request in self.requestsArray) {
-		[NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler: ^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+		[NSURLConnection sendAsynchronousRequest:request
+                                           queue:[NSOperationQueue mainQueue]
+                               completionHandler: ^(NSURLResponse *response, NSData *data, NSError *connectionError) {
 		    if ([self.requestsArray indexOfObject:request] == 0) {
 		        [self setCurrentWeatherResponseData:data];
 		        [self parseCurrentWeatherJSON];
-			}
-		    else if ([self.requestsArray indexOfObject:request] == 1) {
+			} else if ([self.requestsArray indexOfObject:request] == 1) {
 		        [self setAstronomyResponseData:data];
 		        [self parseAstronomyJSON];
-			}
+			} else if ([self.requestsArray indexOfObject:request] == 2) {
+                [self setHourlyWeatherResponseData:data];
+                [self parseHourlyWeatherJSON];
+            }
 		    outstandingRequests--;
 		    if (outstandingRequests == 0) [self formatViewForWeather];
 		}];
@@ -169,14 +201,25 @@
 	[self.requestsArray addObject:request];
 }
 
+- (void)makeHourlyWeatherRequestWithLocation:(NSString *)location {
+	// encode city search for URL and make URL request
+	NSString *hourlyRequest = [NSString stringWithFormat:@"http://api.wunderground.com/api/f29e980ec760f4cc/hourly/q/CA/San_Francisco.json"];
+	NSURL *apiURL = [NSURL URLWithString:hourlyRequest];
+	NSURLRequest *request = [[NSURLRequest alloc] initWithURL:apiURL];
+	[self.requestsArray addObject:request];
+}
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark - Data Parsing
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 - (void)parseCurrentWeatherJSON {
 	// parse JSON, ensure that all fields we need are populated
+    
 	NSError *error;
-	NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:self.currentWeatherResponseData options:kNilOptions error:&error];
+	NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:self.currentWeatherResponseData
+                                                         options:kNilOptions
+                                                           error:&error];
 	NSLog(@"parsed current weather json:\n%@", dict);
 
 	if (dict) {
@@ -199,7 +242,9 @@
 - (void)parseAstronomyJSON {
 	// parse JSON, ensure that all fields we need are populated
 	NSError *error;
-	NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:self.astronomyResponseData options:kNilOptions error:&error];
+	NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:self.astronomyResponseData
+                                                         options:kNilOptions
+                                                           error:&error];
 	NSLog(@"parsed astronomy json:\n%@", dict);
 
 	if (dict) {
@@ -213,6 +258,18 @@
 		                                               SunsetHour:[sunsetDict objectForKey:@"hour"]
 		                                             SunsetMinute:[sunsetDict objectForKey:@"minute"]];
 	}
+}
+
+- (void)parseHourlyWeatherJSON {
+    NSError *error;
+    NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:self.hourlyWeatherResponseData
+                                                         options:kNilOptions
+                                                           error:&error];    
+    if (dict) {
+        self.hourlyWeather = [[CLHourlyWeather alloc] initWithJSONDict:dict];
+        [self layoutHourlyScrollView];
+
+    }
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
