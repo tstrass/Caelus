@@ -51,7 +51,10 @@ const unsigned long SUNSET_DURATION = 30;
 - (void)parseAstronomyDict:(NSDictionary *)astronomyDict {
     if (astronomyDict) {
         NSDictionary *sunPhaseDict = [astronomyDict objectForKey:@"sun_phase"];
+        NSDictionary *moonPhaseDict = [astronomyDict objectForKey:@"moon_phase"];
+        
         self.sunPhase = [[CAESunPhase alloc] initWithSunPhaseDict:sunPhaseDict];
+        self.moonPhase = [[CAEMoonPhase alloc] initWithMoonDict:moonPhaseDict];
     }
 }
 
