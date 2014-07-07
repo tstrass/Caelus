@@ -20,6 +20,7 @@
 // UI objects in storyboard
 @property (weak, nonatomic) IBOutlet UILabel *currentLocationLabel;
 @property (weak, nonatomic) IBOutlet UILabel *currentConditionsLabel;
+@property (weak, nonatomic) IBOutlet UILabel *astronomyLabel;
 @property (weak, nonatomic) IBOutlet UIScrollView *hourlyScrollView;
 
 // Requests
@@ -87,6 +88,13 @@
 	[self.currentConditionsLabel setText:[NSString stringWithFormat:@"Current conditions in %@, %@:\n   %d°F\n   Wind: %@\n   %f inches of rain", self.currentConditions.location.city, self.currentConditions.location.stateAbbrev, [self.currentConditions.fTemp intValue], self.currentConditions.windDescription, [self.currentConditions.precipHourIn floatValue]]];
 	[self.currentConditionsLabel setNumberOfLines:4];
 	[self.currentConditionsLabel setFont:[UIFont fontWithName:@"Times New Roman" size:12]];
+}
+
+// temporary: to display raw astronomy data
+- (void)layoutAstronomyLabel {
+    [self.astronomyLabel setText:[NSString stringWithFormat:@"Sunrise: %d:%d\nSunset: %d:%d\nMoon: %@\n            %d%% illuminated\n             %d days old", [self.astronomy.sunPhase.sunriseHour intValue], [self.astronomy.sunPhase.sunriseMinute intValue], [self.astronomy.sunPhase.sunsetHour intValue], [self.astronomy.sunPhase.sunsetMinute intValue], self.astronomy.moonPhase.phase, [self.astronomy.moonPhase.percentIlluminated intValue], [self.astronomy.moonPhase.age intValue]]];
+    [self.astronomyLabel setNumberOfLines:5];
+    [self.astronomyLabel setFont:[UIFont fontWithName:@"Times New Roman" size:12]];
 }
 
 // temporary: to display raw hourly weather data
@@ -225,6 +233,7 @@
 
 	if (dict) {
         self.astronomy = [[CAEAstronomy alloc] initWithAstronomyDict:dict];
+        [self layoutAstronomyLabel];
 	}
 }
 

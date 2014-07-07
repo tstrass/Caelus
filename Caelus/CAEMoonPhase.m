@@ -10,11 +10,11 @@
 
 @implementation CAEMoonPhase
 - (id)initWithMoonDict:(NSDictionary *)moonDict {
-    self = [super init];
-    if (self) {
-        [self parseMoonDict:moonDict];
-    }
-    return self;
+	self = [super init];
+	if (self) {
+		[self parseMoonDict:moonDict];
+	}
+	return self;
 }
 
 /**
@@ -25,10 +25,11 @@
  *                       the response data from the weather underground API astronomy feature
  */
 - (void)parseMoonDict:(NSDictionary *)moonDict {
-    if (moonDict) {
-        [self setAge:[moonDict objectForKey:@"moon_phase"]];
-        [self setPercentIlluminated:[moonDict objectForKey:@"percentIlluminated"]];
-        [self setPhase:[moonDict objectForKey:@"Waxing Gibbous"]];
-    }
+	if (moonDict) {
+		[self setAge:[moonDict objectForKey:@"moon_phase"]];
+		[self setPercentIlluminated:[moonDict objectForKey:@"percentIlluminated"]];
+		[self setPhase:[moonDict objectForKey:@"phaseofMoon"]];
+	}
 }
+
 @end
