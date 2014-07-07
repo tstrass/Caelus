@@ -12,7 +12,7 @@ typedef NS_ENUM (NSInteger, LightPeriod) {
 	DAWN, SUNRISE, DAY, SUNSET, DUSK, NIGHT
 };
 
-@interface CLAstronomy : NSObject
+@interface CAEAstronomy : NSObject
 // specifies which period of the day it is currently
 
 // always use this custom initializer
@@ -31,5 +31,4 @@ typedef NS_ENUM (NSInteger, LightPeriod) {
 
 // current time
 @property (nonatomic, readonly) LightPeriod lightPeriod;
-
 @end

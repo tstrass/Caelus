@@ -8,10 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-@class CLDetailViewController;
+@class CAEDetailViewController;
 
-@interface CLMasterViewController : UITableViewController
+@interface CAEMasterViewController : UITableViewController
 
-@property (strong, nonatomic) CLDetailViewController *detailViewController;
+@property (strong, nonatomic) CAEDetailViewController *detailViewController;
 
 @end

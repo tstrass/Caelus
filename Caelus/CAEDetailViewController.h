@@ -8,10 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import <CoreLocation/CoreLocation.h>
-typedef void(^weatherParsingComplete)(BOOL);
-typedef void(^astronomyParsingComplete)(BOOL);
+typedef void (^weatherParsingComplete)(BOOL);
+typedef void (^astronomyParsingComplete)(BOOL);
 
-@interface CLDetailViewController : UIViewController <UISplitViewControllerDelegate, NSURLConnectionDelegate, CLLocationManagerDelegate>
+@interface CAEDetailViewController : UIViewController <UISplitViewControllerDelegate, NSURLConnectionDelegate, CLLocationManagerDelegate>
 
 @property (strong, nonatomic) id detailItem;
 

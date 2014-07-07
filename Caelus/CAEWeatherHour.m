@@ -5,10 +5,11 @@
 //  Created by Tom on 7/2/14.
 //  Copyright (c) 2014 Enterprise Holdings, Inc. All rights reserved.
 //
-#import "CLWeatherHour.h"
+#import "CAEWeatherHour.h"
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-@implementation CLWeatherHour
+@implementation CAEWeatherHour
+
 - (id)initWithHourDict:(NSDictionary *)hourDict {
 	self = [super init];
 	if (self) {
