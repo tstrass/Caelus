@@ -5,10 +5,10 @@
 //  Created by Tom on 7/7/14.
 //  Copyright (c) 2014 Enterprise Holdings, Inc. All rights reserved.
 //
-#import "CLLocationData.h"
+#import "CAELocationData.h"
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-@implementation CLLocationData
+@implementation CAELocationData
 
 - (id)initWithLocationDict:(NSDictionary *)locationDict {
 	self = [super init];

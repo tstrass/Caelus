@@ -13,7 +13,7 @@
  *  contain information about current weather conditions in a certain place. This dictionary needs to be from the
  *  weather underground conditions feature.
  */
-@interface CLLocationData : NSObject
+@interface CAELocationData : NSObject
 /**
  *  Custom initializer- should only be used if locationDict is the "display_location" dictionary parsed out of the
  *  weather underground API conditions response.
