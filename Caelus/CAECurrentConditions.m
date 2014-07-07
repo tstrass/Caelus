@@ -6,9 +6,9 @@
 //  Copyright (c) 2014 Enterprise Holdings, Inc. All rights reserved.
 //
 
-#import "CLCurrentConditions.h"
+#import "CAECurrentConditions.h"
 
-@implementation CLCurrentConditions
+@implementation CAECurrentConditions
 
 - (id)initWithJSONDict:(NSDictionary *)dict {
 	self = [super init];
@@ -28,7 +28,7 @@
 	NSDictionary *currentObservation = [dict objectForKey:@"current_observation"];
 	NSDictionary *displayLocation = [currentObservation objectForKey:@"display_location"];
 
-	self.location = [[CLLocationData alloc] initWithLocationDict:displayLocation];
+	self.location = [[CAELocationData alloc] initWithLocationDict:displayLocation];
 
 	[self setFTemp:[currentObservation objectForKey:@"temp_f"]];
 	[self setCTemp:[currentObservation objectForKey:@"temp_c"]];

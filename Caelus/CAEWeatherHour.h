@@ -15,7 +15,7 @@
  *
  *  This object holds various fields describing weather conditions for an individual hour.
  */
-@interface CLWeatherHour : NSObject
+@interface CAEWeatherHour : NSObject
 // custom initializer
 - (id)initWithHourDict:(NSDictionary *)hourDict;                // hourDict has to be from weather underground API
 

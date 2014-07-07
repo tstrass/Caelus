@@ -5,15 +5,15 @@
 //  Created by Thomas Strassner on 6/20/14.
 //  Copyright (c) 2014 Enterprise Holdings, Inc. All rights reserved.
 //
-#import "CLDetailViewController.h"
+#import "CAEDetailViewController.h"
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // Model
-#import "CLCurrentConditions.h"
-#import "CLAstronomy.h"
-#import "CLHourlyWeather.h"
+#import "CAECurrentConditions.h"
+#import "CAEAstronomy.h"
+#import "CAEHourlyWeather.h"
 
-@interface CLDetailViewController ()
+@interface CAEDetailViewController ()
 @property (strong, nonatomic) UIPopoverController *masterPopoverController;
 - (void)configureView;
 
@@ -27,23 +27,23 @@
 
 // Current weather data
 @property (strong, nonatomic) NSData *currentConditionsResponseData;
-@property (strong, nonatomic) CLCurrentConditions *currentConditions;
+@property (strong, nonatomic) CAECurrentConditions *currentConditions;
 
 // Astronomy data
 @property (strong, nonatomic) NSData *astronomyResponseData;
 @property (strong, nonatomic) NSDictionary *sunDict;
-@property (strong, nonatomic) CLAstronomy *astronomy;
+@property (strong, nonatomic) CAEAstronomy *astronomy;
 
 // Hourly weather data
 @property (strong, nonatomic) NSData *hourlyWeatherResponseData;
-@property (strong, nonatomic) CLHourlyWeather *hourlyWeather;
+@property (strong, nonatomic) CAEHourlyWeather *hourlyWeather;
 
 // Geolocation
 @property (strong, nonatomic) CLLocationManager *locationManager;
 @property (strong, nonatomic) NSString *location;
 @end
 
-@implementation CLDetailViewController
+@implementation CAEDetailViewController
 
 #define DUSK_MINUTE = self.sunsetMinuteTime + 30;
 #define DAWN_MINUTE = self.sunriseMinuteTime - 30;
@@ -85,9 +85,9 @@
 
 // temporary: to display raw current conditions weather data
 - (void)layoutCurrentConditionsLabel {
-    [self.currentConditionsLabel setText:[NSString stringWithFormat:@"Current conditions in %@, %@:\n  %d°F, %@, %f inches of rain", self.currentConditions.location.city, self.currentConditions.location.stateAbbrev, [self.currentConditions.fTemp intValue], self.currentConditions.windDescription, [self.currentConditions.precipHourIn floatValue]]];
-    [self.currentConditionsLabel setNumberOfLines:2];
-    [self.currentConditionsLabel setFont:[UIFont fontWithName:@"Times New Roman" size:12]];
+	[self.currentConditionsLabel setText:[NSString stringWithFormat:@"Current conditions in %@, %@:\n   %d°F\n   Wind: %@\n   %f inches of rain", self.currentConditions.location.city, self.currentConditions.location.stateAbbrev, [self.currentConditions.fTemp intValue], self.currentConditions.windDescription, [self.currentConditions.precipHourIn floatValue]]];
+	[self.currentConditionsLabel setNumberOfLines:4];
+	[self.currentConditionsLabel setFont:[UIFont fontWithName:@"Times New Roman" size:12]];
 }
 
 // temporary: to display raw hourly weather data
@@ -95,7 +95,7 @@
 	[self.hourlyScrollView setBackgroundColor:[UIColor whiteColor]];
 	CGFloat labelWidth = self.hourlyScrollView.frame.size.width - 10;
 	int counter = 0;
-	for (CLWeatherHour *weatherHour in self.hourlyWeather.weatherHours) {
+	for (CAEWeatherHour *weatherHour in self.hourlyWeather.weatherHours) {
 		UILabel *hourLabel = [[UILabel alloc] init];
 		[hourLabel setNumberOfLines:2];
 		[hourLabel setText:[NSString stringWithFormat:@"%@ %ld:00\n  %lu°F, %@ (%lu%% cloudy)", weatherHour.weekdayNameAbbrev, (long)weatherHour.hour, (long)weatherHour.temp, weatherHour.condition, (long)weatherHour.cloudCover]];
@@ -117,27 +117,9 @@
 	[self.currentLocationLabel setMinimumScaleFactor:0.3];
 }
 
-- (void)layoutTempLabel {
-	// make sure that we have a location and a temperature, alert user if not
-	if ([self.location isEqual:@""]) {
-		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"Error: City name is invalid" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-		[alert show];
-	}
-	else if (!self.currentConditions.fTemp) {
-		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:[NSString stringWithFormat:@"Error: Could not retrieve temperature for %@", self.location] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-		[alert show];
-	}
-	else {
-		[self.currentConditionsLabel setText:[NSString stringWithFormat:@"Current temperature in %@ is %d°F", self.location, [self.currentConditions.fTemp intValue]]];
-		[self.currentConditionsLabel setAdjustsFontSizeToFitWidth:YES];
-		[self.currentConditionsLabel setMinimumScaleFactor:0.3];
-	}
-}
-
 - (void)formatViewForWeather {
 	[UIView animateWithDuration:1.0 animations: ^{
 	    [self.view setBackgroundColor:[self backgroundColorFromWeatherData]];
-	    //[self layoutTempLabel];
 	}];
 }
 
@@ -229,8 +211,8 @@
 	NSLog(@"parsed current weather json:\n%@", dict);
 
 	if (dict) {
-		self.currentConditions = [[CLCurrentConditions alloc] initWithJSONDict:dict];
-        [self layoutCurrentConditionsLabel];
+		self.currentConditions = [[CAECurrentConditions alloc] initWithJSONDict:dict];
+		[self layoutCurrentConditionsLabel];
 	}
 }
 
@@ -248,10 +230,10 @@
 		NSDictionary *sunriseDict = [self.sunDict objectForKey:@"sunrise"];
 		NSDictionary *sunsetDict = [self.sunDict objectForKey:@"sunset"];
 
-		self.astronomy = [[CLAstronomy alloc] initWithSunriseHour:[sunriseDict objectForKey:@"hour"]
-		                                            SunriseMinute:[sunriseDict objectForKey:@"minute"]
-		                                               SunsetHour:[sunsetDict objectForKey:@"hour"]
-		                                             SunsetMinute:[sunsetDict objectForKey:@"minute"]];
+		self.astronomy = [[CAEAstronomy alloc] initWithSunriseHour:[sunriseDict objectForKey:@"hour"]
+		                                             SunriseMinute:[sunriseDict objectForKey:@"minute"]
+		                                                SunsetHour:[sunsetDict objectForKey:@"hour"]
+		                                              SunsetMinute:[sunsetDict objectForKey:@"minute"]];
 	}
 }
 
@@ -261,7 +243,7 @@
 	                                                     options:kNilOptions
 	                                                       error:&error];
 	if (dict) {
-		self.hourlyWeather = [[CLHourlyWeather alloc] initWithJSONDict:dict];
+		self.hourlyWeather = [[CAEHourlyWeather alloc] initWithJSONDict:dict];
 		[self layoutHourlyScrollView];
 	}
 }
