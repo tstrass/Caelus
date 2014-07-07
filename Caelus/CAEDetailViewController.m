@@ -1,5 +1,5 @@
 //
-//  CLDetailViewController.m
+//  CAEDetailViewController.m
 //  Caelus
 //
 //  Created by Thomas Strassner on 6/20/14.

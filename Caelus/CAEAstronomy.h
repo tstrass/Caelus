@@ -1,5 +1,5 @@
 //
-//  CLAstronomy.h
+//  CAEAstronomy.h
 //  Caelus
 //
 //  Created by Thomas Strassner on 7/1/14.

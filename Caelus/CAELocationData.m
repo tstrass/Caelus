@@ -1,5 +1,5 @@
 //
-//  CLLocation.m
+//  CAELocationData.m
 //  Caelus
 //
 //  Created by Tom on 7/7/14.

@@ -1,5 +1,5 @@
 //
-//  CLHourlyWeather.m
+//  CAEHourlyWeather.m
 //  Caelus
 //
 //  Created by Tom on 7/2/14.
@@ -19,7 +19,7 @@
 }
 
 /**
- *  Parse the array of weather hour dictionaries out of the response dictionary, send each hour to CLWeatherHour and
+ *  Parse the array of weather hour dictionaries out of the response dictionary, send each hour to CAEWeatherHour and
  *  create the array.
  *
  *  @param dict needs to be the response from weather underground API hourly feature
