@@ -73,7 +73,7 @@ const unsigned long SUNSET_DURATION = 30;
 
 - (void)updateCurrentMinuteTime {
 	NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-	[dateFormatter setDateFormat:@"HH"];
+	[dateFormatter setDateFormat:@"kk"];
 	NSInteger hour = [[dateFormatter stringFromDate:[NSDate date]] intValue];
 
 	[dateFormatter setDateFormat:@"mm"];
