@@ -8,26 +8,17 @@
 
 #import <Foundation/Foundation.h>
 
+#import "CAESunPhase.h"
+
 typedef NS_ENUM (NSInteger, LightPeriod) {
 	DAWN, SUNRISE, DAY, SUNSET, DUSK, NIGHT
 };
 
 @interface CAEAstronomy : NSObject
-// specifies which period of the day it is currently
-
 // always use this custom initializer
-- (id)initWithSunriseHour:(NSNumber *)riseHour
-            SunriseMinute:(NSNumber *)riseMinute
-               SunsetHour:(NSNumber *)setHour
-             SunsetMinute:(NSNumber *)setMinute;
+- (id)initWithAstronomyDict:(NSDictionary *)astronomyDict;
 
-// sunrise
-@property (strong, nonatomic) NSNumber *sunriseHour;
-@property (strong, nonatomic) NSNumber *sunriseMinute;
-
-// sunset
-@property (strong, nonatomic) NSNumber *sunsetHour;
-@property (strong, nonatomic) NSNumber *sunsetMinute;
+@property (strong, nonatomic)CAESunPhase *sunPhase;
 
 // current time
 @property (nonatomic, readonly) LightPeriod lightPeriod;

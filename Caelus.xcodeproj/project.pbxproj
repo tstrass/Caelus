@@ -13,6 +13,7 @@
 		E2B95EC41958B084008528D4 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2B95EC31958B084008528D4 /* CoreLocation.framework */; };
 		E2CE3CD1196AE30A00E9D07B /* CAECurrentConditions.m in Sources */ = {isa = PBXBuildFile; fileRef = E2CE3CD0196AE30A00E9D07B /* CAECurrentConditions.m */; };
 		E2CE3CD4196AF3CA00E9D07B /* CAELocationData.m in Sources */ = {isa = PBXBuildFile; fileRef = E2CE3CD3196AF3CA00E9D07B /* CAELocationData.m */; };
+		E2CE3CD7196B317300E9D07B /* CAESunPhase.m in Sources */ = {isa = PBXBuildFile; fileRef = E2CE3CD6196B317300E9D07B /* CAESunPhase.m */; };
 		E2E1EEEE1954BB9600A0B541 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2E1EEED1954BB9600A0B541 /* Foundation.framework */; };
 		E2E1EEF01954BB9600A0B541 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2E1EEEF1954BB9600A0B541 /* CoreGraphics.framework */; };
 		E2E1EEF21954BB9600A0B541 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2E1EEF11954BB9600A0B541 /* UIKit.framework */; };
@@ -54,6 +55,8 @@
 		E2CE3CD0196AE30A00E9D07B /* CAECurrentConditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CAECurrentConditions.m; sourceTree = "<group>"; };
 		E2CE3CD2196AF3CA00E9D07B /* CAELocationData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAELocationData.h; sourceTree = "<group>"; };
 		E2CE3CD3196AF3CA00E9D07B /* CAELocationData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CAELocationData.m; sourceTree = "<group>"; };
+		E2CE3CD5196B317300E9D07B /* CAESunPhase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAESunPhase.h; sourceTree = "<group>"; };
+		E2CE3CD6196B317300E9D07B /* CAESunPhase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CAESunPhase.m; sourceTree = "<group>"; };
 		E2E1EEEA1954BB9600A0B541 /* Caelus.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Caelus.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E2E1EEED1954BB9600A0B541 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		E2E1EEEF1954BB9600A0B541 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -116,6 +119,8 @@
 				E2CE3CD0196AE30A00E9D07B /* CAECurrentConditions.m */,
 				E2CE3CD2196AF3CA00E9D07B /* CAELocationData.h */,
 				E2CE3CD3196AF3CA00E9D07B /* CAELocationData.m */,
+				E2CE3CD5196B317300E9D07B /* CAESunPhase.h */,
+				E2CE3CD6196B317300E9D07B /* CAESunPhase.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -304,6 +309,7 @@
 				E2E1EEFA1954BB9600A0B541 /* main.m in Sources */,
 				E2CE3CD1196AE30A00E9D07B /* CAECurrentConditions.m in Sources */,
 				E2E1EF071954BB9600A0B541 /* CAEMasterViewController.m in Sources */,
+				E2CE3CD7196B317300E9D07B /* CAESunPhase.m in Sources */,
 				E2E1EEFE1954BB9600A0B541 /* CAEAppDelegate.m in Sources */,
 				E2CE3CD4196AF3CA00E9D07B /* CAELocationData.m in Sources */,
 				E29571F91964A3D4009B725C /* CAEWeatherHour.m in Sources */,

@@ -31,7 +31,6 @@
 
 // Astronomy data
 @property (strong, nonatomic) NSData *astronomyResponseData;
-@property (strong, nonatomic) NSDictionary *sunDict;
 @property (strong, nonatomic) CAEAstronomy *astronomy;
 
 // Hourly weather data
@@ -225,15 +224,7 @@
 	NSLog(@"parsed astronomy json:\n%@", dict);
 
 	if (dict) {
-		[self setSunDict:[dict objectForKey:@"sun_phase"]]; // We're only interested in data about the sun
-
-		NSDictionary *sunriseDict = [self.sunDict objectForKey:@"sunrise"];
-		NSDictionary *sunsetDict = [self.sunDict objectForKey:@"sunset"];
-
-		self.astronomy = [[CAEAstronomy alloc] initWithSunriseHour:[sunriseDict objectForKey:@"hour"]
-		                                             SunriseMinute:[sunriseDict objectForKey:@"minute"]
-		                                                SunsetHour:[sunsetDict objectForKey:@"hour"]
-		                                              SunsetMinute:[sunsetDict objectForKey:@"minute"]];
+        self.astronomy = [[CAEAstronomy alloc] initWithAstronomyDict:dict];
 	}
 }
 
@@ -258,7 +249,7 @@
  *  @return background color
  */
 - (UIColor *)backgroundColorFromWeatherData {
-	NSLog(@"Determining background color with temp:%d, sunrise:%d:%d, sunset:%d:%d", [self.currentConditions.fTemp intValue], [self.astronomy.sunriseHour intValue], [self.astronomy.sunriseMinute intValue], [self.astronomy.sunsetHour intValue], [self.astronomy.sunsetMinute intValue]);
+	NSLog(@"Determining background color with temp:%d, sunrise:%d:%d, sunset:%d:%d", [self.currentConditions.fTemp intValue], [self.astronomy.sunPhase.sunriseHour intValue], [self.astronomy.sunPhase.sunriseMinute intValue], [self.astronomy.sunPhase.sunsetHour intValue], [self.astronomy.sunPhase.sunsetMinute intValue]);
 
 	UIColor *backgroundColor = [[UIColor alloc] init];
 
