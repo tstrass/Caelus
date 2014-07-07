@@ -37,29 +37,29 @@ const unsigned long SUNSET_DURATION = 30;
 	return self;
 }
 
-- (id)initWithSunriseHour:(NSNumber *)riseHour
-            SunriseMinute:(NSNumber *)riseMinute
-               SunsetHour:(NSNumber *)setHour
-             SunsetMinute:(NSNumber *)setMinute {
-	self = [super init];
-	if (self) {
-		[self updateCurrentMinuteTime];
-		[self setSunriseHour:riseHour];
-		[self setSunriseMinute:riseMinute];
-		[self setSunsetHour:setHour];
-		[self setSunsetMinute:setMinute];
+- (id)initWithAstronomyDict:(NSDictionary *)astronomyDict {
+    self = [super init];
+    if (self) {
+        [self updateCurrentMinuteTime];
+        [self parseAstronomyDict:astronomyDict];
+        [self calcLightPeriodIntervals];
+        [self calcCurrentLightPeriod];
+    }
+    return self;
+}
 
-		[self calcLightPeriodIntervals];
-		[self calcCurrentLightPeriod];
-	}
-	return self;
+- (void)parseAstronomyDict:(NSDictionary *)astronomyDict {
+    if (astronomyDict) {
+        NSDictionary *sunPhaseDict = [astronomyDict objectForKey:@"sun_phase"];
+        self.sunPhase = [[CAESunPhase alloc] initWithSunPhaseDict:sunPhaseDict];
+    }
 }
 
 - (void)calcLightPeriodIntervals {
-	[self setSunriseMinuteTime:[self minuteTimeFromHour:[self.sunriseHour intValue]
-	                                             Minute:[self.sunriseMinute intValue]]];
-	[self setSunsetMinuteTime:[self minuteTimeFromHour:[self.sunsetHour intValue]
-	                                            Minute:[self.sunsetMinute intValue]]];
+	[self setSunriseMinuteTime:[self minuteTimeFromHour:[self.sunPhase.sunriseHour intValue]
+	                                             Minute:[self.sunPhase.sunriseMinute intValue]]];
+	[self setSunsetMinuteTime:[self minuteTimeFromHour:[self.sunPhase.sunsetHour intValue]
+	                                            Minute:[self.sunPhase.sunsetMinute intValue]]];
 	[self setDawnMinuteTime:self.sunriseMinuteTime - DAWN_DURATION];
 	[self setDayMinuteTime:self.sunriseMinuteTime + SUNRISE_DURATION];
 	[self setSunsetMinuteTime:self.sunsetMinuteTime - SUNSET_DURATION];
