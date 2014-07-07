@@ -8,14 +8,13 @@
 
 #import <Foundation/Foundation.h>
 
-#import "CLWeatherHour.h"
+#import "CAEWeatherHour.h"
 
 /**
  *  The CLHourlyWeather object should be initialized using the custom initializer. The dictionary needs to be from
  *  the weather underground API hourly weather feature.
  */
-@interface CLHourlyWeather : NSObject
-
+@interface CAEHourlyWeather : NSObject
 - (id)initWithJSONDict:(NSDictionary *)dict;                //dict needs to be serialized JSON
 
 @property (strong, nonatomic) NSArray *weatherHours;        // Array of type CLWeatherHour *

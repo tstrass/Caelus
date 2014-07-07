@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface CLAppDelegate : UIResponder <UIApplicationDelegate>
+@interface CAEAppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 
