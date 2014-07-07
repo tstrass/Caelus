@@ -34,7 +34,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lSO-ft-mzW">
-                                <rect key="frame" x="20" y="49" width="280" height="21"/>
+                                <rect key="frame" x="20" y="49" width="280" height="74"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -47,7 +47,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GlV-iD-YS7">
-                                <rect key="frame" x="40" y="78" width="240" height="470"/>
+                                <rect key="frame" x="40" y="131" width="240" height="417"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             </scrollView>
                         </subviews>
@@ -55,9 +55,9 @@
                     </view>
                     <navigationItem key="navigationItem" title="Detail" id="cra-N8-TIN"/>
                     <connections>
+                        <outlet property="currentConditionsLabel" destination="lSO-ft-mzW" id="nYl-KM-IQv"/>
                         <outlet property="currentLocationLabel" destination="cO3-Yo-0zk" id="b51-vm-DRv"/>
                         <outlet property="hourlyScrollView" destination="GlV-iD-YS7" id="1YJ-dq-mPc"/>
-                        <outlet property="tempLabel" destination="lSO-ft-mzW" id="aQf-DZ-lVn"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lrm-kH-fPn" sceneMemberID="firstResponder"/>
