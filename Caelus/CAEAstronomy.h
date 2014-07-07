@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 
 #import "CAESunPhase.h"
+#import "CAEMoonPhase.h"
 
 typedef NS_ENUM (NSInteger, LightPeriod) {
 	DAWN, SUNRISE, DAY, SUNSET, DUSK, NIGHT
@@ -19,6 +20,7 @@ typedef NS_ENUM (NSInteger, LightPeriod) {
 - (id)initWithAstronomyDict:(NSDictionary *)astronomyDict;
 
 @property (strong, nonatomic)CAESunPhase *sunPhase;
+@property (strong, nonatomic)CAEMoonPhase *moonPhase;
 
 // current time
 @property (nonatomic, readonly) LightPeriod lightPeriod;
