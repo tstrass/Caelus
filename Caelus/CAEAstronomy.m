@@ -1,5 +1,5 @@
 //
-//  CLAstronomy.m
+//  CAEAstronomy.m
 //  Caelus
 //
 //  Created by Thomas Strassner on 7/1/14.

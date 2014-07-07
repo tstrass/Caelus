@@ -1,5 +1,5 @@
 //
-//  CLWeatherHour.h
+//  CAEWeatherHour.h
 //  Caelus
 //
 //  Created by Tom on 7/2/14.
@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 
 /**
- *  A CLWeatherHour object should be initialized using the custom initializer. The NSDictionary it expects should be
+ *  A CAEWeatherHour object should be initialized using the custom initializer. The NSDictionary it expects should be
  *  a dictionary containing information about an individual hour of weather, parsed out of the weather underground API
  *  response for hourly weather.
  *

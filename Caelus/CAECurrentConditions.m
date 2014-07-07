@@ -1,5 +1,5 @@
 //
-//  CLCurrentConditions.m
+//  CAECurrentConditions.m
 //  Caelus
 //
 //  Created by Tom on 7/7/14.
@@ -20,7 +20,7 @@
 
 /**
  *  Parse the conditions dictionary from weather underground API for information we are interested in. Set the
- *  corresponding public properties. Send the contained location dictionary to the CLLocation object.
+ *  corresponding public properties. Send the contained location dictionary to the CAELocationData object.
  *
  *  @param dict needs to be the response from weather underground API conditions feature.
  */

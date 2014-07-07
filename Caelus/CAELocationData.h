@@ -1,5 +1,5 @@
 //
-//  CLLocation.h
+//  CAELocationData.h
 //  Caelus
 //
 //  Created by Tom on 7/7/14.
@@ -9,8 +9,8 @@
 #import <Foundation/Foundation.h>
 
 /**
- *  A CLCurrentConditions object should be initialized using the custom initializer. The NSDictionary it expects should
- *  contain information about current weather conditions in a certain place. This dictionary needs to be from the
+ *  A CAELocationData object should be initialized using the custom initializer. The NSDictionary it expects should
+ *  contain information about a specific location. This dictionary needs to be from the display_location field of the
  *  weather underground conditions feature.
  */
 @interface CAELocationData : NSObject
