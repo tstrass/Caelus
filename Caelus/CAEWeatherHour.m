@@ -26,16 +26,14 @@
  *                  out of the response data from the weather underground API hourly weather feature
  */
 - (void)parseHourDict:(NSDictionary *)hourDict {
-    if (hourDict) {
-        NSDictionary *timeDict = [hourDict objectForKey:@"FCTTIME"];
-        NSDictionary *tempDict = [hourDict objectForKey:@"temp"];
-        
-        self.hour = [[timeDict objectForKey:@"hour"] integerValue];
-        self.weekdayNameAbbrev = [timeDict objectForKey:@"weekday_name_abbrev"];
-        self.temp = [[tempDict objectForKey:@"english"] integerValue];
-        self.condition = [hourDict objectForKey:@"condition"];
-        self.cloudCover = [[hourDict objectForKey:@"sky"] integerValue];
-    }
+    NSDictionary *timeDict = [hourDict objectForKey:@"FCTTIME"];
+    NSDictionary *tempDict = [hourDict objectForKey:@"temp"];
+    
+    self.hour = [[timeDict objectForKey:@"hour"] integerValue];
+    self.weekdayNameAbbrev = [timeDict objectForKey:@"weekday_name_abbrev"];
+    self.temp = [[tempDict objectForKey:@"english"] integerValue];
+    self.condition = [hourDict objectForKey:@"condition"];
+    self.cloudCover = [[hourDict objectForKey:@"sky"] integerValue];
 }
 
 @end

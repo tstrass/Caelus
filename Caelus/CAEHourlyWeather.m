@@ -25,19 +25,17 @@
  *  @param hourlyDict needs to be the response from weather underground API hourly feature
  */
 - (void)parseHourlyDict:(NSDictionary *)hourlyDict {
-    if (hourlyDict) {
-        NSDictionary *hourlyForecastDict = [hourlyDict objectForKey:@"hourly_forecast"];
+    NSDictionary *hourlyForecastDict = [hourlyDict objectForKey:@"hourly_forecast"];
         
-        if (hourlyForecastDict) {
-            NSMutableArray *weatherHours = [[NSMutableArray alloc] init];
+    if (hourlyForecastDict) {
+        NSMutableArray *weatherHours = [[NSMutableArray alloc] initWithCapacity:hourlyForecastDict.count];
             
-            // send each weather hour dictionary to CLWeatherHour for parsing, then add it to the array
-            for (NSDictionary *hourDict in hourlyForecastDict) {
-                CAEWeatherHour *weatherHour = [[CAEWeatherHour alloc] initWithHourDict:hourDict];
-                [weatherHours addObject:weatherHour];
-            }
-            self.weatherHours = [[NSArray alloc] initWithArray:weatherHours];
+        // send each weather hour dictionary to CLWeatherHour for parsing, then add it to the array
+        for (NSDictionary *hourDict in hourlyForecastDict) {
+            CAEWeatherHour *weatherHour = [[CAEWeatherHour alloc] initWithHourDict:hourDict];
+            [weatherHours addObject:weatherHour];
         }
+        self.weatherHours = [[NSArray alloc] initWithArray:weatherHours];
     }
 }
 
