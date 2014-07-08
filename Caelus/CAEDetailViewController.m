@@ -40,7 +40,7 @@
 
 // Geolocation
 @property (strong, nonatomic) CLLocationManager *locationManager;
-@property (strong, nonatomic) NSString *location;
+@property (strong, nonatomic) NSString *geolocation;
 @end
 
 @implementation CAEDetailViewController
@@ -63,10 +63,10 @@
 - (void)viewDidLoad {
 	[super viewDidLoad];
 	[self configureView];
-//    self.locationManager = [[CLLocationManager alloc]init];
-//    [self.locationManager setDelegate:self];
-//    [self.locationManager setDesiredAccuracy:kCLLocationAccuracyBest];
-//    [self.locationManager startUpdatingLocation];
+    self.locationManager = [[CLLocationManager alloc]init];
+    [self.locationManager setDelegate:self];
+    [self.locationManager setDesiredAccuracy:kCLLocationAccuracyBest];
+    [self.locationManager startUpdatingLocation];
 
 	self.requestsArray = [[NSMutableArray alloc] init];
 
@@ -119,7 +119,8 @@
 }
 
 - (void)formatLocationLabel {
-	self.currentLocationLabel.text = [NSString stringWithFormat:@"Current Location: %@", self.location];
+	self.currentLocationLabel.text = [NSString stringWithFormat:@"Current Location: %@", self.geolocation];
+    self.currentLocationLabel.font = [UIFont fontWithName:@"Times New Roman" size:12];
 	self.currentLocationLabel.adjustsFontSizeToFitWidth = YES;
 	self.currentLocationLabel.minimumScaleFactor = 0.3;
 }
@@ -140,9 +141,9 @@
 	// get the city name from the location found by the Location Manager
 	CLGeocoder *geoCoder = [[CLGeocoder alloc] init];
 	[geoCoder reverseGeocodeLocation:[locations lastObject] completionHandler: ^(NSArray *placemarks, NSError *error) {
-	    self.location = (placemarks.count > 0) ? [[placemarks objectAtIndex:0] locality] : @"Not Found";
+	    [self setGeolocation:(placemarks.count > 0) ? [[placemarks objectAtIndex:0] locality] : @"Not Found"];
 	    [self formatLocationLabel];
-	    if (![self.location isEqualToString:@"Not Found"]) [self makeCurrentConditionsRequestWithLocation:self.location];
+	    //if (![self.location isEqualToString:@"Not Found"]) [self makeCurrentConditionsRequestWithLocation:self.location];
 	}];
 }
 
