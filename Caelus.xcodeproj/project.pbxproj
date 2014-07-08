@@ -45,11 +45,11 @@
 
 /* Begin PBXFileReference section */
 		E20001A619630E3B007659E3 /* CAEAstronomy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAEAstronomy.h; sourceTree = "<group>"; };
-		E20001A719630E3B007659E3 /* CAEAstronomy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CAEAstronomy.m; sourceTree = "<group>"; };
+		E20001A719630E3B007659E3 /* CAEAstronomy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CAEAstronomy.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		E29571F41964A1B1009B725C /* CAEHourlyWeather.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAEHourlyWeather.h; sourceTree = "<group>"; };
 		E29571F51964A1B1009B725C /* CAEHourlyWeather.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CAEHourlyWeather.m; sourceTree = "<group>"; };
 		E29571F71964A3D4009B725C /* CAEWeatherHour.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAEWeatherHour.h; sourceTree = "<group>"; };
-		E29571F81964A3D4009B725C /* CAEWeatherHour.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CAEWeatherHour.m; sourceTree = "<group>"; };
+		E29571F81964A3D4009B725C /* CAEWeatherHour.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CAEWeatherHour.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		E2B95EC31958B084008528D4 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		E2B95EC51958B4AF008528D4 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		E2CE3CCF196AE30A00E9D07B /* CAECurrentConditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAECurrentConditions.h; sourceTree = "<group>"; };
@@ -75,7 +75,7 @@
 		E2E1EF051954BB9600A0B541 /* CAEMasterViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CAEMasterViewController.h; sourceTree = "<group>"; };
 		E2E1EF061954BB9600A0B541 /* CAEMasterViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CAEMasterViewController.m; sourceTree = "<group>"; };
 		E2E1EF081954BB9600A0B541 /* CAEDetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CAEDetailViewController.h; sourceTree = "<group>"; };
-		E2E1EF091954BB9600A0B541 /* CAEDetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CAEDetailViewController.m; sourceTree = "<group>"; };
+		E2E1EF091954BB9600A0B541 /* CAEDetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CAEDetailViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		E2E1EF0B1954BB9600A0B541 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		E2E1EF111954BB9700A0B541 /* CaelusTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CaelusTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E2E1EF121954BB9700A0B541 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
