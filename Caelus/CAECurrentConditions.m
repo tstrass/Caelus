@@ -25,23 +25,21 @@
  *  @param dict needs to be the response from weather underground API conditions feature.
  */
 - (void)parseConditionsDict:(NSDictionary *)conditionsDict {
-    if (conditionsDict) {
-        NSDictionary *currentObservation = [conditionsDict objectForKey:@"current_observation"];
-        NSDictionary *displayLocation = [currentObservation objectForKey:@"display_location"];
-        
-        self.location = [[CAELocationData alloc] initWithLocationDict:displayLocation];
-        
-        self.fTemp = [currentObservation objectForKey:@"temp_f"];
-        self.cTemp = [currentObservation objectForKey:@"temp_c"];
-        
-        self.windSpeedMPH = [currentObservation objectForKey:@"wind_mph"];
-        self.windSpeedKPH = [currentObservation objectForKey:@"wind_kph"];
-        self.windDir = [currentObservation objectForKey:@"wind_dir"];
-        self.windDescription = [currentObservation objectForKey:@"wind_string"];
-        
-        self.precipHourIn = [currentObservation objectForKey:@"precip_1hr_in"];
-        self.precipHourMM = [currentObservation objectForKey:@"precip_1hr_metric"];
-    }
+    NSDictionary *currentObservation = [conditionsDict objectForKey:@"current_observation"];
+    NSDictionary *displayLocation = [currentObservation objectForKey:@"display_location"];
+    
+    self.location = displayLocation ? [[CAELocationData alloc] initWithLocationDict:displayLocation] : nil;
+    
+    self.fTemp = [currentObservation objectForKey:@"temp_f"];
+    self.cTemp = [currentObservation objectForKey:@"temp_c"];
+    
+    self.windSpeedMPH = [currentObservation objectForKey:@"wind_mph"];
+    self.windSpeedKPH = [currentObservation objectForKey:@"wind_kph"];
+    self.windDir = [currentObservation objectForKey:@"wind_dir"];
+    self.windDescription = [currentObservation objectForKey:@"wind_string"];
+    
+    self.precipHourIn = [currentObservation objectForKey:@"precip_1hr_in"];
+    self.precipHourMM = [currentObservation objectForKey:@"precip_1hr_metric"];
 }
 
 @end

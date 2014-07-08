@@ -25,19 +25,14 @@
  *                      response data from the weather underground API astronomy feature
  */
 - (void)parseSunPhaseDict:(NSDictionary *)sunPhaseDict {
-	if (sunPhaseDict) {
-		NSDictionary *sunriseDict = [sunPhaseDict objectForKey:@"sunrise"];
-		NSDictionary *sunsetDict = [sunPhaseDict objectForKey:@"sunset"];
+    NSDictionary *sunriseDict = [sunPhaseDict objectForKey:@"sunrise"];
+    NSDictionary *sunsetDict = [sunPhaseDict objectForKey:@"sunset"];
 
-		if (sunriseDict) {
-			self.sunriseHour = [sunriseDict objectForKey:@"hour"];
-			self.sunriseMinute = [sunriseDict objectForKey:@"minute"];
-		}
-		if (sunsetDict) {
-			self.sunsetHour = [sunsetDict objectForKey:@"hour"];
-			self.sunsetMinute = [sunsetDict objectForKey:@"minute"];
-		}
-	}
+    self.sunriseHour = [sunriseDict objectForKey:@"hour"];
+    self.sunriseMinute = [sunriseDict objectForKey:@"minute"];
+
+    self.sunsetHour = [sunsetDict objectForKey:@"hour"];
+    self.sunsetMinute = [sunsetDict objectForKey:@"minute"];
 }
 
 @end
