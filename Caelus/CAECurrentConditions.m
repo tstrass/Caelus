@@ -31,16 +31,16 @@
         
         self.location = [[CAELocationData alloc] initWithLocationDict:displayLocation];
         
-        [self setFTemp:[currentObservation objectForKey:@"temp_f"]];
-        [self setCTemp:[currentObservation objectForKey:@"temp_c"]];
+        self.fTemp = [currentObservation objectForKey:@"temp_f"];
+        self.cTemp = [currentObservation objectForKey:@"temp_c"];
         
-        [self setWindSpeedMPH:[currentObservation objectForKey:@"wind_mph"]];
-        [self setWindSpeedKPH:[currentObservation objectForKey:@"wind_kph"]];
-        [self setWindDir:[currentObservation objectForKey:@"wind_dir"]];
-        [self setWindDescription:[currentObservation objectForKey:@"wind_string"]];
+        self.windSpeedMPH = [currentObservation objectForKey:@"wind_mph"];
+        self.windSpeedKPH = [currentObservation objectForKey:@"wind_kph"];
+        self.windDir = [currentObservation objectForKey:@"wind_dir"];
+        self.windDescription = [currentObservation objectForKey:@"wind_string"];
         
-        [self setPrecipHourIn:[currentObservation objectForKey:@"precip_1hr_in"]];
-        [self setPrecipHourMM:[currentObservation objectForKey:@"precip_1hr_metric"]];
+        self.precipHourIn = [currentObservation objectForKey:@"precip_1hr_in"];
+        self.precipHourMM = [currentObservation objectForKey:@"precip_1hr_metric"];
     }
 }
 

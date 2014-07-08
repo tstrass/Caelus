@@ -27,14 +27,14 @@
  */
 - (void)parseLocationDict:(NSDictionary *)locationDict {
 	if (locationDict) {
-		[self setCity:[locationDict objectForKey:@"city"]];
-		[self setState:[locationDict objectForKey:@"state_name"]];
-		[self setStateAbbrev:[locationDict objectForKey:@"state"]];
-		[self setFull:[locationDict objectForKey:@"full"]];
-		[self setCountry:[locationDict objectForKey:@"country"]];
-		[self setZip:[locationDict objectForKey:@"zip"]];
-		[self setLat:[locationDict objectForKey:@"latitude"]];
-		[self setLon:[locationDict objectForKey:@"longitude"]];
+		self.city = [locationDict objectForKey:@"city"];
+		self.state = [locationDict objectForKey:@"state_name"];
+		self.stateAbbrev = [locationDict objectForKey:@"state"];
+		self.full = [locationDict objectForKey:@"full"];
+		self.country = [locationDict objectForKey:@"country"];
+		self.zip = [locationDict objectForKey:@"zip"];
+		self.lat = [locationDict objectForKey:@"latitude"];
+		self.lon = [locationDict objectForKey:@"longitude"];
 	}
 }
 
