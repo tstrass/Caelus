@@ -300,7 +300,7 @@
 }
 
 - (NSString *)lightPeriodNameFromEnum {
-    NSString *lightPeriodName = @"";
+    NSString *lightPeriodName;
     switch (self.astronomy.lightPeriod) {
 		case NIGHT:
             lightPeriodName = @"Night";
@@ -321,6 +321,7 @@
             lightPeriodName = @"Dusk";
 			break;
 		default:
+            NSLog(@"Error: object does not have a valid lightPeriod");
 			break;
 	}
     return lightPeriodName;
