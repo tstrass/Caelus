@@ -26,9 +26,9 @@
  */
 - (void)parseMoonDict:(NSDictionary *)moonDict {
 	if (moonDict) {
-		[self setAge:[moonDict objectForKey:@"ageOfMoon"]];
-		[self setPercentIlluminated:[moonDict objectForKey:@"percentIlluminated"]];
-		[self setPhase:[moonDict objectForKey:@"phaseofMoon"]];
+		self.age = [moonDict objectForKey:@"ageOfMoon"];
+		self.percentIlluminated = [moonDict objectForKey:@"percentIlluminated"];
+		self.phase = [moonDict objectForKey:@"phaseofMoon"];
 	}
 }
 

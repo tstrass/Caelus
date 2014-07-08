@@ -30,12 +30,12 @@
 		NSDictionary *sunsetDict = [sunPhaseDict objectForKey:@"sunset"];
 
 		if (sunriseDict) {
-			[self setSunriseHour:[sunriseDict objectForKey:@"hour"]];
-			[self setSunriseMinute:[sunriseDict objectForKey:@"minute"]];
+			self.sunriseHour = [sunriseDict objectForKey:@"hour"];
+			self.sunriseMinute = [sunriseDict objectForKey:@"minute"];
 		}
 		if (sunsetDict) {
-			[self setSunsetHour:[sunsetDict objectForKey:@"hour"]];
-			[self setSunsetMinute:[sunsetDict objectForKey:@"minute"]];
+			self.sunsetHour = [sunsetDict objectForKey:@"hour"];
+			self.sunsetMinute = [sunsetDict objectForKey:@"minute"];
 		}
 	}
 }
