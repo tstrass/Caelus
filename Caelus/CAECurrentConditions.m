@@ -10,10 +10,10 @@
 
 @implementation CAECurrentConditions
 
-- (id)initWithJSONDict:(NSDictionary *)dict {
+- (id)initWithConditionsDict:(NSDictionary *)dict {
 	self = [super init];
 	if (self) {
-		[self parseJSONDict:dict];
+		[self parseConditionsDict:dict];
 	}
 	return self;
 }
@@ -24,9 +24,9 @@
  *
  *  @param dict needs to be the response from weather underground API conditions feature.
  */
-- (void)parseJSONDict:(NSDictionary *)dict {
-    if (dict) {
-        NSDictionary *currentObservation = [dict objectForKey:@"current_observation"];
+- (void)parseConditionsDict:(NSDictionary *)conditionsDict {
+    if (conditionsDict) {
+        NSDictionary *currentObservation = [conditionsDict objectForKey:@"current_observation"];
         NSDictionary *displayLocation = [currentObservation objectForKey:@"display_location"];
         
         self.location = [[CAELocationData alloc] initWithLocationDict:displayLocation];

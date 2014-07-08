@@ -218,7 +218,7 @@
 	NSLog(@"parsed current weather json:\n%@", dict);
 
 	if (dict) {
-		self.currentConditions = [[CAECurrentConditions alloc] initWithJSONDict:dict];
+		self.currentConditions = [[CAECurrentConditions alloc] initWithConditionsDict:dict];
 		[self layoutCurrentConditionsLabel];
 	}
 }
@@ -243,7 +243,7 @@
 	                                                     options:kNilOptions
 	                                                       error:&error];
 	if (dict) {
-		self.hourlyWeather = [[CAEHourlyWeather alloc] initWithJSONDict:dict];
+		self.hourlyWeather = [[CAEHourlyWeather alloc] initWithHourlyDict:dict];
 		[self layoutHourlyScrollView];
 	}
 }

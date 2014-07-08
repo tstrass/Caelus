@@ -9,19 +9,29 @@
 #import <Foundation/Foundation.h>
 
 /**
- *  A CAESunPhase object should be initialized using the custom initializer. The NSDictionary it expects should be
- *  a dictionary containing information about an the sun phase for the day, and it should be parsed out of the weather
- *  underground API response for astronomy data.
+ *  This object holds data about the sun's current phase.
+ *
+ *  It should be initialized using the custom initializer.
  */
 @interface CAESunPhase : NSObject
-// custom initializer
+/**
+ *  Sets the properties of the CAESunPhase object based on values in sunPhaseDict
+ *
+ *  @param sunPhaseDict must be a dictionary parsed from the
+ *
+ *  @return initialized CAESunPhase object
+ */
 - (id)initWithSunPhaseDict:(NSDictionary *)sunPhaseDict;
 
 // sunrise
-@property (strong, nonatomic) NSNumber *sunriseHour;        // 24 hour time
-@property (strong, nonatomic) NSNumber *sunriseMinute;      // minutes past the hour
+/** 24 hour time */
+@property (strong, nonatomic) NSNumber *sunriseHour;
+/** minutes past the hour */
+@property (strong, nonatomic) NSNumber *sunriseMinute;
 
 // sunset
-@property (strong, nonatomic) NSNumber *sunsetHour;         // 24 hour time
-@property (strong, nonatomic) NSNumber *sunsetMinute;       // minutes past the hour
+/** 24 hour time */
+@property (strong, nonatomic) NSNumber *sunsetHour;
+/** minutes past the hour */
+@property (strong, nonatomic) NSNumber *sunsetMinute;
 @end
