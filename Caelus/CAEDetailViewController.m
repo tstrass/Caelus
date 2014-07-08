@@ -92,8 +92,8 @@
 
 // temporary: to display raw astronomy data
 - (void)layoutAstronomyLabel {
-    [self.astronomyLabel setText:[NSString stringWithFormat:@"Sunrise: %d:%d\nSunset: %d:%d\nMoon: %@\n            %d%% illuminated\n             %d days old", [self.astronomy.sunPhase.sunriseHour intValue], [self.astronomy.sunPhase.sunriseMinute intValue], [self.astronomy.sunPhase.sunsetHour intValue], [self.astronomy.sunPhase.sunsetMinute intValue], self.astronomy.moonPhase.phase, [self.astronomy.moonPhase.percentIlluminated intValue], [self.astronomy.moonPhase.age intValue]]];
-    [self.astronomyLabel setNumberOfLines:5];
+    [self.astronomyLabel setText:[NSString stringWithFormat:@"Current Light Period: %@\nSunrise: %d:%d\nSunset: %d:%d\nMoon: %@\n            %d%% illuminated\n             %d days old", [self lightPeriodNameFromEnum], [self.astronomy.sunPhase.sunriseHour intValue], [self.astronomy.sunPhase.sunriseMinute intValue], [self.astronomy.sunPhase.sunsetHour intValue], [self.astronomy.sunPhase.sunsetMinute intValue], self.astronomy.moonPhase.phase, [self.astronomy.moonPhase.percentIlluminated intValue], [self.astronomy.moonPhase.age intValue]]];
+    [self.astronomyLabel setNumberOfLines:6];
     [self.astronomyLabel setFont:[UIFont fontWithName:@"Times New Roman" size:12]];
 }
 
@@ -297,6 +297,33 @@
 			break;
 	}
 	return color;
+}
+
+- (NSString *)lightPeriodNameFromEnum {
+    NSString *lightPeriodName = @"";
+    switch (self.astronomy.lightPeriod) {
+		case NIGHT:
+            lightPeriodName = @"Night";
+            break;
+        case DAWN:
+            lightPeriodName = @"Dawn";
+            break;
+		case SUNRISE:
+            lightPeriodName = @"Sunrise";
+			break;
+		case DAY:
+            lightPeriodName = @"Day";
+			break;
+		case SUNSET:
+            lightPeriodName = @"Sunset";
+			break;
+		case DUSK:
+            lightPeriodName = @"Dusk";
+			break;
+		default:
+			break;
+	}
+    return lightPeriodName;
 }
 
 @end
