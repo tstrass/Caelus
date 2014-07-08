@@ -11,11 +11,19 @@
 #import "CAEWeatherHour.h"
 
 /**
- *  The CAEHourlyWeather object should be initialized using the custom initializer. The dictionary needs to be from
+ *  This object should be initialized using the custom initializer. The dictionary needs to be from
  *  the weather underground API hourly weather feature.
  */
 @interface CAEHourlyWeather : NSObject
-- (id)initWithJSONDict:(NSDictionary *)dict;                //dict needs to be serialized JSON
+/**
+ *  Sets the properties of the CAEHourlyWeather object based on values in hourlyDict
+ *
+ *  @param hourlyDict must be a dictionary serialized from the weather underground API hourly JSON response
+ *
+ *  @return initialized CAEHourlyWeather object
+ */
+- (id)initWithHourlyDict:(NSDictionary *)hourlyDict;
 
-@property (strong, nonatomic) NSArray *weatherHours;        // Array of type CAEWeatherHour *
+/** Array of type CAEWeatherHour * */
+@property (strong, nonatomic) NSArray *weatherHours;
 @end
