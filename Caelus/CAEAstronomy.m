@@ -59,10 +59,10 @@ const unsigned long SUNSET_DURATION = 30;
 }
 
 - (void)calcLightPeriodIntervals {
-	[self setSunriseMinuteTime:[self minuteTimeFromHour:[self.sunPhase.sunriseHour intValue]
-	                                             Minute:[self.sunPhase.sunriseMinute intValue]]];
-	[self setSunsetMinuteTime:[self minuteTimeFromHour:[self.sunPhase.sunsetHour intValue]
-	                                            Minute:[self.sunPhase.sunsetMinute intValue]]];
+	[self setSunriseMinuteTime:[self minuteTimeFromHour:[self.sunPhase.sunriseHour integerValue]
+	                                             minute:[self.sunPhase.sunriseMinute integerValue]]];
+	[self setSunsetMinuteTime:[self minuteTimeFromHour:[self.sunPhase.sunsetHour integerValue]
+	                                            minute:[self.sunPhase.sunsetMinute integerValue]]];
 	[self setDawnMinuteTime:self.sunriseMinuteTime - DAWN_DURATION];
 	[self setDayMinuteTime:self.sunriseMinuteTime + SUNRISE_DURATION];
 	[self setSunsetMinuteTime:self.sunsetMinuteTime - SUNSET_DURATION];
@@ -70,19 +70,19 @@ const unsigned long SUNSET_DURATION = 30;
 	[self setNightMinuteTime:self.duskMinuteTime + DUSK_DURATION];
 }
 
-- (NSInteger)minuteTimeFromHour:(NSInteger)hour Minute:(NSInteger)minute {
+- (NSInteger)minuteTimeFromHour:(NSInteger)hour minute:(NSInteger)minute {
 	return hour * 60 + minute;
 }
 
 - (void)updateCurrentMinuteTime {
 	NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
 	[dateFormatter setDateFormat:@"kk"];
-	NSInteger hour = [[dateFormatter stringFromDate:[NSDate date]] intValue];
+	NSInteger hour = [[dateFormatter stringFromDate:[NSDate date]] integerValue];
 
 	[dateFormatter setDateFormat:@"mm"];
-	NSInteger minute = [[dateFormatter stringFromDate:[NSDate date]] intValue];
+	NSInteger minute = [[dateFormatter stringFromDate:[NSDate date]] integerValue];
 
-	[self setCurrentMinuteTime:[self minuteTimeFromHour:hour Minute:minute]];
+	[self setCurrentMinuteTime:[self minuteTimeFromHour:hour minute:minute]];
 }
 
 - (void)calcCurrentLightPeriod {

@@ -85,14 +85,14 @@
 
 // temporary: to display raw current conditions weather data
 - (void)layoutCurrentConditionsLabel {
-	[self.currentConditionsLabel setText:[NSString stringWithFormat:@"Current conditions in %@, %@:\n   %d°F\n   Wind: %@\n   %f inches of rain", self.currentConditions.location.city, self.currentConditions.location.stateAbbrev, [self.currentConditions.fTemp intValue], self.currentConditions.windDescription, [self.currentConditions.precipHourIn floatValue]]];
+	[self.currentConditionsLabel setText:[NSString stringWithFormat:@"Current conditions in %@, %@:\n   %ld°F\n   Wind: %@\n   %f inches of rain", self.currentConditions.location.city, self.currentConditions.location.stateAbbrev, [self.currentConditions.fTemp integerValue], self.currentConditions.windDescription, [self.currentConditions.precipHourIn floatValue]]];
 	[self.currentConditionsLabel setNumberOfLines:4];
 	[self.currentConditionsLabel setFont:[UIFont fontWithName:@"Times New Roman" size:12]];
 }
 
 // temporary: to display raw astronomy data
 - (void)layoutAstronomyLabel {
-    [self.astronomyLabel setText:[NSString stringWithFormat:@"Current Light Period: %@\nSunrise: %d:%d\nSunset: %d:%d\nMoon: %@\n            %d%% illuminated\n             %d days old", [self lightPeriodNameFromEnum], [self.astronomy.sunPhase.sunriseHour intValue], [self.astronomy.sunPhase.sunriseMinute intValue], [self.astronomy.sunPhase.sunsetHour intValue], [self.astronomy.sunPhase.sunsetMinute intValue], self.astronomy.moonPhase.phase, [self.astronomy.moonPhase.percentIlluminated intValue], [self.astronomy.moonPhase.age intValue]]];
+    [self.astronomyLabel setText:[NSString stringWithFormat:@"Current Light Period: %@\nSunrise: %ld:%ld\nSunset: %ld:%ld\nMoon: %@\n            %ld%% illuminated\n             %ld days old", [self lightPeriodNameFromEnum], [self.astronomy.sunPhase.sunriseHour integerValue], [self.astronomy.sunPhase.sunriseMinute integerValue], [self.astronomy.sunPhase.sunsetHour integerValue], [self.astronomy.sunPhase.sunsetMinute integerValue], self.astronomy.moonPhase.phase, [self.astronomy.moonPhase.percentIlluminated integerValue], [self.astronomy.moonPhase.age integerValue]]];
     [self.astronomyLabel setNumberOfLines:6];
     [self.astronomyLabel setFont:[UIFont fontWithName:@"Times New Roman" size:12]];
 }
@@ -258,7 +258,7 @@
  *  @return background color
  */
 - (UIColor *)backgroundColorFromWeatherData {
-	NSLog(@"Determining background color with temp:%d, sunrise:%d:%d, sunset:%d:%d", [self.currentConditions.fTemp intValue], [self.astronomy.sunPhase.sunriseHour intValue], [self.astronomy.sunPhase.sunriseMinute intValue], [self.astronomy.sunPhase.sunsetHour intValue], [self.astronomy.sunPhase.sunsetMinute intValue]);
+	NSLog(@"Determining background color with temp:%ld, sunrise:%ld:%ld, sunset:%ld:%ld", [self.currentConditions.fTemp integerValue], [self.astronomy.sunPhase.sunriseHour integerValue], [self.astronomy.sunPhase.sunriseMinute integerValue], [self.astronomy.sunPhase.sunsetHour integerValue], [self.astronomy.sunPhase.sunsetMinute integerValue]);
 
 	UIColor *backgroundColor = [[UIColor alloc] init];
 

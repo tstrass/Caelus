@@ -30,11 +30,11 @@
         NSDictionary *timeDict = [hourDict objectForKey:@"FCTTIME"];
         NSDictionary *tempDict = [hourDict objectForKey:@"temp"];
         
-        [self setHour:[[timeDict objectForKey:@"hour"] intValue]];
+        [self setHour:[[timeDict objectForKey:@"hour"] integerValue]];
         [self setWeekdayNameAbbrev:[timeDict objectForKey:@"weekday_name_abbrev"]];
-        [self setTemp:[[tempDict objectForKey:@"english"] intValue]];
+        [self setTemp:[[tempDict objectForKey:@"english"] integerValue]];
         [self setCondition:[hourDict objectForKey:@"condition"]];
-        [self setCloudCover:[[hourDict objectForKey:@"sky"] intValue]];
+        [self setCloudCover:[[hourDict objectForKey:@"sky"] integerValue]];
     }
 }
 
