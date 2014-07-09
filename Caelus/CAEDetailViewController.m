@@ -141,6 +141,14 @@
 	}];
 }
 
+- (void)formatViewForFailedLocation {
+    self.view.backgroundColor = [self backgroundColorFromWeatherData];
+    self.currentLocationLabel.text = @"Where you at bra I can't tell";
+    self.currentLocationLabel.font = [UIFont fontWithName:@"Times New Roman" size:12];
+	self.currentLocationLabel.adjustsFontSizeToFitWidth = YES;
+	self.currentLocationLabel.minimumScaleFactor = 0.3;
+}
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark - CLLocationManager Delegate Methods
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -162,6 +170,7 @@
 
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error {
 	NSLog(@"self.locationManager:%@ didFailWithError:%@", manager, error);
+    [self formatViewForFailedLocation];
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
