@@ -40,7 +40,7 @@
 
 // Geolocation
 @property (strong, nonatomic) CLLocationManager *locationManager;
-@property (strong, nonatomic) NSString *location;
+@property (strong, nonatomic) NSString *geolocation;
 @end
 
 @implementation CAEDetailViewController
@@ -63,20 +63,30 @@
 - (void)viewDidLoad {
 	[super viewDidLoad];
 	[self configureView];
-//    self.locationManager = [[CLLocationManager alloc]init];
-//    [self.locationManager setDelegate:self];
-//    [self.locationManager setDesiredAccuracy:kCLLocationAccuracyBest];
-//    [self.locationManager startUpdatingLocation];
 
-	self.requestsArray = [[NSMutableArray alloc] init];
+	[self setUpLocationManager];
 
 	self.view.backgroundColor = [UIColor blackColor];
 
-	[self makeCurrentConditionsRequestWithLocation:nil];
-	[self makeAstronomyRequestWithLocation:nil];
-	[self makeHourlyWeatherRequestWithLocation:nil];
+	//[self setUpAPIRequests];
+	//[self sendRequestsAndParseData];
+}
 
-	[self sendRequestsAndParseData];
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+#pragma mark - Set Up
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+- (void)setUpLocationManager {
+	self.locationManager = [[CLLocationManager alloc]init];
+	self.locationManager.delegate = self;
+	self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+	[self.locationManager startUpdatingLocation];
+}
+
+- (void)setUpAPIRequests {
+	self.requestsArray = [[NSMutableArray alloc] init];
+	[self makeCurrentConditionsRequestWithLocation:self.geolocation];
+	[self makeAstronomyRequestWithLocation:self.geolocation];
+	[self makeHourlyWeatherRequestWithLocation:self.geolocation];
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -85,16 +95,16 @@
 
 // temporary: to display raw current conditions weather data
 - (void)layoutCurrentConditionsLabel {
-	self.currentConditionsLabel.text = [NSString stringWithFormat:@"Current conditions in %@, %@:\n   %ld°F\n   Wind: %@\n   %f inches of rain", self.currentConditions.location.city, self.currentConditions.location.stateAbbrev, (long)[self.currentConditions.fTemp integerValue], self.currentConditions.windDescription, [self.currentConditions.precipHourIn floatValue]];
+	self.currentConditionsLabel.text = [NSString stringWithFormat:@"Current conditions in %@, %@:\n   %ld°F\n   Wind: %@\n   %f inches of rain", self.currentConditions.location.city, self.currentConditions.location.country, (long)[self.currentConditions.fTemp integerValue], self.currentConditions.windDescription, [self.currentConditions.precipHourIn floatValue]];
 	self.currentConditionsLabel.numberOfLines = 4;
 	self.currentConditionsLabel.font = [UIFont fontWithName:@"Times New Roman" size:12];
 }
 
 // temporary: to display raw astronomy data
 - (void)layoutAstronomyLabel {
-    self.astronomyLabel.text = [NSString stringWithFormat:@"Current Light Period: %@\nSunrise: %ld:%ld\nSunset: %ld:%ld\nMoon: %@\n            %ld%% illuminated\n             %ld days old", [self lightPeriodNameFromEnum], (long)[self.astronomy.sunPhase.sunriseHour integerValue], (long)[self.astronomy.sunPhase.sunriseMinute integerValue], (long)[self.astronomy.sunPhase.sunsetHour integerValue], (long)[self.astronomy.sunPhase.sunsetMinute integerValue], self.astronomy.moonPhase.phase, (long)[self.astronomy.moonPhase.percentIlluminated integerValue], (long)[self.astronomy.moonPhase.age integerValue]];
-    self.astronomyLabel.numberOfLines = 6;
-    self.astronomyLabel.font = [UIFont fontWithName:@"Times New Roman" size:12];
+	self.astronomyLabel.text = [NSString stringWithFormat:@"Current Light Period: %@\nSunrise: %ld:%ld\nSunset: %ld:%ld\nMoon: %@\n            %ld%% illuminated\n             %ld days old", [self lightPeriodNameFromEnum], (long)[self.astronomy.sunPhase.sunriseHour integerValue], (long)[self.astronomy.sunPhase.sunriseMinute integerValue], (long)[self.astronomy.sunPhase.sunsetHour integerValue], (long)[self.astronomy.sunPhase.sunsetMinute integerValue], self.astronomy.moonPhase.phase, (long)[self.astronomy.moonPhase.percentIlluminated integerValue], (long)[self.astronomy.moonPhase.age integerValue]];
+	self.astronomyLabel.numberOfLines = 6;
+	self.astronomyLabel.font = [UIFont fontWithName:@"Times New Roman" size:12];
 }
 
 // temporary: to display raw hourly weather data
@@ -119,7 +129,8 @@
 }
 
 - (void)formatLocationLabel {
-	self.currentLocationLabel.text = [NSString stringWithFormat:@"Current Location: %@", self.location];
+	self.currentLocationLabel.text = [NSString stringWithFormat:@"Current Location: %@", self.geolocation];
+	self.currentLocationLabel.font = [UIFont fontWithName:@"Times New Roman" size:12];
 	self.currentLocationLabel.adjustsFontSizeToFitWidth = YES;
 	self.currentLocationLabel.minimumScaleFactor = 0.3;
 }
@@ -130,6 +141,14 @@
 	}];
 }
 
+- (void)formatViewForFailedLocation {
+    self.view.backgroundColor = [self backgroundColorFromWeatherData];
+    self.currentLocationLabel.text = @"Where you at bra I can't tell";
+    self.currentLocationLabel.font = [UIFont fontWithName:@"Times New Roman" size:12];
+	self.currentLocationLabel.adjustsFontSizeToFitWidth = YES;
+	self.currentLocationLabel.minimumScaleFactor = 0.3;
+}
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark - CLLocationManager Delegate Methods
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -137,17 +156,21 @@
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
 	[self.locationManager stopUpdatingLocation];
 
-	// get the city name from the location found by the Location Manager
 	CLGeocoder *geoCoder = [[CLGeocoder alloc] init];
 	[geoCoder reverseGeocodeLocation:[locations lastObject] completionHandler: ^(NSArray *placemarks, NSError *error) {
-	    self.location = (placemarks.count > 0) ? [[placemarks objectAtIndex:0] locality] : @"Not Found";
+	    self.geolocation = (placemarks.count > 0) ? [[placemarks objectAtIndex:0] locality]:@"Not Found";
 	    [self formatLocationLabel];
-	    if (![self.location isEqualToString:@"Not Found"]) [self makeCurrentConditionsRequestWithLocation:self.location];
+	    if (![self.geolocation isEqualToString:@"Not Found"]) {
+            self.geolocation = [self requestStringWithCurrentLocation];
+            [self setUpAPIRequests];
+            [self sendRequestsAndParseData];
+        }
 	}];
 }
 
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error {
 	NSLog(@"self.locationManager:%@ didFailWithError:%@", manager, error);
+    [self formatViewForFailedLocation];
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -182,7 +205,8 @@
 
 - (void)makeCurrentConditionsRequestWithLocation:(NSString *)location {
 	// encode city search for URL and make URL request
-	NSString *weatherRequest = [NSString stringWithFormat:@"http://api.wunderground.com/api/f29e980ec760f4cc/conditions/q/CA/San_Francisco.json"];
+	NSString *weatherRequest = [NSString stringWithFormat:@"http://api.wunderground.com/api/f29e980ec760f4cc/conditions/q/%@.json", location];
+    NSLog(@"%@", weatherRequest);
 	NSURL *apiURL = [NSURL URLWithString:weatherRequest];
 	NSURLRequest *request = [[NSURLRequest alloc] initWithURL:apiURL];
 	[self.requestsArray addObject:request];
@@ -190,7 +214,7 @@
 
 - (void)makeAstronomyRequestWithLocation:(NSString *)location {
 	// encode city search for URL and make URL request
-	NSString *astronomyRequest = [NSString stringWithFormat:@"http://api.wunderground.com/api/f29e980ec760f4cc/astronomy/q/CA/San_Francisco.json"];
+	NSString *astronomyRequest = [NSString stringWithFormat:@"http://api.wunderground.com/api/f29e980ec760f4cc/astronomy/q/%@.json", location];
 	NSURL *apiURL = [NSURL URLWithString:astronomyRequest];
 	NSURLRequest *request = [[NSURLRequest alloc] initWithURL:apiURL];
 	[self.requestsArray addObject:request];
@@ -198,10 +222,17 @@
 
 - (void)makeHourlyWeatherRequestWithLocation:(NSString *)location {
 	// encode city search for URL and make URL request
-	NSString *hourlyRequest = [NSString stringWithFormat:@"http://api.wunderground.com/api/f29e980ec760f4cc/hourly/q/CA/San_Francisco.json"];
+	NSString *hourlyRequest = [NSString stringWithFormat:@"http://api.wunderground.com/api/f29e980ec760f4cc/hourly/q/%@.json", location];
 	NSURL *apiURL = [NSURL URLWithString:hourlyRequest];
 	NSURLRequest *request = [[NSURLRequest alloc] initWithURL:apiURL];
 	[self.requestsArray addObject:request];
+}
+
+- (NSString *)requestStringWithCurrentLocation {
+    NSString *requestString = [[NSString alloc] initWithFormat:@"%f,%f",
+                               self.locationManager.location.coordinate.latitude,
+                               self.locationManager.location.coordinate.longitude];
+    return requestString;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -232,8 +263,8 @@
 	NSLog(@"parsed astronomy json:\n%@", dict);
 
 	if (dict) {
-        self.astronomy = [[CAEAstronomy alloc] initWithAstronomyDict:dict];
-        [self layoutAstronomyLabel];
+		self.astronomy = [[CAEAstronomy alloc] initWithAstronomyDict:dict];
+		[self layoutAstronomyLabel];
 	}
 }
 
@@ -262,14 +293,14 @@
 
 	UIColor *backgroundColor = [[UIColor alloc] init];
 
-	backgroundColor = [UIColor colorWithRed:1.000 green:0.981 blue:0.273 alpha:1.00];
+	backgroundColor = [UIColor colorWithRed:0.561 green:0.883 blue:0.947 alpha:1.000];
 	return backgroundColor;
 }
 
 - (UIColor *)colorFromLightPeriod:(LightPeriod)lightPeriod {
 	UIColor *color = [[UIColor alloc] init];
 	switch (lightPeriod) {
-		case NIGHT:
+		case NIGHT :
 
 			break;
 
@@ -300,31 +331,37 @@
 }
 
 - (NSString *)lightPeriodNameFromEnum {
-    NSString *lightPeriodName;
-    switch (self.astronomy.lightPeriod) {
+	NSString *lightPeriodName;
+	switch (self.astronomy.lightPeriod) {
 		case NIGHT:
-            lightPeriodName = @"Night";
-            break;
-        case DAWN:
-            lightPeriodName = @"Dawn";
-            break;
+			lightPeriodName = @"Night";
+			break;
+
+		case DAWN:
+			lightPeriodName = @"Dawn";
+			break;
+
 		case SUNRISE:
-            lightPeriodName = @"Sunrise";
+			lightPeriodName = @"Sunrise";
 			break;
+
 		case DAY:
-            lightPeriodName = @"Day";
+			lightPeriodName = @"Day";
 			break;
+
 		case SUNSET:
-            lightPeriodName = @"Sunset";
+			lightPeriodName = @"Sunset";
 			break;
+
 		case DUSK:
-            lightPeriodName = @"Dusk";
+			lightPeriodName = @"Dusk";
 			break;
+
 		default:
-            NSLog(@"Error: object does not have a valid lightPeriod");
+			NSLog(@"Error: object does not have a valid lightPeriod");
 			break;
 	}
-    return lightPeriodName;
+	return lightPeriodName;
 }
 
 @end
