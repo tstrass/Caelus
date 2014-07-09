@@ -1,5 +1,5 @@
 //
-//  CLWeatherHour.m
+//  CAEWeatherHour.m
 //  Caelus
 //
 //  Created by Tom on 7/2/14.
@@ -26,14 +26,14 @@
  *                  out of the response data from the weather underground API hourly weather feature
  */
 - (void)parseHourDict:(NSDictionary *)hourDict {
-	NSDictionary *timeDict = [hourDict objectForKey:@"FCTTIME"];
-	NSDictionary *tempDict = [hourDict objectForKey:@"temp"];
-
-	[self setHour:[[timeDict objectForKey:@"hour"] intValue]];
-	[self setWeekdayNameAbbrev:[timeDict objectForKey:@"weekday_name_abbrev"]];
-	[self setTemp:[[tempDict objectForKey:@"english"] intValue]];
-	[self setCondition:[hourDict objectForKey:@"condition"]];
-	[self setCloudCover:[[hourDict objectForKey:@"sky"] intValue]];
+    NSDictionary *timeDict = [hourDict objectForKey:@"FCTTIME"];
+    NSDictionary *tempDict = [hourDict objectForKey:@"temp"];
+    
+    self.hour = [[timeDict objectForKey:@"hour"] integerValue];
+    self.weekdayNameAbbrev = [timeDict objectForKey:@"weekday_name_abbrev"];
+    self.temp = [[tempDict objectForKey:@"english"] integerValue];
+    self.condition = [hourDict objectForKey:@"condition"];
+    self.cloudCover = [[hourDict objectForKey:@"sky"] integerValue];
 }
 
 @end

@@ -1,5 +1,5 @@
 //
-//  CLAstronomy.m
+//  CAEAstronomy.m
 //  Caelus
 //
 //  Created by Thomas Strassner on 7/1/14.
@@ -37,69 +37,70 @@ const unsigned long SUNSET_DURATION = 30;
 	return self;
 }
 
-- (id)initWithSunriseHour:(NSNumber *)riseHour
-            SunriseMinute:(NSNumber *)riseMinute
-               SunsetHour:(NSNumber *)setHour
-             SunsetMinute:(NSNumber *)setMinute {
-	self = [super init];
-	if (self) {
-		[self updateCurrentMinuteTime];
-		[self setSunriseHour:riseHour];
-		[self setSunriseMinute:riseMinute];
-		[self setSunsetHour:setHour];
-		[self setSunsetMinute:setMinute];
+- (id)initWithAstronomyDict:(NSDictionary *)astronomyDict {
+    self = [super init];
+    if (self) {
+        [self updateCurrentMinuteTime];
+        [self parseAstronomyDict:astronomyDict];
+        [self calcLightPeriodIntervals];
+        [self calcCurrentLightPeriod];
+    }
+    return self;
+}
 
-		[self calcLightPeriodIntervals];
-		[self calcCurrentLightPeriod];
-	}
-	return self;
+- (void)parseAstronomyDict:(NSDictionary *)astronomyDict {
+    NSDictionary *sunPhaseDict = [astronomyDict objectForKey:@"sun_phase"];
+    NSDictionary *moonPhaseDict = [astronomyDict objectForKey:@"moon_phase"];
+        
+    self.sunPhase = sunPhaseDict ? [[CAESunPhase alloc] initWithSunPhaseDict:sunPhaseDict] : nil;
+    self.moonPhase = moonPhaseDict ? [[CAEMoonPhase alloc] initWithMoonDict:moonPhaseDict] : nil;
 }
 
 - (void)calcLightPeriodIntervals {
-	[self setSunriseMinuteTime:[self minuteTimeFromHour:[self.sunriseHour intValue]
-	                                             Minute:[self.sunriseMinute intValue]]];
-	[self setSunsetMinuteTime:[self minuteTimeFromHour:[self.sunsetHour intValue]
-	                                            Minute:[self.sunsetMinute intValue]]];
-	[self setDawnMinuteTime:self.sunriseMinuteTime - DAWN_DURATION];
-	[self setDayMinuteTime:self.sunriseMinuteTime + SUNRISE_DURATION];
-	[self setSunsetMinuteTime:self.sunsetMinuteTime - SUNSET_DURATION];
-	[self setDuskMinuteTime:self.sunsetMinuteTime + SUNSET_DURATION];
-	[self setNightMinuteTime:self.duskMinuteTime + DUSK_DURATION];
+	self.sunriseMinuteTime = [self minuteTimeFromHour:[self.sunPhase.sunriseHour integerValue]
+                                               minute:[self.sunPhase.sunriseMinute integerValue]];
+	self.sunsetMinuteTime = [self minuteTimeFromHour:[self.sunPhase.sunsetHour integerValue]
+                                              minute:[self.sunPhase.sunsetMinute integerValue]];
+	self.dawnMinuteTime = self.sunriseMinuteTime - DAWN_DURATION;
+	self.dayMinuteTime = self.sunriseMinuteTime + SUNRISE_DURATION;
+	self.sunsetMinuteTime = self.sunsetMinuteTime - SUNSET_DURATION;
+	self.duskMinuteTime = self.sunsetMinuteTime + SUNSET_DURATION;
+	self.nightMinuteTime = self.duskMinuteTime + DUSK_DURATION;
 }
 
-- (NSInteger)minuteTimeFromHour:(NSInteger)hour Minute:(NSInteger)minute {
+- (NSInteger)minuteTimeFromHour:(NSInteger)hour minute:(NSInteger)minute {
 	return hour * 60 + minute;
 }
 
 - (void)updateCurrentMinuteTime {
 	NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
 	[dateFormatter setDateFormat:@"kk"];
-	NSInteger hour = [[dateFormatter stringFromDate:[NSDate date]] intValue];
-
+	NSInteger hour = [[dateFormatter stringFromDate:[NSDate date]] integerValue];
+    
 	[dateFormatter setDateFormat:@"mm"];
-	NSInteger minute = [[dateFormatter stringFromDate:[NSDate date]] intValue];
-
-	[self setCurrentMinuteTime:[self minuteTimeFromHour:hour Minute:minute]];
+	NSInteger minute = [[dateFormatter stringFromDate:[NSDate date]] integerValue];
+    
+	self.currentMinuteTime = [self minuteTimeFromHour:hour minute:minute];
 }
 
 - (void)calcCurrentLightPeriod {
 	if (self.currentMinuteTime < self.dawnMinuteTime || self.currentMinuteTime > (self.duskMinuteTime + DUSK_DURATION)) {
-		[self setLightPeriod:NIGHT];
+		self.lightPeriod = NIGHT;
 	}
 	else if (self.currentMinuteTime < self.sunriseMinuteTime) {
-		[self setLightPeriod:DAWN];
+		self.lightPeriod = DAWN;
 	}
 	else if (self.currentMinuteTime < self.dayMinuteTime) {
-		[self setLightPeriod:SUNRISE];
+		self.lightPeriod = SUNRISE;
 	}
 	else if (self.currentMinuteTime < self.sunsetMinuteTime) {
-		[self setLightPeriod:DAY];
+		self.lightPeriod = DAY;
 	}
 	else if (self.currentMinuteTime < self.duskMinuteTime) {
-		[self setLightPeriod:SUNSET];
+		self.lightPeriod = SUNSET;
 	}
 	else if (self.currentMinuteTime < self.nightMinuteTime) {
-		[self setLightPeriod:DUSK];
+		self.lightPeriod = DUSK;
 	}
 	else {
 		NSLog(@"Error: could not determine proper light period in CLAstronomy");

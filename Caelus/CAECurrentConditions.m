@@ -1,5 +1,5 @@
 //
-//  CLCurrentConditions.m
+//  CAECurrentConditions.m
 //  Caelus
 //
 //  Created by Tom on 7/7/14.
@@ -10,36 +10,36 @@
 
 @implementation CAECurrentConditions
 
-- (id)initWithJSONDict:(NSDictionary *)dict {
+- (id)initWithConditionsDict:(NSDictionary *)dict {
 	self = [super init];
 	if (self) {
-		[self parseJSONDict:dict];
+		[self parseConditionsDict:dict];
 	}
 	return self;
 }
 
 /**
  *  Parse the conditions dictionary from weather underground API for information we are interested in. Set the
- *  corresponding public properties. Send the contained location dictionary to the CLLocation object.
+ *  corresponding public properties. Send the contained location dictionary to the CAELocationData object.
  *
  *  @param dict needs to be the response from weather underground API conditions feature.
  */
-- (void)parseJSONDict:(NSDictionary *)dict {
-	NSDictionary *currentObservation = [dict objectForKey:@"current_observation"];
-	NSDictionary *displayLocation = [currentObservation objectForKey:@"display_location"];
-
-	self.location = [[CAELocationData alloc] initWithLocationDict:displayLocation];
-
-	[self setFTemp:[currentObservation objectForKey:@"temp_f"]];
-	[self setCTemp:[currentObservation objectForKey:@"temp_c"]];
-
-	[self setWindSpeedMPH:[currentObservation objectForKey:@"wind_mph"]];
-	[self setWindSpeedKPH:[currentObservation objectForKey:@"wind_kph"]];
-	[self setWindDir:[currentObservation objectForKey:@"wind_dir"]];
-	[self setWindDescription:[currentObservation objectForKey:@"wind_string"]];
-
-	[self setPrecipHourIn:[currentObservation objectForKey:@"precip_1hr_in"]];
-	[self setPrecipHourMM:[currentObservation objectForKey:@"precip_1hr_metric"]];
+- (void)parseConditionsDict:(NSDictionary *)conditionsDict {
+    NSDictionary *currentObservation = [conditionsDict objectForKey:@"current_observation"];
+    NSDictionary *displayLocation = [currentObservation objectForKey:@"display_location"];
+    
+    self.location = displayLocation ? [[CAELocationData alloc] initWithLocationDict:displayLocation] : nil;
+    
+    self.fTemp = [currentObservation objectForKey:@"temp_f"];
+    self.cTemp = [currentObservation objectForKey:@"temp_c"];
+    
+    self.windSpeedMPH = [currentObservation objectForKey:@"wind_mph"];
+    self.windSpeedKPH = [currentObservation objectForKey:@"wind_kph"];
+    self.windDir = [currentObservation objectForKey:@"wind_dir"];
+    self.windDescription = [currentObservation objectForKey:@"wind_string"];
+    
+    self.precipHourIn = [currentObservation objectForKey:@"precip_1hr_in"];
+    self.precipHourMM = [currentObservation objectForKey:@"precip_1hr_metric"];
 }
 
 @end

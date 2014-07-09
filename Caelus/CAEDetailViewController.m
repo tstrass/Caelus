@@ -1,5 +1,5 @@
 //
-//  CLDetailViewController.m
+//  CAEDetailViewController.m
 //  Caelus
 //
 //  Created by Thomas Strassner on 6/20/14.
@@ -20,6 +20,7 @@
 // UI objects in storyboard
 @property (weak, nonatomic) IBOutlet UILabel *currentLocationLabel;
 @property (weak, nonatomic) IBOutlet UILabel *currentConditionsLabel;
+@property (weak, nonatomic) IBOutlet UILabel *astronomyLabel;
 @property (weak, nonatomic) IBOutlet UIScrollView *hourlyScrollView;
 
 // Requests
@@ -31,7 +32,6 @@
 
 // Astronomy data
 @property (strong, nonatomic) NSData *astronomyResponseData;
-@property (strong, nonatomic) NSDictionary *sunDict;
 @property (strong, nonatomic) CAEAstronomy *astronomy;
 
 // Hourly weather data
@@ -70,7 +70,7 @@
 
 	self.requestsArray = [[NSMutableArray alloc] init];
 
-	[self.view setBackgroundColor:[UIColor blackColor]];
+	self.view.backgroundColor = [UIColor blackColor];
 
 	[self makeCurrentConditionsRequestWithLocation:nil];
 	[self makeAstronomyRequestWithLocation:nil];
@@ -85,41 +85,48 @@
 
 // temporary: to display raw current conditions weather data
 - (void)layoutCurrentConditionsLabel {
-	[self.currentConditionsLabel setText:[NSString stringWithFormat:@"Current conditions in %@, %@:\n   %d°F\n   Wind: %@\n   %f inches of rain", self.currentConditions.location.city, self.currentConditions.location.stateAbbrev, [self.currentConditions.fTemp intValue], self.currentConditions.windDescription, [self.currentConditions.precipHourIn floatValue]]];
-	[self.currentConditionsLabel setNumberOfLines:4];
-	[self.currentConditionsLabel setFont:[UIFont fontWithName:@"Times New Roman" size:12]];
+	self.currentConditionsLabel.text = [NSString stringWithFormat:@"Current conditions in %@, %@:\n   %ld°F\n   Wind: %@\n   %f inches of rain", self.currentConditions.location.city, self.currentConditions.location.stateAbbrev, (long)[self.currentConditions.fTemp integerValue], self.currentConditions.windDescription, [self.currentConditions.precipHourIn floatValue]];
+	self.currentConditionsLabel.numberOfLines = 4;
+	self.currentConditionsLabel.font = [UIFont fontWithName:@"Times New Roman" size:12];
+}
+
+// temporary: to display raw astronomy data
+- (void)layoutAstronomyLabel {
+    self.astronomyLabel.text = [NSString stringWithFormat:@"Current Light Period: %@\nSunrise: %ld:%ld\nSunset: %ld:%ld\nMoon: %@\n            %ld%% illuminated\n             %ld days old", [self lightPeriodNameFromEnum], (long)[self.astronomy.sunPhase.sunriseHour integerValue], (long)[self.astronomy.sunPhase.sunriseMinute integerValue], (long)[self.astronomy.sunPhase.sunsetHour integerValue], (long)[self.astronomy.sunPhase.sunsetMinute integerValue], self.astronomy.moonPhase.phase, (long)[self.astronomy.moonPhase.percentIlluminated integerValue], (long)[self.astronomy.moonPhase.age integerValue]];
+    self.astronomyLabel.numberOfLines = 6;
+    self.astronomyLabel.font = [UIFont fontWithName:@"Times New Roman" size:12];
 }
 
 // temporary: to display raw hourly weather data
 - (void)layoutHourlyScrollView {
-	[self.hourlyScrollView setBackgroundColor:[UIColor whiteColor]];
+	self.hourlyScrollView.backgroundColor = [UIColor whiteColor];
 	CGFloat labelWidth = self.hourlyScrollView.frame.size.width - 10;
 	int counter = 0;
 	for (CAEWeatherHour *weatherHour in self.hourlyWeather.weatherHours) {
 		UILabel *hourLabel = [[UILabel alloc] init];
-		[hourLabel setNumberOfLines:2];
-		[hourLabel setText:[NSString stringWithFormat:@"%@ %ld:00\n  %lu°F, %@ (%lu%% cloudy)", weatherHour.weekdayNameAbbrev, (long)weatherHour.hour, (long)weatherHour.temp, weatherHour.condition, (long)weatherHour.cloudCover]];
-		[hourLabel setFont:[UIFont fontWithName:@"Times New Roman" size:10]];
+		hourLabel.numberOfLines = 2;
+		hourLabel.text = [NSString stringWithFormat:@"%@ %ld:00\n  %lu°F, %@ (%lu%% cloudy)", weatherHour.weekdayNameAbbrev, (long)weatherHour.hour, (long)weatherHour.temp, weatherHour.condition, (long)weatherHour.cloudCover];
+		hourLabel.font = [UIFont fontWithName:@"Times New Roman" size:10];
 		[hourLabel sizeToFit];
-		[hourLabel setFrame:CGRectMake(5, 5, labelWidth, hourLabel.frame.size.height)];
+		hourLabel.frame = CGRectMake(5, 5, labelWidth, hourLabel.frame.size.height);
 
 		UIView *hourView = [[UIView alloc] initWithFrame:CGRectMake(0, counter * 30, labelWidth + 10, hourLabel.frame.size.height + 5)];
 		[hourView addSubview:hourLabel];
 		[self.hourlyScrollView addSubview:hourView];
 		counter++;
 	}
-	[self.hourlyScrollView setContentSize:CGSizeMake(self.hourlyScrollView.frame.size.width, counter * 30)];
+	self.hourlyScrollView.contentSize = CGSizeMake(self.hourlyScrollView.frame.size.width, counter * 30);
 }
 
 - (void)formatLocationLabel {
-	[self.currentLocationLabel setText:[NSString stringWithFormat:@"Current Location: %@", self.location]];
-	[self.currentLocationLabel setAdjustsFontSizeToFitWidth:YES];
-	[self.currentLocationLabel setMinimumScaleFactor:0.3];
+	self.currentLocationLabel.text = [NSString stringWithFormat:@"Current Location: %@", self.location];
+	self.currentLocationLabel.adjustsFontSizeToFitWidth = YES;
+	self.currentLocationLabel.minimumScaleFactor = 0.3;
 }
 
 - (void)formatViewForWeather {
 	[UIView animateWithDuration:1.0 animations: ^{
-	    [self.view setBackgroundColor:[self backgroundColorFromWeatherData]];
+	    self.view.backgroundColor = [self backgroundColorFromWeatherData];
 	}];
 }
 
@@ -156,15 +163,15 @@
 		                                   queue:[NSOperationQueue mainQueue]
 		                       completionHandler: ^(NSURLResponse *response, NSData *data, NSError *connectionError) {
 		    if ([self.requestsArray indexOfObject:request] == 0) {
-		        [self setCurrentConditionsResponseData:data];
+		        self.currentConditionsResponseData = data;
 		        [self parseCurrentWeatherJSON];
 			}
 		    else if ([self.requestsArray indexOfObject:request] == 1) {
-		        [self setAstronomyResponseData:data];
+		        self.astronomyResponseData = data;
 		        [self parseAstronomyJSON];
 			}
 		    else if ([self.requestsArray indexOfObject:request] == 2) {
-		        [self setHourlyWeatherResponseData:data];
+		        self.hourlyWeatherResponseData = data;
 		        [self parseHourlyWeatherJSON];
 			}
 		    outstandingRequests--;
@@ -211,7 +218,7 @@
 	NSLog(@"parsed current weather json:\n%@", dict);
 
 	if (dict) {
-		self.currentConditions = [[CAECurrentConditions alloc] initWithJSONDict:dict];
+		self.currentConditions = [[CAECurrentConditions alloc] initWithConditionsDict:dict];
 		[self layoutCurrentConditionsLabel];
 	}
 }
@@ -225,15 +232,8 @@
 	NSLog(@"parsed astronomy json:\n%@", dict);
 
 	if (dict) {
-		[self setSunDict:[dict objectForKey:@"sun_phase"]]; // We're only interested in data about the sun
-
-		NSDictionary *sunriseDict = [self.sunDict objectForKey:@"sunrise"];
-		NSDictionary *sunsetDict = [self.sunDict objectForKey:@"sunset"];
-
-		self.astronomy = [[CAEAstronomy alloc] initWithSunriseHour:[sunriseDict objectForKey:@"hour"]
-		                                             SunriseMinute:[sunriseDict objectForKey:@"minute"]
-		                                                SunsetHour:[sunsetDict objectForKey:@"hour"]
-		                                              SunsetMinute:[sunsetDict objectForKey:@"minute"]];
+        self.astronomy = [[CAEAstronomy alloc] initWithAstronomyDict:dict];
+        [self layoutAstronomyLabel];
 	}
 }
 
@@ -243,7 +243,7 @@
 	                                                     options:kNilOptions
 	                                                       error:&error];
 	if (dict) {
-		self.hourlyWeather = [[CAEHourlyWeather alloc] initWithJSONDict:dict];
+		self.hourlyWeather = [[CAEHourlyWeather alloc] initWithHourlyDict:dict];
 		[self layoutHourlyScrollView];
 	}
 }
@@ -258,7 +258,7 @@
  *  @return background color
  */
 - (UIColor *)backgroundColorFromWeatherData {
-	NSLog(@"Determining background color with temp:%d, sunrise:%d:%d, sunset:%d:%d", [self.currentConditions.fTemp intValue], [self.astronomy.sunriseHour intValue], [self.astronomy.sunriseMinute intValue], [self.astronomy.sunsetHour intValue], [self.astronomy.sunsetMinute intValue]);
+	NSLog(@"Determining background color with temp:%ld, sunrise:%ld:%ld, sunset:%ld:%ld", (long)[self.currentConditions.fTemp integerValue], (long)[self.astronomy.sunPhase.sunriseHour integerValue], (long)[self.astronomy.sunPhase.sunriseMinute integerValue], (long)[self.astronomy.sunPhase.sunsetHour integerValue], (long)[self.astronomy.sunPhase.sunsetMinute integerValue]);
 
 	UIColor *backgroundColor = [[UIColor alloc] init];
 
@@ -297,6 +297,34 @@
 			break;
 	}
 	return color;
+}
+
+- (NSString *)lightPeriodNameFromEnum {
+    NSString *lightPeriodName;
+    switch (self.astronomy.lightPeriod) {
+		case NIGHT:
+            lightPeriodName = @"Night";
+            break;
+        case DAWN:
+            lightPeriodName = @"Dawn";
+            break;
+		case SUNRISE:
+            lightPeriodName = @"Sunrise";
+			break;
+		case DAY:
+            lightPeriodName = @"Day";
+			break;
+		case SUNSET:
+            lightPeriodName = @"Sunset";
+			break;
+		case DUSK:
+            lightPeriodName = @"Dusk";
+			break;
+		default:
+            NSLog(@"Error: object does not have a valid lightPeriod");
+			break;
+	}
+    return lightPeriodName;
 }
 
 @end
