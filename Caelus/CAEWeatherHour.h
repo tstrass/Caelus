@@ -23,15 +23,40 @@
  */
 - (id)initWithHourDict:(NSDictionary *)hourDict;
 
-// TODO: change NSInteger properties to NSNumber for versatility and consitency with other classes
-/** hour of the day in 24 hour time */
-@property (nonatomic) NSInteger hour;
+// Date
+/** Hour of the day in 24 hour time */
+@property (strong, nonatomic) NSNumber *hour;
 /** i.e. Sun, Mon, Tue, Wed, Thu, Fri, Sat */
 @property (strong, nonatomic) NSString *weekdayNameAbbrev;
-/** temperature in farenheit */
-@property (nonatomic) NSInteger temp;
+
+// Temperature
+/** Temperature in farenheit */
+@property (strong, nonatomic) NSNumber *fTemp;
+/** Temperature in celsius */
+@property (strong, nonatomic) NSNumber *cTemp;
+
+// Wind
+/** wind speed in miles per hour */
+@property (strong, nonatomic) NSNumber *windSpeedMPH;
+/** wind speed in kilometers per hour */
+@property (strong, nonatomic) NSNumber *windSpeedKPH;
+/** wind direction (e.g. ENE) */
+@property (strong, nonatomic) NSString *windDir;
+
+// Precipitation
+/** scale of 0-100 */
+@property (strong, nonatomic) NSNumber *probabilityOfPrecipitation;
+/** predicted precipitation during the hour in inches */
+@property (strong, nonatomic) NSNumber *precipIn;
+/** predicted precipitation during the hour in millimeters */
+@property (strong, nonatomic) NSNumber *precipMM;
+
+// Sky
 /** e.g. "Clear" */
 @property (strong, nonatomic) NSString *condition;
 /** percentage of sky covered by clouds */
-@property (nonatomic) NSInteger cloudCover;
+@property (strong, nonatomic) NSNumber *cloudCover;
+
+// Air
+
 @end
