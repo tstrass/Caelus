@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		E20001A819630E3B007659E3 /* CAEAstronomy.m in Sources */ = {isa = PBXBuildFile; fileRef = E20001A719630E3B007659E3 /* CAEAstronomy.m */; };
-		E21B51AA196DC06B004E0FA7 /* Clayton.gpx in Resources */ = {isa = PBXBuildFile; fileRef = E21B51A9196DC06B004E0FA7 /* Clayton.gpx */; };
 		E29571F61964A1B1009B725C /* CAEHourlyWeather.m in Sources */ = {isa = PBXBuildFile; fileRef = E29571F51964A1B1009B725C /* CAEHourlyWeather.m */; };
 		E29571F91964A3D4009B725C /* CAEWeatherHour.m in Sources */ = {isa = PBXBuildFile; fileRef = E29571F81964A3D4009B725C /* CAEWeatherHour.m */; };
 		E2B95EC41958B084008528D4 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2B95EC31958B084008528D4 /* CoreLocation.framework */; };
@@ -32,6 +31,9 @@
 		E2E1EF151954BB9700A0B541 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2E1EEF11954BB9600A0B541 /* UIKit.framework */; };
 		E2E1EF1D1954BB9700A0B541 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = E2E1EF1B1954BB9700A0B541 /* InfoPlist.strings */; };
 		E2E1EF1F1954BB9700A0B541 /* CaelusTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E2E1EF1E1954BB9700A0B541 /* CaelusTests.m */; };
+		E2EA38E7196EE2B30089896B /* CAEWeatherInformation.m in Sources */ = {isa = PBXBuildFile; fileRef = E2EA38E6196EE2B30089896B /* CAEWeatherInformation.m */; };
+		E2EB122C196EEB1900BC0DEA /* Clayton.gpx in Resources */ = {isa = PBXBuildFile; fileRef = E2EB122A196EEB1900BC0DEA /* Clayton.gpx */; };
+		E2EB122D196EEB1900BC0DEA /* Tufts.gpx in Resources */ = {isa = PBXBuildFile; fileRef = E2EB122B196EEB1900BC0DEA /* Tufts.gpx */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,7 +49,6 @@
 /* Begin PBXFileReference section */
 		E20001A619630E3B007659E3 /* CAEAstronomy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAEAstronomy.h; sourceTree = "<group>"; };
 		E20001A719630E3B007659E3 /* CAEAstronomy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CAEAstronomy.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		E21B51A9196DC06B004E0FA7 /* Clayton.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Clayton.gpx; sourceTree = "<group>"; };
 		E29571F41964A1B1009B725C /* CAEHourlyWeather.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAEHourlyWeather.h; sourceTree = "<group>"; };
 		E29571F51964A1B1009B725C /* CAEHourlyWeather.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CAEHourlyWeather.m; sourceTree = "<group>"; };
 		E29571F71964A3D4009B725C /* CAEWeatherHour.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAEWeatherHour.h; sourceTree = "<group>"; };
@@ -84,6 +85,10 @@
 		E2E1EF1A1954BB9700A0B541 /* CaelusTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "CaelusTests-Info.plist"; sourceTree = "<group>"; };
 		E2E1EF1C1954BB9700A0B541 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		E2E1EF1E1954BB9700A0B541 /* CaelusTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CaelusTests.m; sourceTree = "<group>"; };
+		E2EA38E5196EE2B30089896B /* CAEWeatherInformation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAEWeatherInformation.h; sourceTree = "<group>"; };
+		E2EA38E6196EE2B30089896B /* CAEWeatherInformation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CAEWeatherInformation.m; sourceTree = "<group>"; };
+		E2EB122A196EEB1900BC0DEA /* Clayton.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Clayton.gpx; sourceTree = "<group>"; };
+		E2EB122B196EEB1900BC0DEA /* Tufts.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Tufts.gpx; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -111,6 +116,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		53E52C2BB7D62E4CE62BE87F /* GPX */ = {
+			isa = PBXGroup;
+			children = (
+				E2EB122A196EEB1900BC0DEA /* Clayton.gpx */,
+				E2EB122B196EEB1900BC0DEA /* Tufts.gpx */,
+			);
+			path = GPX;
+			sourceTree = "<group>";
+		};
 		E20001A919630E4C007659E3 /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -128,6 +142,8 @@
 				E2CE3CD6196B317300E9D07B /* CAESunPhase.m */,
 				E2CE3CD8196B351A00E9D07B /* CAEMoonPhase.h */,
 				E2CE3CD9196B351A00E9D07B /* CAEMoonPhase.m */,
+				E2EA38E5196EE2B30089896B /* CAEWeatherInformation.h */,
+				E2EA38E6196EE2B30089896B /* CAEWeatherInformation.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -135,11 +151,11 @@
 		E2E1EEE11954BB9600A0B541 = {
 			isa = PBXGroup;
 			children = (
-				E21B51A9196DC06B004E0FA7 /* Clayton.gpx */,
 				E2E1EEF31954BB9600A0B541 /* Caelus */,
 				E2E1EF181954BB9700A0B541 /* CaelusTests */,
 				E2E1EEEC1954BB9600A0B541 /* Frameworks */,
 				E2E1EEEB1954BB9600A0B541 /* Products */,
+				53E52C2BB7D62E4CE62BE87F /* GPX */,
 			);
 			sourceTree = "<group>";
 		};
@@ -289,9 +305,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E2EB122D196EEB1900BC0DEA /* Tufts.gpx in Resources */,
 				E2E1EF041954BB9600A0B541 /* Main_iPad.storyboard in Resources */,
+				E2EB122C196EEB1900BC0DEA /* Clayton.gpx in Resources */,
 				E2E1EF0C1954BB9600A0B541 /* Images.xcassets in Resources */,
-				E21B51AA196DC06B004E0FA7 /* Clayton.gpx in Resources */,
 				E2E1EF011954BB9600A0B541 /* Main_iPhone.storyboard in Resources */,
 				E2E1EEF81954BB9600A0B541 /* InfoPlist.strings in Resources */,
 			);
@@ -317,6 +334,7 @@
 				E2E1EF0A1954BB9600A0B541 /* CAEDetailViewController.m in Sources */,
 				E2E1EEFA1954BB9600A0B541 /* main.m in Sources */,
 				E2CE3CDA196B351A00E9D07B /* CAEMoonPhase.m in Sources */,
+				E2EA38E7196EE2B30089896B /* CAEWeatherInformation.m in Sources */,
 				E2CE3CD1196AE30A00E9D07B /* CAECurrentConditions.m in Sources */,
 				E2E1EF071954BB9600A0B541 /* CAEMasterViewController.m in Sources */,
 				E2CE3CD7196B317300E9D07B /* CAESunPhase.m in Sources */,

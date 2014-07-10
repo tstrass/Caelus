@@ -39,8 +39,8 @@
 	self.windDescription = [currentObservation objectForKey:@"wind_string"];
 
 	// Note: these values are strings in the JSON response
-	self.precipHourIn = [NSNumber numberWithFloat:[[currentObservation objectForKey:@"precip_1hr_in"] floatValue]];
-	self.precipHourMM = [NSNumber numberWithFloat:[[currentObservation objectForKey:@"precip_1hr_metric"] floatValue]];
+	self.precipIn = [NSNumber numberWithFloat:[[currentObservation objectForKey:@"precip_1hr_in"] floatValue]];
+	self.precipMM = [NSNumber numberWithFloat:[[currentObservation objectForKey:@"precip_1hr_metric"] floatValue]];
 }
 
 @end
