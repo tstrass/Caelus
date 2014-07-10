@@ -95,7 +95,7 @@
 
 // temporary: to display raw current conditions weather data
 - (void)layoutCurrentConditionsLabel {
-	self.currentConditionsLabel.text = [NSString stringWithFormat:@"Current conditions in %@, %@:\n   %ld°F\n   Wind: %@\n   %f inches of rain", self.currentConditions.location.city, self.currentConditions.location.country, (long)[self.currentConditions.fTemp integerValue], self.currentConditions.windDescription, [self.currentConditions.precipHourIn floatValue]];
+	self.currentConditionsLabel.text = [NSString stringWithFormat:@"Current conditions in %@, %@:\n   %ld°F\n   Wind: %@\n   %f inches of rain", self.currentConditions.location.city, self.currentConditions.location.country, (long)[self.currentConditions.fTemp integerValue], self.currentConditions.windDescription, [self.currentConditions.precipIn floatValue]];
 	self.currentConditionsLabel.numberOfLines = 4;
 	self.currentConditionsLabel.font = [UIFont fontWithName:@"Times New Roman" size:12];
 }
