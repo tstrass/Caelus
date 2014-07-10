@@ -25,9 +25,10 @@
  *                       the response data from the weather underground API astronomy feature
  */
 - (void)parseMoonDict:(NSDictionary *)moonDict {
-    self.age = [moonDict objectForKey:@"ageOfMoon"];
-    self.percentIlluminated = [moonDict objectForKey:@"percentIlluminated"];
-    self.phase = [moonDict objectForKey:@"phaseofMoon"];
+	// Note: all of the following values are strings in the JSON response
+	self.age = [NSNumber numberWithInteger:[[moonDict objectForKey:@"ageOfMoon"] integerValue]];
+	self.percentIlluminated = [NSNumber numberWithInteger:[[moonDict objectForKey:@"percentIlluminated"] integerValue]];
+	self.phase = [moonDict objectForKey:@"phaseofMoon"];
 }
 
 @end

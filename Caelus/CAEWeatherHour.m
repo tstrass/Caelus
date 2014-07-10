@@ -26,14 +26,30 @@
  *                  out of the response data from the weather underground API hourly weather feature
  */
 - (void)parseHourDict:(NSDictionary *)hourDict {
-    NSDictionary *timeDict = [hourDict objectForKey:@"FCTTIME"];
-    NSDictionary *tempDict = [hourDict objectForKey:@"temp"];
-    
-    self.hour = [[timeDict objectForKey:@"hour"] integerValue];
-    self.weekdayNameAbbrev = [timeDict objectForKey:@"weekday_name_abbrev"];
-    self.temp = [[tempDict objectForKey:@"english"] integerValue];
-    self.condition = [hourDict objectForKey:@"condition"];
-    self.cloudCover = [[hourDict objectForKey:@"sky"] integerValue];
+	NSDictionary *timeDict = [hourDict objectForKey:@"FCTTIME"];
+	NSDictionary *tempDict = [hourDict objectForKey:@"temp"];
+	NSDictionary *windSpeedDict = [hourDict objectForKey:@"wspd"];
+	NSDictionary *windDirectionDict = [hourDict objectForKey:@"wdir"];
+    NSDictionary *precipQuantityDict = [hourDict objectForKey:@"qpf"];
+
+	// Note: all of the following values are strings in the JSON response
+
+	self.hour = [NSNumber numberWithInteger:[[timeDict objectForKey:@"hour"] integerValue]];
+	self.weekdayNameAbbrev = [timeDict objectForKey:@"weekday_name_abbrev"];
+
+	self.fTemp = [NSNumber numberWithInteger:[[tempDict objectForKey:@"english"] integerValue]];
+	self.cTemp = [NSNumber numberWithInteger:[[tempDict objectForKey:@"metric"] integerValue]];
+
+	self.windSpeedMPH = [NSNumber numberWithInteger:[[windSpeedDict objectForKey:@"english"] integerValue]];
+	self.windSpeedKPH = [NSNumber numberWithInteger:[[windSpeedDict objectForKey:@"metric"] integerValue]];
+	self.windDir = [windDirectionDict objectForKey:@"dir"];
+
+	self.probabilityOfPrecipitation = [NSNumber numberWithInteger:[[hourDict objectForKey:@"pop"] integerValue]];
+    self.precipIn = [NSNumber numberWithInteger:[[precipQuantityDict objectForKey:@"english"] floatValue]];
+    self.precipMM = [NSNumber numberWithInteger:[[precipQuantityDict objectForKey:@"metric"] floatValue]];
+
+	self.condition = [hourDict objectForKey:@"condition"];
+	self.cloudCover = [NSNumber numberWithInteger:[[hourDict objectForKey:@"sky"] integerValue]];
 }
 
 @end
