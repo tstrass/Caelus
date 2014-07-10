@@ -191,12 +191,12 @@
 			}
 		    else if ([self.requestsArray indexOfObject:request] == 1) {
 		        self.astronomyResponseData = data;
+                NSString *string = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+                NSLog(@"%@", string);
 		        [self parseAstronomyJSON];
 			}
 		    else if ([self.requestsArray indexOfObject:request] == 2) {
 		        self.hourlyWeatherResponseData = data;
-                NSString *string = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-                NSLog(@"%@", string);
 		        [self parseHourlyWeatherJSON];
 			}
 		    outstandingRequests--;

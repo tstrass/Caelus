@@ -37,11 +37,8 @@
 @property (strong, nonatomic) NSNumber *probabilityOfPrecipitation;
 
 // Sky
-/** e.g. "Clear" */
+/** e.g. "Clear", all possible values here: http://www.wunderground.com/weather/api/d/community.html */
 @property (strong, nonatomic) NSString *condition;
 /** percentage of sky covered by clouds */
 @property (strong, nonatomic) NSNumber *cloudCover;
-
-// Air
-
 @end
