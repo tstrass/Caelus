@@ -30,7 +30,8 @@
 	NSDictionary *tempDict = [hourDict objectForKey:@"temp"];
 	NSDictionary *windSpeedDict = [hourDict objectForKey:@"wspd"];
 	NSDictionary *windDirectionDict = [hourDict objectForKey:@"wdir"];
-    NSDictionary *precipQuantityDict = [hourDict objectForKey:@"qpf"];
+	NSDictionary *precipQuantityDict = [hourDict objectForKey:@"qpf"];
+	NSDictionary *snowDict = [hourDict objectForKey:@"snow"];
 
 	// Note: all of the following values are strings in the JSON response
 
@@ -45,8 +46,10 @@
 	self.windDir = [windDirectionDict objectForKey:@"dir"];
 
 	self.probabilityOfPrecipitation = [NSNumber numberWithInteger:[[hourDict objectForKey:@"pop"] integerValue]];
-    self.precipIn = [NSNumber numberWithInteger:[[precipQuantityDict objectForKey:@"english"] floatValue]];
-    self.precipMM = [NSNumber numberWithInteger:[[precipQuantityDict objectForKey:@"metric"] floatValue]];
+	self.precipIn = [NSNumber numberWithInteger:[[precipQuantityDict objectForKey:@"english"] floatValue]];
+	self.precipMM = [NSNumber numberWithInteger:[[precipQuantityDict objectForKey:@"metric"] floatValue]];
+	self.snowIn = [NSNumber numberWithInteger:[[snowDict objectForKey:@"english"] floatValue]];
+	self.snowMM = [NSNumber numberWithInteger:[[snowDict objectForKey:@"metric"] floatValue]];
 
 	self.condition = [hourDict objectForKey:@"condition"];
 	self.cloudCover = [NSNumber numberWithInteger:[[hourDict objectForKey:@"sky"] integerValue]];
