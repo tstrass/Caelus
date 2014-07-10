@@ -115,7 +115,7 @@
 	for (CAEWeatherHour *weatherHour in self.hourlyWeather.weatherHours) {
 		UILabel *hourLabel = [[UILabel alloc] init];
 		hourLabel.numberOfLines = 2;
-		hourLabel.text = [NSString stringWithFormat:@"%@ %ld:00\n  %lu°F, %@ (%lu%% cloudy)", weatherHour.weekdayNameAbbrev, (long)weatherHour.hour, (long)weatherHour.temp, weatherHour.condition, (long)weatherHour.cloudCover];
+		hourLabel.text = [NSString stringWithFormat:@"%@ %ld:00\n  %lu°F, %@ (%lu%% cloudy), %lu%% chance of precipitation", weatherHour.weekdayNameAbbrev, [weatherHour.hour longValue], [weatherHour.fTemp longValue], weatherHour.condition, [weatherHour.cloudCover longValue], [weatherHour.probabilityOfPrecipitation longValue]];
 		hourLabel.font = [UIFont fontWithName:@"Times New Roman" size:10];
 		[hourLabel sizeToFit];
 		hourLabel.frame = CGRectMake(5, 5, labelWidth, hourLabel.frame.size.height);
@@ -142,9 +142,9 @@
 }
 
 - (void)formatViewForFailedLocation {
-    self.view.backgroundColor = [self backgroundColorFromWeatherData];
-    self.currentLocationLabel.text = @"Where you at bra I can't tell";
-    self.currentLocationLabel.font = [UIFont fontWithName:@"Times New Roman" size:12];
+	self.view.backgroundColor = [self backgroundColorFromWeatherData];
+	self.currentLocationLabel.text = @"Where you at bra I can't tell";
+	self.currentLocationLabel.font = [UIFont fontWithName:@"Times New Roman" size:12];
 	self.currentLocationLabel.adjustsFontSizeToFitWidth = YES;
 	self.currentLocationLabel.minimumScaleFactor = 0.3;
 }
@@ -158,19 +158,19 @@
 
 	CLGeocoder *geoCoder = [[CLGeocoder alloc] init];
 	[geoCoder reverseGeocodeLocation:[locations lastObject] completionHandler: ^(NSArray *placemarks, NSError *error) {
-	    self.geolocation = (placemarks.count > 0) ? [[placemarks objectAtIndex:0] locality]:@"Not Found";
+	    self.geolocation = (placemarks.count > 0) ? [[placemarks objectAtIndex:0] locality] : @"Not Found";
 	    [self formatLocationLabel];
 	    if (![self.geolocation isEqualToString:@"Not Found"]) {
-            self.geolocation = [self requestStringWithCurrentLocation];
-            [self setUpAPIRequests];
-            [self sendRequestsAndParseData];
-        }
+	        self.geolocation = [self requestStringWithCurrentLocation];
+	        [self setUpAPIRequests];
+	        [self sendRequestsAndParseData];
+		}
 	}];
 }
 
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error {
 	NSLog(@"self.locationManager:%@ didFailWithError:%@", manager, error);
-    [self formatViewForFailedLocation];
+	[self formatViewForFailedLocation];
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -195,6 +195,8 @@
 			}
 		    else if ([self.requestsArray indexOfObject:request] == 2) {
 		        self.hourlyWeatherResponseData = data;
+                NSString *string = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+                NSLog(@"%@", string);
 		        [self parseHourlyWeatherJSON];
 			}
 		    outstandingRequests--;
@@ -206,7 +208,7 @@
 - (void)makeCurrentConditionsRequestWithLocation:(NSString *)location {
 	// encode city search for URL and make URL request
 	NSString *weatherRequest = [NSString stringWithFormat:@"http://api.wunderground.com/api/f29e980ec760f4cc/conditions/q/%@.json", location];
-    NSLog(@"%@", weatherRequest);
+	NSLog(@"%@", weatherRequest);
 	NSURL *apiURL = [NSURL URLWithString:weatherRequest];
 	NSURLRequest *request = [[NSURLRequest alloc] initWithURL:apiURL];
 	[self.requestsArray addObject:request];
@@ -229,10 +231,10 @@
 }
 
 - (NSString *)requestStringWithCurrentLocation {
-    NSString *requestString = [[NSString alloc] initWithFormat:@"%f,%f",
-                               self.locationManager.location.coordinate.latitude,
-                               self.locationManager.location.coordinate.longitude];
-    return requestString;
+	NSString *requestString = [[NSString alloc] initWithFormat:@"%f,%f",
+	                           self.locationManager.location.coordinate.latitude,
+	                           self.locationManager.location.coordinate.longitude];
+	return requestString;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -300,7 +302,7 @@
 - (UIColor *)colorFromLightPeriod:(LightPeriod)lightPeriod {
 	UIColor *color = [[UIColor alloc] init];
 	switch (lightPeriod) {
-		case NIGHT :
+		case NIGHT:
 
 			break;
 

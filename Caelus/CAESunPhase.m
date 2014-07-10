@@ -25,14 +25,16 @@
  *                      response data from the weather underground API astronomy feature
  */
 - (void)parseSunPhaseDict:(NSDictionary *)sunPhaseDict {
-    NSDictionary *sunriseDict = [sunPhaseDict objectForKey:@"sunrise"];
-    NSDictionary *sunsetDict = [sunPhaseDict objectForKey:@"sunset"];
+	NSDictionary *sunriseDict = [sunPhaseDict objectForKey:@"sunrise"];
+	NSDictionary *sunsetDict = [sunPhaseDict objectForKey:@"sunset"];
 
-    self.sunriseHour = [sunriseDict objectForKey:@"hour"];
-    self.sunriseMinute = [sunriseDict objectForKey:@"minute"];
+	// Note: all the following values are strings in the JSON response
 
-    self.sunsetHour = [sunsetDict objectForKey:@"hour"];
-    self.sunsetMinute = [sunsetDict objectForKey:@"minute"];
+	self.sunriseHour = [NSNumber numberWithInteger:[[sunriseDict objectForKey:@"hour"] integerValue]];
+	self.sunriseMinute = [NSNumber numberWithInteger:[[sunriseDict objectForKey:@"minute"] integerValue]];
+
+	self.sunsetHour = [NSNumber numberWithInteger:[[sunsetDict objectForKey:@"hour"] integerValue]];
+	self.sunsetMinute = [NSNumber numberWithInteger:[[sunsetDict objectForKey:@"minute"] integerValue]];
 }
 
 @end
