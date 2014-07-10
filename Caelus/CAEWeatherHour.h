@@ -8,12 +8,15 @@
 
 #import <Foundation/Foundation.h>
 
+#import "CAEWeatherInformation.h"
+
 /**
- *  This object holds various fields describing weather conditions for an individual hour.
+ *  This object holds various fields describing weather conditions for an individual hour. It inherits several weather
+ *  properties from CAEWeatherInformation.
  *
  *  It should be initialized using the custom initializer.
  */
-@interface CAEWeatherHour : NSObject
+@interface CAEWeatherHour : CAEWeatherInformation
 /**
  *  Sets properties of the CAEWeatherHour object based on values in hourDict
  *
@@ -29,27 +32,9 @@
 /** i.e. Sun, Mon, Tue, Wed, Thu, Fri, Sat */
 @property (strong, nonatomic) NSString *weekdayNameAbbrev;
 
-// Temperature
-/** Temperature in farenheit */
-@property (strong, nonatomic) NSNumber *fTemp;
-/** Temperature in celsius */
-@property (strong, nonatomic) NSNumber *cTemp;
-
-// Wind
-/** wind speed in miles per hour */
-@property (strong, nonatomic) NSNumber *windSpeedMPH;
-/** wind speed in kilometers per hour */
-@property (strong, nonatomic) NSNumber *windSpeedKPH;
-/** wind direction (e.g. ENE) */
-@property (strong, nonatomic) NSString *windDir;
-
 // Precipitation
 /** scale of 0-100 */
 @property (strong, nonatomic) NSNumber *probabilityOfPrecipitation;
-/** predicted precipitation during the hour in inches */
-@property (strong, nonatomic) NSNumber *precipIn;
-/** predicted precipitation during the hour in millimeters */
-@property (strong, nonatomic) NSNumber *precipMM;
 
 // Sky
 /** e.g. "Clear" */
