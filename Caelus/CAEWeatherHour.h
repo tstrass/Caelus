@@ -35,6 +35,10 @@
 // Precipitation
 /** scale of 0-100 */
 @property (strong, nonatomic) NSNumber *probabilityOfPrecipitation;
+/** quantity of snow forecasted during the hour in inches */
+@property (strong, nonatomic) NSNumber *snowIn;
+/** quantity of snow forecasted during the hour in millimeters */
+@property (strong, nonatomic) NSNumber *snowMM;
 
 // Sky
 /** e.g. "Clear", all possible values here: http://www.wunderground.com/weather/api/d/community.html */
