@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		E20001A819630E3B007659E3 /* CAEAstronomy.m in Sources */ = {isa = PBXBuildFile; fileRef = E20001A719630E3B007659E3 /* CAEAstronomy.m */; };
+		E21B51AA196DC06B004E0FA7 /* Clayton.gpx in Resources */ = {isa = PBXBuildFile; fileRef = E21B51A9196DC06B004E0FA7 /* Clayton.gpx */; };
 		E29571F61964A1B1009B725C /* CAEHourlyWeather.m in Sources */ = {isa = PBXBuildFile; fileRef = E29571F51964A1B1009B725C /* CAEHourlyWeather.m */; };
 		E29571F91964A3D4009B725C /* CAEWeatherHour.m in Sources */ = {isa = PBXBuildFile; fileRef = E29571F81964A3D4009B725C /* CAEWeatherHour.m */; };
 		E2B95EC41958B084008528D4 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2B95EC31958B084008528D4 /* CoreLocation.framework */; };
@@ -46,6 +47,7 @@
 /* Begin PBXFileReference section */
 		E20001A619630E3B007659E3 /* CAEAstronomy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAEAstronomy.h; sourceTree = "<group>"; };
 		E20001A719630E3B007659E3 /* CAEAstronomy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CAEAstronomy.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		E21B51A9196DC06B004E0FA7 /* Clayton.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Clayton.gpx; sourceTree = "<group>"; };
 		E29571F41964A1B1009B725C /* CAEHourlyWeather.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAEHourlyWeather.h; sourceTree = "<group>"; };
 		E29571F51964A1B1009B725C /* CAEHourlyWeather.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CAEHourlyWeather.m; sourceTree = "<group>"; };
 		E29571F71964A3D4009B725C /* CAEWeatherHour.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAEWeatherHour.h; sourceTree = "<group>"; };
@@ -133,6 +135,7 @@
 		E2E1EEE11954BB9600A0B541 = {
 			isa = PBXGroup;
 			children = (
+				E21B51A9196DC06B004E0FA7 /* Clayton.gpx */,
 				E2E1EEF31954BB9600A0B541 /* Caelus */,
 				E2E1EF181954BB9700A0B541 /* CaelusTests */,
 				E2E1EEEC1954BB9600A0B541 /* Frameworks */,
@@ -288,6 +291,7 @@
 			files = (
 				E2E1EF041954BB9600A0B541 /* Main_iPad.storyboard in Resources */,
 				E2E1EF0C1954BB9600A0B541 /* Images.xcassets in Resources */,
+				E21B51AA196DC06B004E0FA7 /* Clayton.gpx in Resources */,
 				E2E1EF011954BB9600A0B541 /* Main_iPhone.storyboard in Resources */,
 				E2E1EEF81954BB9600A0B541 /* InfoPlist.strings in Resources */,
 			);
