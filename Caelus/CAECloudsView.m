@@ -33,8 +33,9 @@
     }];
     
     NSInteger maxClouds = [self.delegate maxNumberOfCloudsForCloudView:self];
-    CGFloat cloudWidth = ([[UIScreen mainScreen] bounds].size.width - ((maxClouds + 1) * CLOUD_H_PADDING)) / maxClouds;
-    
+    NSLog(@"Maximum number of clouds: %lu", maxClouds);
+    CGFloat cloudWidth = (self.frame.size.width - ((((maxClouds + 1) * 2) - 2) * CLOUD_H_PADDING)) / maxClouds;
+    NSLog(@"Number of clouds to display: %lu", [self.delegate numberOfCloudsForCloudView:self]);
     CGFloat xValue = 0;
     for (int i = 0; i < [self.delegate numberOfCloudsForCloudView:self]; i++) {
         UIImageView *cloudImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"cloud"]];
