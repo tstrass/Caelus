@@ -8,12 +8,15 @@
 #import "CAEDetailViewController.h"
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+// View
+#import "CAECloudsView.h"
+
 // Model
 #import "CAECurrentConditions.h"
 #import "CAEAstronomy.h"
 #import "CAEHourlyWeather.h"
 
-@interface CAEDetailViewController ()
+@interface CAEDetailViewController () <CAECloudsViewDelegate>
 @property (strong, nonatomic) UIPopoverController *masterPopoverController;
 - (void)configureView;
 
@@ -22,6 +25,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *currentConditionsLabel;
 @property (weak, nonatomic) IBOutlet UILabel *astronomyLabel;
 @property (weak, nonatomic) IBOutlet UIScrollView *hourlyScrollView;
+
+@property (strong, nonatomic) CAECloudsView *cloudsView;
 
 // Requests
 @property (strong, nonatomic) NSMutableArray *requestsArray;
@@ -67,6 +72,11 @@
 	[self setUpLocationManager];
 
 	self.view.backgroundColor = [UIColor blackColor];
+    
+    self.cloudsView = [[CAECloudsView alloc] initWithFrame:CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width, 400)];
+    self.cloudsView.delegate = self;
+    [self.cloudsView reload];
+    [self.view addSubview:self.cloudsView];
 
 	//[self setUpAPIRequests];
 	//[self sendRequestsAndParseData];
@@ -364,6 +374,18 @@
 			break;
 	}
 	return lightPeriodName;
+}
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+#pragma mark - CAECloudsView Delegate Methods
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+- (NSInteger)maxNumberOfCloudsForCloudView:(CAECloudsView *)cloudView {
+    return 5;
+}
+
+- (NSInteger)numberOfCloudsForCloudView:(CAECloudsView *)cloudView {
+    return 3;
 }
 
 @end
