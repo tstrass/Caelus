@@ -72,14 +72,6 @@
 	[self setUpLocationManager];
 
 	self.view.backgroundColor = [UIColor blackColor];
-    
-    self.cloudsView = [[CAECloudsView alloc] initWithFrame:CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width, 400)];
-    self.cloudsView.delegate = self;
-    [self.cloudsView reload];
-    [self.view addSubview:self.cloudsView];
-
-	//[self setUpAPIRequests];
-	//[self sendRequestsAndParseData];
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -149,6 +141,10 @@
 	[UIView animateWithDuration:1.0 animations: ^{
 	    self.view.backgroundColor = [self backgroundColorFromWeatherData];
 	}];
+    self.cloudsView = [[CAECloudsView alloc] initWithFrame:CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width, 400)];
+    self.cloudsView.delegate = self;
+    [self.cloudsView reload];
+    [self.view addSubview:self.cloudsView];
 }
 
 - (void)formatViewForFailedLocation {
@@ -201,12 +197,12 @@
 			}
 		    else if ([self.requestsArray indexOfObject:request] == 1) {
 		        self.astronomyResponseData = data;
-                NSString *string = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-                NSLog(@"%@", string);
 		        [self parseAstronomyJSON];
 			}
 		    else if ([self.requestsArray indexOfObject:request] == 2) {
 		        self.hourlyWeatherResponseData = data;
+                NSString *string = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+                NSLog(@"%@", string);
 		        [self parseHourlyWeatherJSON];
 			}
 		    outstandingRequests--;
@@ -258,7 +254,7 @@
 	NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:self.currentConditionsResponseData
 	                                                     options:kNilOptions
 	                                                       error:&error];
-	NSLog(@"parsed current weather json:\n%@", dict);
+	//NSLog(@"parsed current weather json:\n%@", dict);
 
 	if (dict) {
 		self.currentConditions = [[CAECurrentConditions alloc] initWithConditionsDict:dict];
@@ -272,7 +268,7 @@
 	NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:self.astronomyResponseData
 	                                                     options:kNilOptions
 	                                                       error:&error];
-	NSLog(@"parsed astronomy json:\n%@", dict);
+	//NSLog(@"parsed astronomy json:\n%@", dict);
 
 	if (dict) {
 		self.astronomy = [[CAEAstronomy alloc] initWithAstronomyDict:dict];
@@ -385,7 +381,8 @@
 }
 
 - (NSInteger)numberOfCloudsForCloudView:(CAECloudsView *)cloudView {
-    return 3;
+    CAEWeatherHour *firstHour = [self.hourlyWeather.weatherHours objectAtIndex:0];
+    return (NSInteger) floor([firstHour.cloudCover floatValue] / (101.0 / 6.0));
 }
 
 @end
