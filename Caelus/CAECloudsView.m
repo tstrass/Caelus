@@ -37,8 +37,9 @@
     CGFloat cloudWidth = (self.frame.size.width - ((((maxClouds + 1) * 2) - 2) * CLOUD_H_PADDING)) / maxClouds;
     NSLog(@"Number of clouds to display: %lu", [self.delegate numberOfCloudsForCloudView:self]);
     CGFloat xValue = 0;
-    for (int i = 0; i < [self.delegate numberOfCloudsForCloudView:self]; i++) {
-        UIImageView *cloudImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"cloud"]];
+    for (int i = 0; i < [self.delegate maxNumberOfCloudsForCloudView:self]; i++) {
+        NSString *imageName = i < [self.delegate numberOfCloudsForCloudView:self] ? @"cloud" : @"cloud-border";
+        UIImageView *cloudImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:imageName]];
         xValue += CLOUD_H_PADDING;
         cloudImageView.frame = CGRectMake(xValue, CLOUD_V_PADDING, cloudWidth, [cloudImageView heightForWidth:cloudWidth]);
         [self addSubview:cloudImageView];
