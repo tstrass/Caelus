@@ -69,6 +69,14 @@
 	[super viewDidLoad];
 	[self configureView];
 
+    if ([self respondsToSelector:@selector(setNeedsStatusBarAppearanceUpdate)]) {
+        // iOS 7
+        [self performSelector:@selector(setNeedsStatusBarAppearanceUpdate)];
+    } else {
+        // iOS 6
+        [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationSlide];
+    }
+    
 	[self setUpLocationManager];
 
 	self.view.backgroundColor = [UIColor blackColor];
@@ -383,6 +391,11 @@
 - (NSInteger)numberOfCloudsForCloudView:(CAECloudsView *)cloudView {
     CAEWeatherHour *firstHour = [self.hourlyWeather.weatherHours objectAtIndex:0];
     return (NSInteger) floor([firstHour.cloudCover floatValue] / (101.0 / 6.0));
+}
+
+
+- (BOOL)prefersStatusBarHidden {
+    return YES;
 }
 
 @end
