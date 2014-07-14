@@ -157,7 +157,8 @@
 
 - (void)formatViewForFailedLocation {
 	self.view.backgroundColor = [self backgroundColorFromWeatherData];
-	self.currentLocationLabel.text = @"Where you at bra I can't tell";
+	self.currentLocationLabel.text = @"Cannot detect a location.";
+    self.currentLocationLabel.textAlignment = NSTextAlignmentCenter;
 	self.currentLocationLabel.font = [UIFont fontWithName:@"Times New Roman" size:12];
 	self.currentLocationLabel.adjustsFontSizeToFitWidth = YES;
 	self.currentLocationLabel.minimumScaleFactor = 0.3;
@@ -309,7 +310,7 @@
 
 	UIColor *backgroundColor = [[UIColor alloc] init];
 
-	backgroundColor = [UIColor colorWithRed:0.561 green:0.883 blue:0.947 alpha:1.000];
+	backgroundColor = [UIColor colorWithRed:0.438 green:0.640 blue:0.865 alpha:1.000];
 	return backgroundColor;
 }
 
