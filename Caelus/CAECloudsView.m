@@ -28,9 +28,7 @@
     // nothing to load if there's no delegate
     if (self.delegate == nil) return;
     
-    [self.subviews enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        [obj removeFromSuperview];
-    }];
+    [self.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
     
     NSInteger maxClouds = [self.delegate maxNumberOfCloudsForCloudView:self];
     NSLog(@"Maximum number of clouds: %lu", (long)maxClouds);
