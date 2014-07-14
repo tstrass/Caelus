@@ -59,8 +59,8 @@ const unsigned long SUNSET_DURATION = 30;
 	self.sunPhase = sunPhaseDict ? [[CAESunPhase alloc] initWithSunPhaseDict:sunPhaseDict] : nil;
 	self.moonPhase = moonPhaseDict ? [[CAEMoonPhase alloc] initWithMoonDict:moonPhaseDict] : nil;
 
-	self.currentHour = [NSNumber numberWithInt:[[currentTimeDict objectForKey:@"hour"] integerValue]];
-	self.currentMinute = [NSNumber numberWithInt:[[currentTimeDict objectForKey:@"minute"] integerValue]];
+	self.currentHour = [NSNumber numberWithInteger:[[currentTimeDict objectForKey:@"hour"] integerValue]];
+	self.currentMinute = [NSNumber numberWithInteger:[[currentTimeDict objectForKey:@"minute"] integerValue]];
 }
 
 - (void)calcLightPeriodIntervals {
