@@ -22,5 +22,6 @@
 - (NSInteger)numberOfCloudsForCloudView:(CAECloudsView *)cloudView;
 
 @optional
+- (NSNumber *)percentageRainChance;
 
 @end
