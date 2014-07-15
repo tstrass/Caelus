@@ -8,20 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-@protocol CAECloudsViewDelegate;
+#import "CAEDiscreteMeterView.h"
 
-@interface CAECloudsView : UIView
-@property (weak) id<CAECloudsViewDelegate> delegate;
-
-- (void)reload;
+@interface CAECloudsView : CAEDiscreteMeterView
++ (NSString *)imageNameWithFilledIn:(BOOL)filledIn CloudShade:(NSNumber *)cloudShade;
++ (NSNumber *)cloudShadeWithProbabilityOfPrecipitation:(NSNumber *)probabilityOfPrecipitation;
 @end
 
-@protocol CAECloudsViewDelegate <NSObject>
-@required
-- (NSInteger)maxNumberOfCloudsForCloudView:(CAECloudsView *)cloudView;
-- (NSInteger)numberOfCloudsForCloudView:(CAECloudsView *)cloudView;
-
-@optional
-- (NSNumber *)percentageRainChance;
-
-@end
