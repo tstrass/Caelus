@@ -9,7 +9,7 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // View
-#import "CAECloudsView.h"
+#import "CAECloudsDataSource.h"
 #import "CAEDiscreteMeterView.h"
 
 // Model
@@ -17,7 +17,7 @@
 #import "CAEAstronomy.h"
 #import "CAEHourlyWeather.h"
 
-@interface CAEDetailViewController () <CAEDiscreteMeterViewDelegate>
+@interface CAEDetailViewController () <CAEDiscreteMeterViewDelegate, CAEDiscreteMeterViewDelegate>
 @property (strong, nonatomic) UIPopoverController *masterPopoverController;
 - (void)configureView;
 
@@ -154,12 +154,9 @@
     self.cloudsView = [[CAEDiscreteMeterView alloc] initWithFrame:CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width, 400)];
     CAEWeatherHour *firstHour = [self.hourlyWeather.weatherHours objectAtIndex:0];
     NSNumber *propabilityOfPrecip = firstHour.probabilityOfPrecipitation;
-    NSNumber *cloudShade = [CAECloudsView cloudShadeWithProbabilityOfPrecipitation:propabilityOfPrecip];
-    NSString *valueImageName = [CAECloudsView imageNameWithFilledIn:YES CloudShade:cloudShade];
-    NSString *nonValueImageName = [CAECloudsView imageNameWithFilledIn:NO CloudShade:cloudShade];
-    
-    self.cloudsView.valueImage = [UIImage imageNamed:valueImageName];
-    self.cloudsView.nonValueImage = [UIImage imageNamed:nonValueImageName];
+
+    CAECloudsDataSource *cloudsDataSource = [[CAECloudsDataSource alloc] initWithChanceOfPrecipitation:propabilityOfPrecip];
+    self.cloudsView.dataSource = cloudsDataSource;
     self.cloudsView.delegate = self;
     [self.cloudsView reload];
     [self.view addSubview:self.cloudsView];
@@ -389,20 +386,6 @@
 			break;
 	}
 	return lightPeriodName;
-}
-
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-#pragma mark - CAECloudsView Delegate Methods
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-- (NSInteger)maxNumberOfCloudsForCloudView:(CAECloudsView *)cloudView {
-    return 5;
-}
-
-- (NSInteger)numberOfCloudsForCloudView:(CAECloudsView *)cloudView {
-    CAEWeatherHour *firstHour = [self.hourlyWeather.weatherHours objectAtIndex:0];
-    return (NSInteger) floor([firstHour.cloudCover floatValue] / (101.0 / 6.0));
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

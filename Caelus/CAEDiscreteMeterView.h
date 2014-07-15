@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @protocol CAEDiscreteMeterViewDelegate;
+@protocol CAEDiscreteMeterViewDataSource;
 
 /**
  *  This object is a meter that represents discrete values. The values are represented with images.
@@ -17,13 +18,10 @@
  */
 @interface CAEDiscreteMeterView : UIView
 @property (weak) id<CAEDiscreteMeterViewDelegate> delegate;
-- (id)initWithFrame:(CGRect)frame ValueImage:(UIImage *)valueImage NonValueImage:(UIImage *)nonValueImage;
-- (id)initWithValueImage:(UIImage *)valueImage NonValueImage:(UIImage *)nonValueImage;
+@property (weak) id<CAEDiscreteMeterViewDataSource> dataSource;
+//- (id)initWithFrame:(CGRect)frame ValueImage:(UIImage *)valueImage NonValueImage:(UIImage *)nonValueImage;
+//- (id)initWithValueImage:(UIImage *)valueImage NonValueImage:(UIImage *)nonValueImage;
 - (void)reload;
-/** image to represent a "filled in" value in the meter */
-@property (strong, nonatomic)UIImage *valueImage;
-/** image to represent a "non filled in" value in the meter */
-@property (strong, nonatomic)UIImage *nonValueImage;
 @end
 
 @protocol CAEDiscreteMeterViewDelegate <NSObject>
@@ -31,4 +29,13 @@
 - (NSInteger)maxValueForDiscreteMeterView:(CAEDiscreteMeterView *)discreteMeterView;
 /** value for meter (out of max value). i.e. number of "filled in" images */
 - (NSInteger)valueForDiscreteMeterView:(CAEDiscreteMeterView *)discreteMeterView;
+@end
+
+
+@protocol CAEDiscreteMeterViewDataSource <NSObject>
+@required
+/** image to represent a "filled in" value in the meter */
+- (UIImage *)valueImage;
+/** image to represent a "non filled in" value in the meter */
+- (UIImage *)nonValueImage;
 @end

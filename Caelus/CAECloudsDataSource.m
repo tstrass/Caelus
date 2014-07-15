@@ -5,33 +5,46 @@
 //  Created by Thomas Strassner on 7/11/14.
 //  Copyright (c) 2014 Enterprise Holdings, Inc. All rights reserved.
 //
-#import "CAECloudsView.h"
+#import "CAECloudsDataSource.h"
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #import "UIImageView+Tools.h"
 
-#define CLOUD_H_PADDING 2        // space between clouds
-#define CLOUD_V_PADDING 5        // space between top/bottom of clouds and top/bottom of view
+@interface CAECloudsDataSource ()
+@property (strong, nonatomic) NSNumber *probabilityOfPrecipitation;
+@end
 
-@implementation CAECloudsView
+@implementation CAECloudsDataSource
 
-- (id)initWithFrame:(CGRect)frame
-{
-    self = [super initWithFrame:frame];
+- (instancetype)initWithChanceOfPrecipitation:(NSNumber *)probabilityOfPrecipitation {
+    self = [super init];
     if (self) {
-        
+        self.probabilityOfPrecipitation = probabilityOfPrecipitation;
     }
     return self;
 }
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-#pragma mark - class methods
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-+ (NSString *)imageNameWithFilledIn:(BOOL)filledIn CloudShade:(NSNumber *)cloudShade {
-    // Only consider cloud shade if we have that information
-    return cloudShade ? [self cloudImageNameWithFilledIn:filledIn CloudShade:cloudShade] : [self cloudImageNameWithFilledIn:filledIn];
+- (UIImage *)nonValueImage {
+    if (self.probabilityOfPrecipitation != nil) {
+        NSNumber *cloudShade = [CAECloudsDataSource cloudShadeWithProbabilityOfPrecipitation:self.probabilityOfPrecipitation];
+        NSString *imageName = [CAECloudsDataSource cloudImageNameWithFilledIn:NO CloudShade:cloudShade];
+        return [UIImage imageNamed:imageName];
+    }
+    return [UIImage imageNamed:@"cloud-border"];
 }
+
+- (UIImage *)valueImage {
+    if (self.probabilityOfPrecipitation != nil) {
+        NSNumber *cloudShade = [CAECloudsDataSource cloudShadeWithProbabilityOfPrecipitation:self.probabilityOfPrecipitation];
+        NSString *imageName = [CAECloudsDataSource cloudImageNameWithFilledIn:YES CloudShade:cloudShade];
+        return [UIImage imageNamed:imageName];
+    }
+    return [UIImage imageNamed:@"cloud"];
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+#pragma mark - Determining of image
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 + (NSNumber *)cloudShadeWithProbabilityOfPrecipitation:(NSNumber *)probabilityOfPrecipitation {
     NSInteger cloudShadeInteger = (NSInteger) floor([probabilityOfPrecipitation floatValue] / (101.0 / 6.0));
@@ -76,12 +89,5 @@
                 return nil;
         }
     }
-}
-
-+ (NSString *)cloudImageNameWithFilledIn:(BOOL)filledIn {
-    if (filledIn) {
-        return @"cloud";
-    }
-    return @"cloud-border";
 }
 @end
