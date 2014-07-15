@@ -30,13 +30,14 @@
     
     [self.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
     
-    NSInteger maxValues = [self.delegate maxValueForDiscreteMeterView:self];
+    NSInteger maxValue = [self.delegate maxValueForDiscreteMeterView:self];
     NSInteger meterValue = [self.delegate valueForDiscreteMeterView:self];
     
-    CGFloat subviewWidth = (self.frame.size.width - ((((maxValues + 1) * 2) - 2) * SUBVIEW_H_PADDING)) / maxValues;
+    CGFloat subviewWidth = (self.frame.size.width - ((((maxValue + 1) * 2) - 2) * SUBVIEW_H_PADDING)) / maxValue;
     CGFloat xValue = 0;
+    
     // render each subview
-    for (int i = 0; i < maxValues; i++) {
+    for (int i = 0; i < maxValue; i++) {
         UIImage *subviewImage = (i < meterValue) ? [self.dataSource valueImage] : [self.dataSource nonValueImage];
         UIImageView *subviewImageView = [[UIImageView alloc] initWithImage:subviewImage];
         xValue += SUBVIEW_H_PADDING;

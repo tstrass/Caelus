@@ -19,8 +19,7 @@
 @interface CAEDiscreteMeterView : UIView
 @property (weak) id<CAEDiscreteMeterViewDelegate> delegate;
 @property (weak) id<CAEDiscreteMeterViewDataSource> dataSource;
-//- (id)initWithFrame:(CGRect)frame ValueImage:(UIImage *)valueImage NonValueImage:(UIImage *)nonValueImage;
-//- (id)initWithValueImage:(UIImage *)valueImage NonValueImage:(UIImage *)nonValueImage;
+
 - (void)reload;
 @end
 
