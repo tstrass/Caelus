@@ -10,13 +10,14 @@
 
 // View
 #import "CAECloudsView.h"
+#import "CAEDiscreteMeterView.h"
 
 // Model
 #import "CAECurrentConditions.h"
 #import "CAEAstronomy.h"
 #import "CAEHourlyWeather.h"
 
-@interface CAEDetailViewController () <CAECloudsViewDelegate>
+@interface CAEDetailViewController () <CAECloudsViewDelegate, CAEDiscreteMeterViewDelegate>
 @property (strong, nonatomic) UIPopoverController *masterPopoverController;
 - (void)configureView;
 
@@ -26,7 +27,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *astronomyLabel;
 @property (weak, nonatomic) IBOutlet UIScrollView *hourlyScrollView;
 
-@property (strong, nonatomic) CAECloudsView *cloudsView;
+//@property (strong, nonatomic) CAECloudsView *cloudsView;
+@property (strong, nonatomic) CAEDiscreteMeterView *cloudsView;
 
 // Requests
 @property (strong, nonatomic) NSMutableArray *requestsArray;
@@ -149,7 +151,9 @@
 	[UIView animateWithDuration:1.0 animations: ^{
 	    self.view.backgroundColor = [self backgroundColorFromWeatherData];
 	}];
-    self.cloudsView = [[CAECloudsView alloc] initWithFrame:CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width, 400)];
+    self.cloudsView = [[CAEDiscreteMeterView alloc] initWithFrame:CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width, 400)];
+    self.cloudsView.valueImage = [UIImage imageNamed:@"cloud"];
+    self.cloudsView.nonValueImage = [UIImage imageNamed:@"cloud-border"];
     self.cloudsView.delegate = self;
     [self.cloudsView reload];
     [self.view addSubview:self.cloudsView];
@@ -399,6 +403,20 @@
     CAEWeatherHour *firstHour = [self.hourlyWeather.weatherHours objectAtIndex:0];
     return firstHour.probabilityOfPrecipitation;
 }
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+#pragma mark - CAEDiscreteMeterView Delegate Methods
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+- (NSInteger)maxValueForDiscreteMeterView:(CAEDiscreteMeterView *)discreteMeterView {
+    return 5;
+}
+
+- (NSInteger)valueForDiscreteMeterView:(CAEDiscreteMeterView *)discreteMeterView {
+    CAEWeatherHour *firstHour = [self.hourlyWeather.weatherHours objectAtIndex:0];
+    return (NSInteger) floor([firstHour.cloudCover floatValue] / (101.0 / 6.0));
+}
+
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark - UIViewController delegate methods

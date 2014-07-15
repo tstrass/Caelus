@@ -36,6 +36,8 @@
 		E2EA38E7196EE2B30089896B /* CAEWeatherInformation.m in Sources */ = {isa = PBXBuildFile; fileRef = E2EA38E6196EE2B30089896B /* CAEWeatherInformation.m */; };
 		E2EB122C196EEB1900BC0DEA /* Clayton.gpx in Resources */ = {isa = PBXBuildFile; fileRef = E2EB122A196EEB1900BC0DEA /* Clayton.gpx */; };
 		E2EB122D196EEB1900BC0DEA /* Tufts.gpx in Resources */ = {isa = PBXBuildFile; fileRef = E2EB122B196EEB1900BC0DEA /* Tufts.gpx */; };
+		E2F18E2E197570C700C013FA /* CAEPrecipitationView.m in Sources */ = {isa = PBXBuildFile; fileRef = E2F18E2D197570C700C013FA /* CAEPrecipitationView.m */; };
+		E2F18E3119757B1900C013FA /* CAEDiscreteMeterView.m in Sources */ = {isa = PBXBuildFile; fileRef = E2F18E3019757B1900C013FA /* CAEDiscreteMeterView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -95,6 +97,10 @@
 		E2EA38E6196EE2B30089896B /* CAEWeatherInformation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CAEWeatherInformation.m; sourceTree = "<group>"; };
 		E2EB122A196EEB1900BC0DEA /* Clayton.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Clayton.gpx; sourceTree = "<group>"; };
 		E2EB122B196EEB1900BC0DEA /* Tufts.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Tufts.gpx; sourceTree = "<group>"; };
+		E2F18E2C197570C700C013FA /* CAEPrecipitationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAEPrecipitationView.h; sourceTree = "<group>"; };
+		E2F18E2D197570C700C013FA /* CAEPrecipitationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CAEPrecipitationView.m; sourceTree = "<group>"; };
+		E2F18E2F19757B1900C013FA /* CAEDiscreteMeterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAEDiscreteMeterView.h; sourceTree = "<group>"; };
+		E2F18E3019757B1900C013FA /* CAEDiscreteMeterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CAEDiscreteMeterView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -161,6 +167,10 @@
 				E259FECA19702AF7000E032C /* CAECloudsView.m */,
 				E259FECF19707388000E032C /* UIImageView+Tools.h */,
 				E259FED019707388000E032C /* UIImageView+Tools.m */,
+				E2F18E2C197570C700C013FA /* CAEPrecipitationView.h */,
+				E2F18E2D197570C700C013FA /* CAEPrecipitationView.m */,
+				E2F18E2F19757B1900C013FA /* CAEDiscreteMeterView.h */,
+				E2F18E3019757B1900C013FA /* CAEDiscreteMeterView.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -352,10 +362,12 @@
 				E2E1EF0A1954BB9600A0B541 /* CAEDetailViewController.m in Sources */,
 				E2E1EEFA1954BB9600A0B541 /* main.m in Sources */,
 				E2CE3CDA196B351A00E9D07B /* CAEMoonPhase.m in Sources */,
+				E2F18E3119757B1900C013FA /* CAEDiscreteMeterView.m in Sources */,
 				E2EA38E7196EE2B30089896B /* CAEWeatherInformation.m in Sources */,
 				E259FECB19702AF7000E032C /* CAECloudsView.m in Sources */,
 				E2CE3CD1196AE30A00E9D07B /* CAECurrentConditions.m in Sources */,
 				E259FED119707388000E032C /* UIImageView+Tools.m in Sources */,
+				E2F18E2E197570C700C013FA /* CAEPrecipitationView.m in Sources */,
 				E2E1EF071954BB9600A0B541 /* CAEMasterViewController.m in Sources */,
 				E2CE3CD7196B317300E9D07B /* CAESunPhase.m in Sources */,
 				E2E1EEFE1954BB9600A0B541 /* CAEAppDelegate.m in Sources */,
