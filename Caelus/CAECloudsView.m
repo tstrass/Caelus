@@ -24,45 +24,21 @@
     return self;
 }
 
-- (void)reload {
-    // nothing to load if there's no delegate
-    if (self.delegate == nil) return;
-    
-    [self.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
-    
-    NSInteger maxClouds = [self.delegate maxNumberOfCloudsForCloudView:self];
-    //NSLog(@"Maximum number of clouds: %lu", (long)maxClouds);
-    NSInteger numClouds = [self.delegate numberOfCloudsForCloudView:self];
-    //NSLog(@"Number of clouds to display: %lu", (long)numClouds);
-    NSNumber *cloudShade = nil;
-    if ([self.delegate respondsToSelector:@selector(percentageRainChance)]) cloudShade = [self calculateCloudShade];
-    
-    CGFloat cloudWidth = (self.frame.size.width - ((((maxClouds + 1) * 2) - 2) * CLOUD_H_PADDING)) / maxClouds;
-    CGFloat xValue = 0;
-    
-    for (int i = 0; i < maxClouds; i++) {
-        // Use cloud border image if we already have enough clouds to represent % cloudiness
-        NSString *imageName = [self imageNameWithFilledIn:(i < numClouds) CloudShade:cloudShade];
-        NSLog(@"Using cloud image: %@", imageName);
-        UIImageView *cloudImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:imageName]];
-        xValue += CLOUD_H_PADDING;
-        cloudImageView.frame = CGRectMake(xValue, CLOUD_V_PADDING, cloudWidth, [cloudImageView heightForWidth:cloudWidth]);
-        [self addSubview:cloudImageView];
-        xValue += cloudWidth + CLOUD_H_PADDING;
-    }
-}
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+#pragma mark - class methods
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-- (NSString *)imageNameWithFilledIn:(BOOL)filledIn CloudShade:(NSNumber *)cloudShade {
++ (NSString *)imageNameWithFilledIn:(BOOL)filledIn CloudShade:(NSNumber *)cloudShade {
     // Only consider cloud shade if we have that information
     return cloudShade ? [self cloudImageNameWithFilledIn:filledIn CloudShade:cloudShade] : [self cloudImageNameWithFilledIn:filledIn];
 }
 
-- (NSNumber *)calculateCloudShade {
-    NSInteger cloudShadeInteger = (NSInteger) floor([[self.delegate percentageRainChance] floatValue] / (101.0 / 6.0));
++ (NSNumber *)cloudShadeWithProbabilityOfPrecipitation:(NSNumber *)probabilityOfPrecipitation {
+    NSInteger cloudShadeInteger = (NSInteger) floor([probabilityOfPrecipitation floatValue] / (101.0 / 6.0));
     return [NSNumber numberWithInteger:cloudShadeInteger];
 }
 
-- (NSString *)cloudImageNameWithFilledIn:(BOOL)filledIn CloudShade:(NSNumber *)cloudShade {
++ (NSString *)cloudImageNameWithFilledIn:(BOOL)filledIn CloudShade:(NSNumber *)cloudShade {
     if (filledIn) {
         switch ([cloudShade integerValue]) {
             case 0:
@@ -102,7 +78,7 @@
     }
 }
 
-- (NSString *)cloudImageNameWithFilledIn:(BOOL)filledIn {
++ (NSString *)cloudImageNameWithFilledIn:(BOOL)filledIn {
     if (filledIn) {
         return @"cloud";
     }
