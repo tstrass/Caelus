@@ -33,12 +33,10 @@
 }
 
 - (UIImage *)valueImage {
-    // TODO: change first option to snow once you have the image
-    return self.precipType == SNOW ? [UIImage imageNamed:@"rain"] : [UIImage imageNamed:@"rain"];
+    return self.precipType == SNOW ? [UIImage imageNamed:@"snow"] : [UIImage imageNamed:@"rain"];
 }
 
 -(UIImage *)nonValueImage {
-    // TODO: change first option to snow-border once you have the image
-    return self.precipType == SNOW ? [UIImage imageNamed:@"rain-border"] : [UIImage imageNamed:@"rain-border"];
+    return self.precipType == SNOW ? [UIImage imageNamed:@"snow-border"] : [UIImage imageNamed:@"rain-border"];
 }
 @end
