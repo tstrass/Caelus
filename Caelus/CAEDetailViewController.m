@@ -8,19 +8,18 @@
 #import "CAEDetailViewController.h"
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+// Delegate
+#import "CAECloudsDelegate.h"
+
 // View
 #import "CAEDiscreteMeterView.h"
-
-// Data Source
-#import "CAECloudsDataSource.h"
-#import "CAEPrecipitationDataSource.h"
 
 // Model
 #import "CAECurrentConditions.h"
 #import "CAEAstronomy.h"
 #import "CAEHourlyWeather.h"
 
-@interface CAEDetailViewController () <CAEDiscreteMeterViewDelegate, CAEDiscreteMeterViewDelegate>
+@interface CAEDetailViewController ()
 @property (strong, nonatomic) UIPopoverController *masterPopoverController;
 - (void)configureView;
 
@@ -31,7 +30,8 @@
 @property (weak, nonatomic) IBOutlet UIScrollView *hourlyScrollView;
 
 //@property (strong, nonatomic) CAECloudsView *cloudsView;
-@property (strong, nonatomic) CAEDiscreteMeterView *cloudsView;
+@property (strong, nonatomic) CAEDiscreteMeterView *cloudsMeterView;
+@property (strong, nonatomic) CAEDiscreteMeterView *precipitationMeterView;
 
 // Requests
 @property (strong, nonatomic) NSMutableArray *requestsArray;
@@ -154,15 +154,16 @@
 	[UIView animateWithDuration:1.0 animations: ^{
 	    self.view.backgroundColor = [self backgroundColorFromWeatherData];
 	}];
-    self.cloudsView = [[CAEDiscreteMeterView alloc] initWithFrame:CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width, 400)];
+    self.cloudsMeterView = [[CAEDiscreteMeterView alloc] initWithFrame:CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width, 400)];
     CAEWeatherHour *firstHour = [self.hourlyWeather.weatherHours objectAtIndex:0];
     NSNumber *propabilityOfPrecip = firstHour.probabilityOfPrecipitation;
-
-    CAECloudsDataSource *cloudsDataSource = [[CAECloudsDataSource alloc] initWithChanceOfPrecipitation:propabilityOfPrecip];
-    self.cloudsView.dataSource = cloudsDataSource;
-    self.cloudsView.delegate = self;
-    [self.cloudsView reload];
-    [self.view addSubview:self.cloudsView];
+    NSNumber *percentCloudy = firstHour.cloudCover;
+    
+    CAECloudsDelegate *cloudsDelegate = [[CAECloudsDelegate alloc] initWithPercentCloudy:percentCloudy ChanceOfPrecipitation:propabilityOfPrecip];
+    self.cloudsMeterView.dataSource = cloudsDelegate;
+    self.cloudsMeterView.delegate = cloudsDelegate;
+    [self.cloudsMeterView reload];
+    [self.view addSubview:self.cloudsMeterView];
 }
 
 - (void)formatViewForFailedLocation {
@@ -390,20 +391,6 @@
 	}
 	return lightPeriodName;
 }
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-#pragma mark - CAEDiscreteMeterView Delegate Methods
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-- (NSInteger)maxValueForDiscreteMeterView:(CAEDiscreteMeterView *)discreteMeterView {
-    return 5;
-}
-
-- (NSInteger)valueForDiscreteMeterView:(CAEDiscreteMeterView *)discreteMeterView {
-    CAEWeatherHour *firstHour = [self.hourlyWeather.weatherHours objectAtIndex:0];
-    return (NSInteger) floor([firstHour.cloudCover floatValue] / (101.0 / 6.0));
-}
-
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark - UIViewController delegate methods

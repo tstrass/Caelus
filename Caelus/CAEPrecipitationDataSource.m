@@ -24,10 +24,10 @@
 }
 
 - (UIImage *)valueImage {
-    return nil;
+    return [UIImage imageNamed:@"rain"];
 }
 
 -(UIImage *)nonValueImage {
-    return nil;
+    return [UIImage imageNamed:@"rain-border"];
 }
 @end
