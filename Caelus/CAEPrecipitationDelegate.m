@@ -6,14 +6,14 @@
 //  Copyright (c) 2014 Enterprise Holdings, Inc. All rights reserved.
 //
 
-#import "CAEPrecipitationDataSource.h"
+#import "CAEPrecipitationDelegate.h"
 
-@interface CAEPrecipitationDataSource ()
+@interface CAEPrecipitationDelegate ()
 @property (nonatomic) PrecipType precipType;
 @property (strong, nonatomic) NSNumber *probability;
 @end
 
-@implementation CAEPrecipitationDataSource
+@implementation CAEPrecipitationDelegate
 - (instancetype)initWithPrecipType:(PrecipType)precipType Probability:(NSNumber *)probability {
     self = [super init];
     if (self) {
@@ -21,6 +21,15 @@
         self.probability = probability;
     }
     return self;
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+- (NSInteger)maxValueForDiscreteMeterView:(CAEDiscreteMeterView *)discreteMeterView {
+    return 5;
+}
+
+- (NSInteger)valueForDiscreteMeterView:(CAEDiscreteMeterView *)discreteMeterView {
+    return (NSInteger) floor([self.probability floatValue] / (101.0 / 6.0));
 }
 
 - (UIImage *)valueImage {

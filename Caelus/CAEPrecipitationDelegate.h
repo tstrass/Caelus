@@ -12,10 +12,9 @@
 
 typedef NS_ENUM(NSInteger, PrecipType) {
     RAIN,
-    SNOW,
-    HAIL
+    SNOW
 };
 
-@interface CAEPrecipitationDataSource : NSObject <CAEDiscreteMeterViewDataSource>
+@interface CAEPrecipitationDelegate : NSObject <CAEDiscreteMeterViewDelegate, CAEDiscreteMeterViewDataSource>
 - (instancetype)initWithPrecipType:(PrecipType)precipType Probability:(NSNumber *)probability;
 @end

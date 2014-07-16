@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		E20001A819630E3B007659E3 /* CAEAstronomy.m in Sources */ = {isa = PBXBuildFile; fileRef = E20001A719630E3B007659E3 /* CAEAstronomy.m */; };
-		E2089BF81976D04A00E0D643 /* CAEPrecipitationDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = E2089BF71976D04A00E0D643 /* CAEPrecipitationDataSource.m */; };
+		E2089BF81976D04A00E0D643 /* CAEPrecipitationDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E2089BF71976D04A00E0D643 /* CAEPrecipitationDelegate.m */; };
 		E259FECB19702AF7000E032C /* CAECloudsDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E259FECA19702AF7000E032C /* CAECloudsDelegate.m */; };
 		E259FED119707388000E032C /* UIImageView+Tools.m in Sources */ = {isa = PBXBuildFile; fileRef = E259FED019707388000E032C /* UIImageView+Tools.m */; };
 		E29571F61964A1B1009B725C /* CAEHourlyWeather.m in Sources */ = {isa = PBXBuildFile; fileRef = E29571F51964A1B1009B725C /* CAEHourlyWeather.m */; };
@@ -53,8 +53,8 @@
 /* Begin PBXFileReference section */
 		E20001A619630E3B007659E3 /* CAEAstronomy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAEAstronomy.h; sourceTree = "<group>"; };
 		E20001A719630E3B007659E3 /* CAEAstronomy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CAEAstronomy.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		E2089BF61976D04A00E0D643 /* CAEPrecipitationDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAEPrecipitationDataSource.h; sourceTree = "<group>"; };
-		E2089BF71976D04A00E0D643 /* CAEPrecipitationDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CAEPrecipitationDataSource.m; sourceTree = "<group>"; };
+		E2089BF61976D04A00E0D643 /* CAEPrecipitationDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAEPrecipitationDelegate.h; sourceTree = "<group>"; };
+		E2089BF71976D04A00E0D643 /* CAEPrecipitationDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CAEPrecipitationDelegate.m; sourceTree = "<group>"; };
 		E259FEC919702AF7000E032C /* CAECloudsDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAECloudsDelegate.h; sourceTree = "<group>"; };
 		E259FECA19702AF7000E032C /* CAECloudsDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CAECloudsDelegate.m; sourceTree = "<group>"; };
 		E259FECF19707388000E032C /* UIImageView+Tools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+Tools.h"; sourceTree = "<group>"; };
@@ -174,8 +174,8 @@
 		E287E3591976F45000066C80 /* Delegate */ = {
 			isa = PBXGroup;
 			children = (
-				E2089BF61976D04A00E0D643 /* CAEPrecipitationDataSource.h */,
-				E2089BF71976D04A00E0D643 /* CAEPrecipitationDataSource.m */,
+				E2089BF61976D04A00E0D643 /* CAEPrecipitationDelegate.h */,
+				E2089BF71976D04A00E0D643 /* CAEPrecipitationDelegate.m */,
 				E259FEC919702AF7000E032C /* CAECloudsDelegate.h */,
 				E259FECA19702AF7000E032C /* CAECloudsDelegate.m */,
 			);
@@ -371,7 +371,7 @@
 				E2E1EEFA1954BB9600A0B541 /* main.m in Sources */,
 				E2CE3CDA196B351A00E9D07B /* CAEMoonPhase.m in Sources */,
 				E2F18E3119757B1900C013FA /* CAEDiscreteMeterView.m in Sources */,
-				E2089BF81976D04A00E0D643 /* CAEPrecipitationDataSource.m in Sources */,
+				E2089BF81976D04A00E0D643 /* CAEPrecipitationDelegate.m in Sources */,
 				E2EA38E7196EE2B30089896B /* CAEWeatherInformation.m in Sources */,
 				E259FECB19702AF7000E032C /* CAECloudsDelegate.m in Sources */,
 				E2CE3CD1196AE30A00E9D07B /* CAECurrentConditions.m in Sources */,
