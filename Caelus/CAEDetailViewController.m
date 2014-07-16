@@ -9,8 +9,11 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // View
-#import "CAECloudsDataSource.h"
 #import "CAEDiscreteMeterView.h"
+
+// Data Source
+#import "CAECloudsDataSource.h"
+#import "CAEPrecipitationDataSource.h"
 
 // Model
 #import "CAECurrentConditions.h"
