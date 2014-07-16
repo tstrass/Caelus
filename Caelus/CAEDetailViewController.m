@@ -10,6 +10,7 @@
 
 // Delegate
 #import "CAECloudsDelegate.h"
+#import "CAEPrecipitationDelegate.h"
 
 // View
 #import "CAEDiscreteMeterView.h"
@@ -28,10 +29,11 @@
 @property (weak, nonatomic) IBOutlet UILabel *currentConditionsLabel;
 @property (weak, nonatomic) IBOutlet UILabel *astronomyLabel;
 @property (weak, nonatomic) IBOutlet UIScrollView *hourlyScrollView;
+@property (weak, nonatomic) IBOutlet CAEDiscreteMeterView *cloudsMeterView;
+@property (weak, nonatomic) IBOutlet CAEDiscreteMeterView *precipitationMeterView;
 
-//@property (strong, nonatomic) CAECloudsView *cloudsView;
-@property (strong, nonatomic) CAEDiscreteMeterView *cloudsMeterView;
-@property (strong, nonatomic) CAEDiscreteMeterView *precipitationMeterView;
+//@property (strong, nonatomic) CAEDiscreteMeterView *cloudsMeterView;
+//@property (strong, nonatomic) CAEDiscreteMeterView *precipitationMeterView;
 
 // Requests
 @property (strong, nonatomic) NSMutableArray *requestsArray;
@@ -68,6 +70,8 @@
 	if (self.detailItem) {
 		self.detailDescriptionLabel.text = [self.detailItem description];
 	}
+    self.cloudsMeterView.backgroundColor = [UIColor clearColor];
+    self.precipitationMeterView.backgroundColor = [UIColor clearColor];
 }
 
 - (void)viewDidLoad {
@@ -154,7 +158,11 @@
 	[UIView animateWithDuration:1.0 animations: ^{
 	    self.view.backgroundColor = [self backgroundColorFromWeatherData];
 	}];
-    self.cloudsMeterView = [[CAEDiscreteMeterView alloc] initWithFrame:CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width, 400)];
+    [self formatCloudsView];
+    [self formatPrecpitationView];
+}
+
+- (void)formatCloudsView {
     CAEWeatherHour *firstHour = [self.hourlyWeather.weatherHours objectAtIndex:0];
     NSNumber *propabilityOfPrecip = firstHour.probabilityOfPrecipitation;
     NSNumber *percentCloudy = firstHour.cloudCover;
@@ -164,6 +172,18 @@
     self.cloudsMeterView.delegate = cloudsDelegate;
     [self.cloudsMeterView reload];
     [self.view addSubview:self.cloudsMeterView];
+}
+
+- (void)formatPrecpitationView {
+    CAEWeatherHour *firstHour = [self.hourlyWeather.weatherHours objectAtIndex:0];
+    NSNumber *probabilityOfPrecip = firstHour.probabilityOfPrecipitation;
+    PrecipType precipType = [self precipTypeFromIconName:firstHour.iconName Temperature:firstHour.fTemp];
+    
+    CAEPrecipitationDelegate *precipitationDelegate = [[CAEPrecipitationDelegate alloc] initWithPrecipType:precipType Probability:probabilityOfPrecip];
+    self.precipitationMeterView.dataSource = precipitationDelegate;
+    self.precipitationMeterView.delegate = precipitationDelegate;
+    [self.precipitationMeterView reload];
+    [self.view addSubview:self.precipitationMeterView];
 }
 
 - (void)formatViewForFailedLocation {
@@ -310,6 +330,19 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark - Utilities for data presentation
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+- (PrecipType)precipTypeFromIconName:(NSString *)iconName Temperature:(NSNumber *)fTemp {
+    if ([fTemp integerValue] > 40) return RAIN;
+    if ([fTemp integerValue] > 28) return SNOW;
+    
+    if ([iconName isEqualToString:@"rain"] || [iconName isEqualToString:@"chancerain"] || [iconName isEqualToString:@"sleet"] || [iconName isEqualToString:@"chancesleet"] || [iconName isEqualToString:@"tstorms"] || [iconName isEqualToString:@"chancetstorms"]) {
+        return RAIN;
+    } else if ([iconName isEqualToString:@"snow"] || [iconName isEqualToString:@"flurries"] || [iconName isEqualToString:@"chancesnow"] || [iconName isEqualToString:@"chanceflurries"]) {
+        return SNOW;
+    } else {
+        return ([fTemp integerValue] > 32) ? RAIN : SNOW;
+    }
+}
 
 /**
  *  Determine the background color, based on temp and sunniness
