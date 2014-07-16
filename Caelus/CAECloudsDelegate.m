@@ -1,31 +1,46 @@
 //
-//  CAECloudsView.m
+//  CAECloudsDelegate.m
 //  Caelus
 //
 //  Created by Thomas Strassner on 7/11/14.
 //  Copyright (c) 2014 Enterprise Holdings, Inc. All rights reserved.
 //
-#import "CAECloudsDataSource.h"
+#import "CAECloudsDelegate.h"
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #import "UIImageView+Tools.h"
 
-@interface CAECloudsDataSource ()
+@interface CAECloudsDelegate ()
+@property (strong, nonatomic) NSNumber *percentCloudy;
 @property (strong, nonatomic) NSNumber *probabilityOfPrecipitation;
 @end
 
-@implementation CAECloudsDataSource
+@implementation CAECloudsDelegate
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark - Custom Initializers
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-- (instancetype)initWithChanceOfPrecipitation:(NSNumber *)probabilityOfPrecipitation {
+- (instancetype)initWithPercentCloudy:(NSNumber *)percentCloudy ChanceOfPrecipitation:(NSNumber *)probabilityOfPrecipitation {
     self = [super init];
     if (self) {
+        self.percentCloudy = percentCloudy;
         self.probabilityOfPrecipitation = probabilityOfPrecipitation;
     }
     return self;
 }
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+#pragma mark - CAEDiscreteMeterView Delegate Methods
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+- (NSInteger)maxValueForDiscreteMeterView:(CAEDiscreteMeterView *)discreteMeterView {
+    return 5;
+}
+
+- (NSInteger)valueForDiscreteMeterView:(CAEDiscreteMeterView *)discreteMeterView {
+   return (NSInteger) floor([self.percentCloudy floatValue] / (101.0 / 6.0));
+}
+
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark - CAEDiscreteMeterView Data Source Methods
@@ -34,8 +49,8 @@
 
 - (UIImage *)nonValueImage {
     if (self.probabilityOfPrecipitation != nil) {
-        NSNumber *cloudShade = [CAECloudsDataSource cloudShadeWithProbabilityOfPrecipitation:self.probabilityOfPrecipitation];
-        NSString *imageName = [CAECloudsDataSource cloudImageNameWithFilledIn:NO CloudShade:cloudShade];
+        NSNumber *cloudShade = [CAECloudsDelegate cloudShadeWithProbabilityOfPrecipitation:self.probabilityOfPrecipitation];
+        NSString *imageName = [CAECloudsDelegate cloudImageNameWithFilledIn:NO CloudShade:cloudShade];
         return [UIImage imageNamed:imageName];
     }
     return [UIImage imageNamed:@"cloud-border"];
@@ -43,8 +58,8 @@
 
 - (UIImage *)valueImage {
     if (self.probabilityOfPrecipitation != nil) {
-        NSNumber *cloudShade = [CAECloudsDataSource cloudShadeWithProbabilityOfPrecipitation:self.probabilityOfPrecipitation];
-        NSString *imageName = [CAECloudsDataSource cloudImageNameWithFilledIn:YES CloudShade:cloudShade];
+        NSNumber *cloudShade = [CAECloudsDelegate cloudShadeWithProbabilityOfPrecipitation:self.probabilityOfPrecipitation];
+        NSString *imageName = [CAECloudsDelegate cloudImageNameWithFilledIn:YES CloudShade:cloudShade];
         return [UIImage imageNamed:imageName];
     }
     return [UIImage imageNamed:@"cloud"];
