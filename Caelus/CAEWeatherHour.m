@@ -53,6 +53,8 @@
 
 	self.condition = [hourDict objectForKey:@"condition"];
 	self.cloudCover = [NSNumber numberWithInteger:[[hourDict objectForKey:@"sky"] integerValue]];
+    
+    self.iconName = [hourDict objectForKey:@"icon"];
 }
 
 @end

@@ -37,6 +37,8 @@
 	self.windSpeedKPH = [currentObservation objectForKey:@"wind_kph"];
 	self.windDir = [currentObservation objectForKey:@"wind_dir"];
 	self.windDescription = [currentObservation objectForKey:@"wind_string"];
+    
+    self.iconName = [currentObservation objectForKey:@"icon"];
 
 	// Note: these values are strings in the JSON response
 	self.precipIn = [NSNumber numberWithFloat:[[currentObservation objectForKey:@"precip_1hr_in"] floatValue]];
