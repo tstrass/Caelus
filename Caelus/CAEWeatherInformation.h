@@ -31,4 +31,7 @@
 @property (strong, nonatomic) NSNumber *precipIn;
 /** predicted precipitation during an hour in millimeters */
 @property (strong, nonatomic) NSNumber *precipMM;
+
+// Miscellaneous
+@property (strong, nonatomic) NSString *iconName;
 @end
