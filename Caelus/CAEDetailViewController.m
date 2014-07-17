@@ -60,6 +60,11 @@
 #define DUSK_MINUTE = self.sunsetMinuteTime + 30;
 #define DAWN_MINUTE = self.sunriseMinuteTime - 30;
 
+/** if there's precipitation you know it will be raining at or above this farenheit value */
+const int MIN_RAIN_SURE = 40;
+/** if there's precipitation you know it will be frozen at or below this farenheit value */
+const int MAX_SNOW_SURE = 28;
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark - Managing the detail item
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -332,8 +337,8 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 - (PrecipType)precipTypeFromIconName:(NSString *)iconName Temperature:(NSNumber *)fTemp {
-    if ([fTemp integerValue] > 40) return RAIN;
-    if ([fTemp integerValue] > 28) return SNOW;
+    if ([fTemp integerValue] >= MIN_RAIN_SURE) return RAIN;
+    if ([fTemp integerValue] >= MAX_SNOW_SURE) return SNOW;
     
     if ([iconName isEqualToString:@"rain"] || [iconName isEqualToString:@"chancerain"] || [iconName isEqualToString:@"sleet"] || [iconName isEqualToString:@"chancesleet"] || [iconName isEqualToString:@"tstorms"] || [iconName isEqualToString:@"chancetstorms"]) {
         return RAIN;

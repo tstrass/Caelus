@@ -14,6 +14,8 @@
 @end
 
 @implementation CAEPrecipitationDelegate
+const int MAX_METER_VALUE = 5;
+
 - (instancetype)initWithPrecipType:(PrecipType)precipType Probability:(NSNumber *)probability {
     self = [super init];
     if (self) {
@@ -25,11 +27,12 @@
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 - (NSInteger)maxValueForDiscreteMeterView:(CAEDiscreteMeterView *)discreteMeterView {
-    return 5;
+    return MAX_METER_VALUE;
 }
 
 - (NSInteger)valueForDiscreteMeterView:(CAEDiscreteMeterView *)discreteMeterView {
-    return (NSInteger) floor([self.probability floatValue] / (101.0 / 6.0));
+    // 101 so that if there's 100% chance of rain you still get MAX_METER_VALUE as opposed to MAX_METER_VALUE + 1
+    return (NSInteger) floor([self.probability floatValue] / (101.0 / (MAX_METER_VALUE + 1.0)));
 }
 
 - (UIImage *)valueImage {

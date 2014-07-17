@@ -16,6 +16,8 @@
 @end
 
 @implementation CAECloudsDelegate
+const int MAX_METER_VALUE = 5;
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark - Custom Initializers
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -34,11 +36,11 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 - (NSInteger)maxValueForDiscreteMeterView:(CAEDiscreteMeterView *)discreteMeterView {
-    return 5;
+    return MAX_METER_VALUE;
 }
 
 - (NSInteger)valueForDiscreteMeterView:(CAEDiscreteMeterView *)discreteMeterView {
-   return (NSInteger) floor([self.percentCloudy floatValue] / (101.0 / 6.0));
+   return (NSInteger) floor([self.percentCloudy floatValue] / (101.0 / (MAX_METER_VALUE + 1)));
 }
 
 
