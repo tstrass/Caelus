@@ -14,7 +14,7 @@
 @end
 
 @implementation CAEPrecipitationDelegate
-const int MAX_METER_VALUE = 5;
+static const int MAX_METER_VALUE = 5;
 
 - (instancetype)initWithPrecipType:(PrecipType)precipType Probability:(NSNumber *)probability {
     self = [super init];
