@@ -34,24 +34,24 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lSO-ft-mzW">
-                                <rect key="frame" x="20" y="252" width="280" height="59"/>
+                                <rect key="frame" x="20" y="145" width="280" height="59"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Current Location:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cO3-Yo-0zk">
-                                <rect key="frame" x="20" y="223" width="280" height="21"/>
+                                <rect key="frame" x="20" y="116" width="280" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="TimesNewRomanPSMT" family="Times New Roman" pointSize="12"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GlV-iD-YS7">
-                                <rect key="frame" x="40" y="414" width="240" height="134"/>
+                                <rect key="frame" x="20" y="307" width="280" height="78"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             </scrollView>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7XL-R3-CxK">
-                                <rect key="frame" x="20" y="319" width="280" height="87"/>
+                                <rect key="frame" x="20" y="212" width="280" height="87"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -67,6 +67,10 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                             </view>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lgr-Qu-i3I" customClass="CAEHorizontalScrollView">
+                                <rect key="frame" x="20" y="466" width="280" height="82"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            </scrollView>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -76,7 +80,8 @@
                         <outlet property="cloudsMeterView" destination="k41-yB-8Mm" id="cvz-lB-6qJ"/>
                         <outlet property="currentConditionsLabel" destination="lSO-ft-mzW" id="nYl-KM-IQv"/>
                         <outlet property="currentLocationLabel" destination="cO3-Yo-0zk" id="b51-vm-DRv"/>
-                        <outlet property="hourlyScrollView" destination="GlV-iD-YS7" id="1YJ-dq-mPc"/>
+                        <outlet property="hourlyScrollView" destination="GlV-iD-YS7" id="h23-LA-ZJk"/>
+                        <outlet property="hoursScrollView" destination="lgr-Qu-i3I" id="ZHU-CR-iXR"/>
                         <outlet property="precipitationMeterView" destination="ye2-m0-hfE" id="tgU-Py-3NF"/>
                     </connections>
                 </viewController>
