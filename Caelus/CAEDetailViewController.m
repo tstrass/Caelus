@@ -77,6 +77,7 @@ const int MAX_SNOW_SURE = 28;
 	}
     self.cloudsMeterView.backgroundColor = [UIColor clearColor];
     self.precipitationMeterView.backgroundColor = [UIColor clearColor];
+    self.hoursScrollView.layer.borderWidth = 1.0;
 }
 
 - (void)viewDidLoad {
@@ -165,7 +166,7 @@ const int MAX_SNOW_SURE = 28;
 	}];
     [self formatCloudsView];
     [self formatPrecpitationView];
-    [self formatHourlyScrollView];
+    [self populateHoursScrollView];
 }
 
 - (void)formatCloudsView {
@@ -190,7 +191,7 @@ const int MAX_SNOW_SURE = 28;
     [self.precipitationMeterView reload];
 }
 
-- (void)formatHourlyScrollView {
+- (void)populateHoursScrollView {
     NSNumber *numberOfHours = [NSNumber numberWithInteger:self.hourlyWeather.weatherHours.count];
     CAEWeatherHour *firstWeatherHour = [self.hourlyWeather.weatherHours objectAtIndex:0];
     NSNumber *startHour = firstWeatherHour.hour;
