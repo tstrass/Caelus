@@ -13,7 +13,7 @@
 
 @interface CAEHorizontalScrollView : UIScrollView
 @property (nonatomic, assign) id<UIScrollViewDelegate, CAEHorizontalScrollViewDelegate> delegate;
-@property (nonatomic, weak) id<CAEHorizontalScrollViewDataSource> dataSource;
+@property (nonatomic, strong) id<CAEHorizontalScrollViewDataSource> dataSource;
 
 - (void)reload;
 @end
