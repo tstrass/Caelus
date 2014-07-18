@@ -11,9 +11,11 @@
 // Delegate
 #import "CAECloudsDelegate.h"
 #import "CAEPrecipitationDelegate.h"
+#import "CAEHoursScrollViewDelegate.h"
 
 // View
 #import "CAEDiscreteMeterView.h"
+#import "CAEHorizontalScrollView.h"
 
 // Model
 #import "CAECurrentConditions.h"
@@ -31,9 +33,7 @@
 @property (weak, nonatomic) IBOutlet UIScrollView *hourlyScrollView;
 @property (weak, nonatomic) IBOutlet CAEDiscreteMeterView *cloudsMeterView;
 @property (weak, nonatomic) IBOutlet CAEDiscreteMeterView *precipitationMeterView;
-
-//@property (strong, nonatomic) CAEDiscreteMeterView *cloudsMeterView;
-//@property (strong, nonatomic) CAEDiscreteMeterView *precipitationMeterView;
+@property (weak, nonatomic) IBOutlet CAEHorizontalScrollView *hoursScrollView;
 
 // Requests
 @property (strong, nonatomic) NSMutableArray *requestsArray;
@@ -165,6 +165,7 @@ const int MAX_SNOW_SURE = 28;
 	}];
     [self formatCloudsView];
     [self formatPrecpitationView];
+    [self formatHourlyScrollView];
 }
 
 - (void)formatCloudsView {
@@ -176,19 +177,28 @@ const int MAX_SNOW_SURE = 28;
     self.cloudsMeterView.dataSource = cloudsDelegate;
     self.cloudsMeterView.delegate = cloudsDelegate;
     [self.cloudsMeterView reload];
-    [self.view addSubview:self.cloudsMeterView];
 }
 
 - (void)formatPrecpitationView {
-    CAEWeatherHour *firstHour = [self.hourlyWeather.weatherHours objectAtIndex:0];
-    NSNumber *probabilityOfPrecip = firstHour.probabilityOfPrecipitation;
-    PrecipType precipType = [self precipTypeFromIconName:firstHour.iconName Temperature:firstHour.fTemp];
+    CAEWeatherHour *firstWeatherHour = [self.hourlyWeather.weatherHours objectAtIndex:0];
+    NSNumber *probabilityOfPrecip = firstWeatherHour.probabilityOfPrecipitation;
+    PrecipType precipType = [self precipTypeFromIconName:firstWeatherHour.iconName Temperature:firstWeatherHour.fTemp];
     
     CAEPrecipitationDelegate *precipitationDelegate = [[CAEPrecipitationDelegate alloc] initWithPrecipType:precipType Probability:probabilityOfPrecip];
     self.precipitationMeterView.dataSource = precipitationDelegate;
     self.precipitationMeterView.delegate = precipitationDelegate;
     [self.precipitationMeterView reload];
-    [self.view addSubview:self.precipitationMeterView];
+}
+
+- (void)formatHourlyScrollView {
+    NSNumber *numberOfHours = [NSNumber numberWithInteger:self.hourlyWeather.weatherHours.count];
+    CAEWeatherHour *firstWeatherHour = [self.hourlyWeather.weatherHours objectAtIndex:0];
+    NSNumber *startHour = firstWeatherHour.hour;
+    CAEHoursScrollViewDelegate *hoursScrollViewDelegate = [[CAEHoursScrollViewDelegate alloc] initWithNumberOfHours:numberOfHours StartHour:startHour];
+    
+    self.hoursScrollView.delegate = hoursScrollViewDelegate;
+    self.hoursScrollView.dataSource = hoursScrollViewDelegate;
+    [self.hoursScrollView reload];
 }
 
 - (void)formatViewForFailedLocation {
