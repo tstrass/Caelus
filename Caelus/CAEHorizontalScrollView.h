@@ -11,14 +11,14 @@
 @protocol CAEHorizontalScrollViewDelegate;
 @protocol CAEHorizontalScrollViewDataSource;
 
-@interface CAEHorizontalScrollView : UIScrollView
-@property (nonatomic, assign) id<UIScrollViewDelegate, CAEHorizontalScrollViewDelegate> delegate;
+@interface CAEHorizontalScrollView : UIView
+@property (nonatomic, strong) id<CAEHorizontalScrollViewDelegate> poopcheese;
 @property (nonatomic, strong) id<CAEHorizontalScrollViewDataSource> dataSource;
 
 - (void)reload;
 @end
 
-@protocol CAEHorizontalScrollViewDelegate <UIScrollViewDelegate>
+@protocol CAEHorizontalScrollViewDelegate <NSObject>
 @required
 /** total number of subviews for the horizontal scrollView to contain */
 - (NSInteger)numberOfViewsForHorizonalScrollView:(CAEHorizontalScrollView *)horizontalScrollView;
@@ -26,5 +26,5 @@
 
 @protocol CAEHorizontalScrollViewDataSource <NSObject>
 /** specify a view to put at this index */
-- (UIView *)viewAtIndex:(NSInteger)index ForHorizontalScrollView:(CAEHorizontalScrollView *)horizontalScrollView;
+- (UIView *)viewAtIndex:(NSInteger)index forHorizontalScrollView:(CAEHorizontalScrollView *)horizontalScrollView;
 @end

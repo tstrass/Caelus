@@ -35,7 +35,7 @@
 #pragma mark - CAEHorizontalScrollView Data Source Methods
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-- (UIView *)viewAtIndex:(NSInteger)index ForHorizontalScrollView:(CAEHorizontalScrollView *)horizontalScrollView {
+- (UIView *)viewAtIndex:(NSInteger)index forHorizontalScrollView:(CAEHorizontalScrollView *)horizontalScrollView {
     UILabel *hourLabel = [[UILabel alloc] init];
     NSNumber *hourForIndex = [NSNumber numberWithInteger:[self.startHour integerValue] + index];
     hourLabel.text = [NSString stringWithFormat:@"%@:00", [hourForIndex stringValue]];

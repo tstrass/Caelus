@@ -197,8 +197,8 @@ const int MAX_SNOW_SURE = 28;
     NSNumber *startHour = firstWeatherHour.hour;
     CAEHoursScrollViewDelegate *hoursScrollViewDelegate = [[CAEHoursScrollViewDelegate alloc] initWithNumberOfHours:numberOfHours StartHour:startHour];
     
-    self.hoursScrollView.delegate = hoursScrollViewDelegate;
     self.hoursScrollView.dataSource = hoursScrollViewDelegate;
+    self.hoursScrollView.poopcheese = hoursScrollViewDelegate;
     [self.hoursScrollView reload];
 }
 

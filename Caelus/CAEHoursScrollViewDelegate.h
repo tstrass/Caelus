@@ -10,6 +10,6 @@
 
 #import "CAEHorizontalScrollView.h"
 
-@interface CAEHoursScrollViewDelegate : NSObject <CAEHorizontalScrollViewDelegate, CAEHorizontalScrollViewDataSource, UIScrollViewDelegate>
+@interface CAEHoursScrollViewDelegate : NSObject <CAEHorizontalScrollViewDelegate, CAEHorizontalScrollViewDataSource>
 - (instancetype)initWithNumberOfHours:(NSNumber *)numberOfHours StartHour:(NSNumber *)startHour;
 @end
