@@ -25,7 +25,8 @@ static const float INDICATOR_HEIGHT = 10.0;
 {
     self = [super initWithFrame:frame];
     if (self) {
-        self.scrollView.frame = CGRectMake(0, 0, frame.size.width, frame.size.height);
+        self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, frame.size.height)];
+        //self.scrollView.frame = CGRectMake(0, 0, frame.size.width, frame.size.height);
         self.scrollView.delegate = self;
         [self addSubview:self.scrollView];
     }
@@ -34,34 +35,49 @@ static const float INDICATOR_HEIGHT = 10.0;
 
 - (void)layoutSubviews {
     [super layoutSubviews];
-    [self formatIndicatorView];
+    //[self formatIndicatorView];
 }
 
 - (void)reload {
     //nothing to load if there's no delegate
-    if (self.poopcheese == nil) return;
+    if (self.hoursDelegate == nil) return;
+    
+    if (!self.scrollView) [self setUpScrollView];
+    if (!self.indicatorView) [self setUpIndicatorView];
     
     //remove all subviews
     [self.scrollView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
     
-    [self.scrollView addSubview:self.indicatorView];
+    //[self.scrollView addSubview:self.indicatorView];
     
     self.xOffset = (self.frame.size.width / 2) - ([self.dataSource viewAtIndex:0 forHorizontalScrollView:self].frame.size.width / 2) - VIEW_PADDING;
     
     
     //xValue is the starting point of the views inside the scroller
     CGFloat xValue = self.xOffset;
-    NSInteger numSubviews = [self.poopcheese numberOfViewsForHorizonalScrollView:self];
+    NSInteger numSubviews = [self.hoursDelegate numberOfViewsForHorizonalScrollView:self];
     for (NSInteger i = 0; i < numSubviews; i++) {
         //add a view at the right position
         xValue += VIEW_PADDING;
         UIView *view = [self.dataSource viewAtIndex:i forHorizontalScrollView:self];
         view.frame = CGRectMake(xValue, 0, VIEW_WIDTH, view.frame.size.height);
-        [self insertSubview:view belowSubview:self.indicatorView];
+        //[self insertSubview:view belowSubview:self.indicatorView];
+        [self.scrollView addSubview:view];
         xValue += view.frame.size.width + VIEW_PADDING;
     }
     [self.scrollView setContentSize:CGSizeMake(xValue + self.xOffset, self.frame.size.height)];
-    self.scrollView.scrollEnabled = YES;
+}
+
+- (void)setUpScrollView {
+    self.scrollView = [[UIScrollView alloc] initWithFrame:self.frame];
+    self.scrollView.delegate = self;
+    [self addSubview:self.scrollView];
+}
+
+- (void)setUpIndicatorView {
+    self.indicatorView = [[UIView alloc] init];
+    self.indicatorView.frame = CGRectMake((self.frame.size.width / 2) - (INDICATOR_WIDTH / 2), self.layer.borderWidth, INDICATOR_WIDTH, INDICATOR_HEIGHT);
+    [self addSubview:self.indicatorView];
 }
 
 - (void)formatIndicatorView {
