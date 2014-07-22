@@ -41,6 +41,7 @@
     hourLabel.text = [NSString stringWithFormat:@"%@:00", [hourForIndex stringValue]];
     hourLabel.frame = CGRectMake(0, 0, 60, horizontalScrollView.frame.size.height);
     hourLabel.textAlignment = NSTextAlignmentCenter;
+    hourLabel.layer.borderWidth = 1.0;
     return hourLabel;
 }
 
