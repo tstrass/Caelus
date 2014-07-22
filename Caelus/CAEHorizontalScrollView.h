@@ -12,7 +12,7 @@
 @protocol CAEHorizontalScrollViewDataSource;
 
 @interface CAEHorizontalScrollView : UIView
-@property (nonatomic, strong) id<CAEHorizontalScrollViewDelegate> poopcheese;
+@property (nonatomic, strong) id<CAEHorizontalScrollViewDelegate> hoursDelegate;
 @property (nonatomic, strong) id<CAEHorizontalScrollViewDataSource> dataSource;
 
 - (void)reload;
