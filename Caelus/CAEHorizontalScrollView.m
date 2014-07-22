@@ -17,7 +17,7 @@
 @implementation CAEHorizontalScrollView
 
 static const float VIEW_WIDTH = 75.0;
-static const float VIEW_PADDING = 10.0;
+static const float VIEW_PADDING = 2.0;
 static const float INDICATOR_WIDTH = 1.0;
 static const float INDICATOR_HEIGHT = 10.0;
 
@@ -25,17 +25,10 @@ static const float INDICATOR_HEIGHT = 10.0;
 {
     self = [super initWithFrame:frame];
     if (self) {
-        self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, frame.size.height)];
-        //self.scrollView.frame = CGRectMake(0, 0, frame.size.width, frame.size.height);
-        self.scrollView.delegate = self;
-        [self addSubview:self.scrollView];
+        [self setUpScrollView];
+        [self setUpIndicatorView];
     }
     return self;
-}
-
-- (void)layoutSubviews {
-    [super layoutSubviews];
-    //[self formatIndicatorView];
 }
 
 - (void)reload {
@@ -44,13 +37,12 @@ static const float INDICATOR_HEIGHT = 10.0;
     
     if (!self.scrollView) [self setUpScrollView];
     if (!self.indicatorView) [self setUpIndicatorView];
+
     
     //remove all subviews
     [self.scrollView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
     
-    //[self.scrollView addSubview:self.indicatorView];
-    
-    self.xOffset = (self.frame.size.width / 2) - ([self.dataSource viewAtIndex:0 forHorizontalScrollView:self].frame.size.width / 2) - VIEW_PADDING;
+    self.xOffset = (self.frame.size.width / 2) - (VIEW_WIDTH / 2) - VIEW_PADDING;
     
     
     //xValue is the starting point of the views inside the scroller
@@ -60,36 +52,27 @@ static const float INDICATOR_HEIGHT = 10.0;
         //add a view at the right position
         xValue += VIEW_PADDING;
         UIView *view = [self.dataSource viewAtIndex:i forHorizontalScrollView:self];
+        [view setBackgroundColor:[UIColor blueColor]];
         view.frame = CGRectMake(xValue, 0, VIEW_WIDTH, view.frame.size.height);
-        //[self insertSubview:view belowSubview:self.indicatorView];
         [self.scrollView addSubview:view];
         xValue += view.frame.size.width + VIEW_PADDING;
     }
+    
     [self.scrollView setContentSize:CGSizeMake(xValue + self.xOffset, self.frame.size.height)];
 }
 
 - (void)setUpScrollView {
-    self.scrollView = [[UIScrollView alloc] initWithFrame:self.frame];
+    self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
     self.scrollView.delegate = self;
+    self.scrollView.backgroundColor = [UIColor greenColor];
     [self addSubview:self.scrollView];
 }
 
 - (void)setUpIndicatorView {
     self.indicatorView = [[UIView alloc] init];
     self.indicatorView.frame = CGRectMake((self.frame.size.width / 2) - (INDICATOR_WIDTH / 2), self.layer.borderWidth, INDICATOR_WIDTH, INDICATOR_HEIGHT);
+    self.indicatorView.backgroundColor = [UIColor redColor];
     [self addSubview:self.indicatorView];
-}
-
-- (void)formatIndicatorView {
-    CGFloat xOffset = self.scrollView.contentOffset.x;
-    xOffset = self.frame.size.width / 2 - (INDICATOR_WIDTH / 2) + xOffset;
-    if (self.indicatorView == nil) {
-        self.indicatorView = [[UIView alloc] init];
-        self.indicatorView.backgroundColor = [UIColor redColor];
-        [self addSubview:self.indicatorView];
-    }
-    self.indicatorView.frame = CGRectMake(xOffset, self.layer.borderWidth, INDICATOR_WIDTH, INDICATOR_HEIGHT);
-    //[self bringSubviewToFront:self.indicatorView];
 }
 
 - (void)centerCurrentView {
