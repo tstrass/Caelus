@@ -52,7 +52,6 @@ static const float INDICATOR_HEIGHT = 10.0;
         //add a view at the right position
         xValue += VIEW_PADDING;
         UIView *view = [self.dataSource viewAtIndex:i forHorizontalScrollView:self];
-        [view setBackgroundColor:[UIColor blueColor]];
         view.frame = CGRectMake(xValue, 0, VIEW_WIDTH, view.frame.size.height);
         [self.scrollView addSubview:view];
         xValue += view.frame.size.width + VIEW_PADDING;
@@ -64,7 +63,6 @@ static const float INDICATOR_HEIGHT = 10.0;
 - (void)setUpScrollView {
     self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
     self.scrollView.delegate = self;
-    self.scrollView.backgroundColor = [UIColor greenColor];
     [self addSubview:self.scrollView];
 }
 
@@ -76,7 +74,7 @@ static const float INDICATOR_HEIGHT = 10.0;
 }
 
 - (void)centerCurrentView {
-    CGFloat xFinal = self.scrollView.contentOffset.x + (self.xOffset / 2) + VIEW_PADDING;
+    CGFloat xFinal = self.scrollView.contentOffset.x + (VIEW_WIDTH / 2) + VIEW_PADDING;
     NSInteger viewIndex = xFinal / (VIEW_WIDTH + (2 * VIEW_PADDING));
     xFinal = viewIndex * (VIEW_WIDTH + (2 * VIEW_PADDING));
     [self.scrollView setContentOffset:CGPointMake(xFinal, 0) animated:YES];
