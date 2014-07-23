@@ -11,7 +11,7 @@
 // Delegate
 #import "CAECloudsDelegate.h"
 #import "CAEPrecipitationDelegate.h"
-#import "CAEHoursScrollViewDelegate.h"
+#import "CAEHoursScrollViewDataSource.h"
 
 // View
 #import "CAEDiscreteMeterView.h"
@@ -22,7 +22,7 @@
 #import "CAEAstronomy.h"
 #import "CAEHourlyWeather.h"
 
-@interface CAEDetailViewController ()
+@interface CAEDetailViewController () <CAEHorizontalScrollViewDelegate>
 @property (strong, nonatomic) UIPopoverController *masterPopoverController;
 - (void)configureView;
 
@@ -53,6 +53,9 @@
 // Geolocation
 @property (strong, nonatomic) CLLocationManager *locationManager;
 @property (strong, nonatomic) NSString *geolocation;
+
+// Current UI state
+@property (nonatomic) NSInteger currentHour;
 @end
 
 @implementation CAEDetailViewController
@@ -75,23 +78,24 @@ const int MAX_SNOW_SURE = 28;
 	if (self.detailItem) {
 		self.detailDescriptionLabel.text = [self.detailItem description];
 	}
-    self.cloudsMeterView.backgroundColor = [UIColor clearColor];
-    self.precipitationMeterView.backgroundColor = [UIColor clearColor];
-    self.hoursScrollView.layer.borderWidth = 1.0;
+	self.cloudsMeterView.backgroundColor = [UIColor clearColor];
+	self.precipitationMeterView.backgroundColor = [UIColor clearColor];
+	self.hoursScrollView.layer.borderWidth = 1.0;
 }
 
 - (void)viewDidLoad {
 	[super viewDidLoad];
 	[self configureView];
 
-    if ([self respondsToSelector:@selector(setNeedsStatusBarAppearanceUpdate)]) {
-        // iOS 7
-        [self performSelector:@selector(setNeedsStatusBarAppearanceUpdate)];
-    } else {
-        // iOS 6
-        [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationSlide];
-    }
-    
+	if ([self respondsToSelector:@selector(setNeedsStatusBarAppearanceUpdate)]) {
+		// iOS 7
+		[self performSelector:@selector(setNeedsStatusBarAppearanceUpdate)];
+	}
+	else {
+		// iOS 6
+		[[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationSlide];
+	}
+
 	[self setUpLocationManager];
 
 	self.view.backgroundColor = [UIColor blackColor];
@@ -110,7 +114,7 @@ const int MAX_SNOW_SURE = 28;
 - (void)setUpAPIRequests {
 	self.requestsArray = [[NSMutableArray alloc] init];
 	[self makeCurrentConditionsRequestWithLocation:self.geolocation];
-	[self makeAstronomyRequestWithLocation:self.geolocation];
+	//[self makeAstronomyRequestWithLocation:self.geolocation];
 	[self makeHourlyWeatherRequestWithLocation:self.geolocation];
 }
 
@@ -164,48 +168,44 @@ const int MAX_SNOW_SURE = 28;
 	[UIView animateWithDuration:1.0 animations: ^{
 	    self.view.backgroundColor = [self backgroundColorFromWeatherData];
 	}];
-    [self formatCloudsView];
-    [self formatPrecpitationView];
-    [self populateHoursScrollView];
+	[self formatCloudsView];
+	[self formatPrecpitationView];
+	[self populateHoursScrollView];
 }
 
 - (void)formatCloudsView {
-    CAEWeatherHour *firstHour = [self.hourlyWeather.weatherHours objectAtIndex:0];
-    NSNumber *propabilityOfPrecip = firstHour.probabilityOfPrecipitation;
-    NSNumber *percentCloudy = firstHour.cloudCover;
-    
-    CAECloudsDelegate *cloudsDelegate = [[CAECloudsDelegate alloc] initWithPercentCloudy:percentCloudy ChanceOfPrecipitation:propabilityOfPrecip];
-    self.cloudsMeterView.dataSource = cloudsDelegate;
-    self.cloudsMeterView.delegate = cloudsDelegate;
-    [self.cloudsMeterView reload];
+    CAEWeatherHour *currentHour = [self.hourlyWeather.weatherHours objectAtIndex:self.currentHour];
+	NSNumber *propabilityOfPrecip = currentHour.probabilityOfPrecipitation;
+	NSNumber *percentCloudy = currentHour.cloudCover;
+
+	CAECloudsDelegate *cloudsDelegate = [[CAECloudsDelegate alloc] initWithPercentCloudy:percentCloudy ChanceOfPrecipitation:propabilityOfPrecip];
+	self.cloudsMeterView.dataSource = cloudsDelegate;
+	self.cloudsMeterView.delegate = cloudsDelegate;
+	[self.cloudsMeterView reload];
 }
 
 - (void)formatPrecpitationView {
-    CAEWeatherHour *firstWeatherHour = [self.hourlyWeather.weatherHours objectAtIndex:0];
-    NSNumber *probabilityOfPrecip = firstWeatherHour.probabilityOfPrecipitation;
-    PrecipType precipType = [self precipTypeFromIconName:firstWeatherHour.iconName Temperature:firstWeatherHour.fTemp];
-    
-    CAEPrecipitationDelegate *precipitationDelegate = [[CAEPrecipitationDelegate alloc] initWithPrecipType:precipType Probability:probabilityOfPrecip];
-    self.precipitationMeterView.dataSource = precipitationDelegate;
-    self.precipitationMeterView.delegate = precipitationDelegate;
-    [self.precipitationMeterView reload];
+	CAEWeatherHour *currentHour = [self.hourlyWeather.weatherHours objectAtIndex:self.currentHour];
+	NSNumber *probabilityOfPrecip = currentHour.probabilityOfPrecipitation;
+	PrecipType precipType = [self precipTypeFromIconName:currentHour.iconName Temperature:currentHour.fTemp];
+
+	CAEPrecipitationDelegate *precipitationDelegate = [[CAEPrecipitationDelegate alloc] initWithPrecipType:precipType Probability:probabilityOfPrecip];
+	self.precipitationMeterView.dataSource = precipitationDelegate;
+	self.precipitationMeterView.delegate = precipitationDelegate;
+	[self.precipitationMeterView reload];
 }
 
 - (void)populateHoursScrollView {
-    //NSNumber *numberOfHours = [NSNumber numberWithInteger:self.hourlyWeather.weatherHours.count];
-    //CAEWeatherHour *firstWeatherHour = [self.hourlyWeather.weatherHours objectAtIndex:0];
-    //NSNumber *startHour = firstWeatherHour.hour;
-    //CAEHoursScrollViewDelegate *hoursScrollViewDelegate = [[CAEHoursScrollViewDelegate alloc] initWithNumberOfHours:numberOfHours StartHour:startHour];
-    CAEHoursScrollViewDelegate *hoursScrollViewDelegate = [[CAEHoursScrollViewDelegate alloc] initWithWeatherHoursArray:self.hourlyWeather.weatherHours];
-    self.hoursScrollView.dataSource = hoursScrollViewDelegate;
-    self.hoursScrollView.hoursDelegate = hoursScrollViewDelegate;
-    [self.hoursScrollView reload];
+	CAEHoursScrollViewDataSource *hoursScrollViewDataSource = [[CAEHoursScrollViewDataSource alloc] initWithWeatherHoursArray:self.hourlyWeather.weatherHours];
+	self.hoursScrollView.dataSource = hoursScrollViewDataSource;
+	self.hoursScrollView.hoursDelegate = self;
+	[self.hoursScrollView reload];
 }
 
 - (void)formatViewForFailedLocation {
 	self.view.backgroundColor = [self backgroundColorFromWeatherData];
 	self.currentLocationLabel.text = @"Cannot detect a location.";
-    self.currentLocationLabel.textAlignment = NSTextAlignmentCenter;
+	self.currentLocationLabel.textAlignment = NSTextAlignmentCenter;
 	self.currentLocationLabel.font = [UIFont fontWithName:@"Times New Roman" size:12];
 	self.currentLocationLabel.adjustsFontSizeToFitWidth = YES;
 	self.currentLocationLabel.minimumScaleFactor = 0.3;
@@ -251,14 +251,14 @@ const int MAX_SNOW_SURE = 28;
 		        self.currentConditionsResponseData = data;
 		        [self parseCurrentWeatherJSON];
 			}
-		    else if ([self.requestsArray indexOfObject:request] == 1) {
+		    else if ([self.requestsArray indexOfObject:request] == 3) {
 		        self.astronomyResponseData = data;
 		        [self parseAstronomyJSON];
 			}
-		    else if ([self.requestsArray indexOfObject:request] == 2) {
+		    else if ([self.requestsArray indexOfObject:request] == 1) {
 		        self.hourlyWeatherResponseData = data;
-                NSString *string = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-                NSLog(@"%@", string);
+		        NSString *string = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+		        NSLog(@"%@", string);
 		        [self parseHourlyWeatherJSON];
 			}
 		    outstandingRequests--;
@@ -348,16 +348,18 @@ const int MAX_SNOW_SURE = 28;
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 - (PrecipType)precipTypeFromIconName:(NSString *)iconName Temperature:(NSNumber *)fTemp {
-    if ([fTemp integerValue] >= MIN_RAIN_SURE) return RAIN;
-    if ([fTemp integerValue] >= MAX_SNOW_SURE) return SNOW;
-    
-    if ([iconName isEqualToString:@"rain"] || [iconName isEqualToString:@"chancerain"] || [iconName isEqualToString:@"sleet"] || [iconName isEqualToString:@"chancesleet"] || [iconName isEqualToString:@"tstorms"] || [iconName isEqualToString:@"chancetstorms"]) {
-        return RAIN;
-    } else if ([iconName isEqualToString:@"snow"] || [iconName isEqualToString:@"flurries"] || [iconName isEqualToString:@"chancesnow"] || [iconName isEqualToString:@"chanceflurries"]) {
-        return SNOW;
-    } else {
-        return ([fTemp integerValue] > 32) ? RAIN : SNOW;
-    }
+	if ([fTemp integerValue] >= MIN_RAIN_SURE) return RAIN;
+	if ([fTemp integerValue] >= MAX_SNOW_SURE) return SNOW;
+
+	if ([iconName isEqualToString:@"rain"] || [iconName isEqualToString:@"chancerain"] || [iconName isEqualToString:@"sleet"] || [iconName isEqualToString:@"chancesleet"] || [iconName isEqualToString:@"tstorms"] || [iconName isEqualToString:@"chancetstorms"]) {
+		return RAIN;
+	}
+	else if ([iconName isEqualToString:@"snow"] || [iconName isEqualToString:@"flurries"] || [iconName isEqualToString:@"chancesnow"] || [iconName isEqualToString:@"chanceflurries"]) {
+		return SNOW;
+	}
+	else {
+		return ([fTemp integerValue] > 32) ? RAIN : SNOW;
+	}
 }
 
 /**
@@ -442,11 +444,23 @@ const int MAX_SNOW_SURE = 28;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+#pragma mark - CAEHorizontalScrollView Delegate Methods
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+- (void)scrollViewSubviewDidChange:(NSInteger)index {
+    self.currentHour = index;
+    [self formatViewForWeather];
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark - UIViewController delegate methods
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 - (BOOL)prefersStatusBarHidden {
-    return YES;
+	return YES;
+}
+
+- (IBAction)reloadHoursScrollView:(id)sender {
+	[self.hoursScrollView reload];
 }
 
 @end

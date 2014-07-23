@@ -19,12 +19,14 @@
 @end
 
 @protocol CAEHorizontalScrollViewDelegate <NSObject>
-@required
-/** total number of subviews for the horizontal scrollView to contain */
-- (NSInteger)numberOfViewsForHorizonalScrollView:(CAEHorizontalScrollView *)horizontalScrollView;
+@optional
+- (void)scrollViewSubviewDidChange:(NSInteger)index;
 @end
 
 @protocol CAEHorizontalScrollViewDataSource <NSObject>
 /** specify a view to put at this index */
 - (UIView *)viewAtIndex:(NSInteger)index forHorizontalScrollView:(CAEHorizontalScrollView *)horizontalScrollView;
+@required
+/** total number of subviews for the horizontal scrollView to contain */
+- (NSInteger)numberOfViewsForHorizonalScrollView:(CAEHorizontalScrollView *)horizontalScrollView;
 @end
