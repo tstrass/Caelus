@@ -192,11 +192,11 @@ const int MAX_SNOW_SURE = 28;
 }
 
 - (void)populateHoursScrollView {
-    NSNumber *numberOfHours = [NSNumber numberWithInteger:self.hourlyWeather.weatherHours.count];
-    CAEWeatherHour *firstWeatherHour = [self.hourlyWeather.weatherHours objectAtIndex:0];
-    NSNumber *startHour = firstWeatherHour.hour;
-    CAEHoursScrollViewDelegate *hoursScrollViewDelegate = [[CAEHoursScrollViewDelegate alloc] initWithNumberOfHours:numberOfHours StartHour:startHour];
-    
+    //NSNumber *numberOfHours = [NSNumber numberWithInteger:self.hourlyWeather.weatherHours.count];
+    //CAEWeatherHour *firstWeatherHour = [self.hourlyWeather.weatherHours objectAtIndex:0];
+    //NSNumber *startHour = firstWeatherHour.hour;
+    //CAEHoursScrollViewDelegate *hoursScrollViewDelegate = [[CAEHoursScrollViewDelegate alloc] initWithNumberOfHours:numberOfHours StartHour:startHour];
+    CAEHoursScrollViewDelegate *hoursScrollViewDelegate = [[CAEHoursScrollViewDelegate alloc] initWithWeatherHoursArray:self.hourlyWeather.weatherHours];
     self.hoursScrollView.dataSource = hoursScrollViewDelegate;
     self.hoursScrollView.hoursDelegate = hoursScrollViewDelegate;
     [self.hoursScrollView reload];
