@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface UIImageView (Tools)
-/** Returns proper height for an image given a width, in order to keep the aspect ratio of the original image.
+/** Returns proper height for an imageView given a width, in order to keep the aspect ratio of the original image.
  *  If the imageView has no image, this method will return 0.0
  */
 - (CGFloat)heightForWidth:(CGFloat)width;
