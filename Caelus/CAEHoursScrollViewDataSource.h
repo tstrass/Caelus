@@ -10,7 +10,7 @@
 
 #import "CAEHorizontalScrollView.h"
 
-@interface CAEHoursScrollViewDelegate : NSObject <CAEHorizontalScrollViewDelegate, CAEHorizontalScrollViewDataSource>
+@interface CAEHoursScrollViewDataSource : NSObject <CAEHorizontalScrollViewDataSource>
 - (instancetype)initWithNumberOfHours:(NSNumber *)numberOfHours StartHour:(NSNumber *)startHour;
 /** Array must be of type weatherHour* */
 - (instancetype)initWithWeatherHoursArray:(NSArray *)weatherHours;

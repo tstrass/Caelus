@@ -12,6 +12,8 @@
 @property (strong, nonatomic) UIView *indicatorView;
 @property (nonatomic) CGFloat xOffset;
 @property (strong, nonatomic) UIScrollView *scrollView;
+
+@property (nonatomic) NSInteger subviewIndex;
 @end
 
 @implementation CAEHorizontalScrollView
@@ -47,7 +49,7 @@ static const float INDICATOR_HEIGHT = 10.0;
     
     //xValue is the starting point of the views inside the scroller
     CGFloat xValue = self.xOffset;
-    NSInteger numSubviews = [self.hoursDelegate numberOfViewsForHorizonalScrollView:self];
+    NSInteger numSubviews = [self.dataSource numberOfViewsForHorizonalScrollView:self];
     for (NSInteger i = 0; i < numSubviews; i++) {
         //add a view at the right position
         xValue += VIEW_PADDING;
@@ -74,10 +76,15 @@ static const float INDICATOR_HEIGHT = 10.0;
 }
 
 - (void)centerCurrentView {
-    CGFloat xFinal = self.scrollView.contentOffset.x + (VIEW_WIDTH / 2) + VIEW_PADDING;
-    NSInteger viewIndex = xFinal / (VIEW_WIDTH + (2 * VIEW_PADDING));
-    xFinal = viewIndex * (VIEW_WIDTH + (2 * VIEW_PADDING));
+    NSInteger viewIndex = [self currentViewIndex];
+    CGFloat xFinal = viewIndex * (VIEW_WIDTH + (2 * VIEW_PADDING));
     [self.scrollView setContentOffset:CGPointMake(xFinal, 0) animated:YES];
+}
+
+- (NSInteger)currentViewIndex {
+    CGFloat xValue = self.scrollView.contentOffset.x + (VIEW_WIDTH / 2) + VIEW_PADDING;
+    NSInteger index = xValue / (VIEW_WIDTH + (2 * VIEW_PADDING));
+    return index < 0 ? 0 : MIN(index, [self.dataSource numberOfViewsForHorizonalScrollView:self] - 1);
 }
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
@@ -88,5 +95,8 @@ static const float INDICATOR_HEIGHT = 10.0;
     [self centerCurrentView];
 }
 
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    [self.hoursDelegate scrollViewSubviewDidChange:[self currentViewIndex]];
+}
 
 @end
