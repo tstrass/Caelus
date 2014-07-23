@@ -17,7 +17,7 @@
 @implementation CAEHorizontalScrollView
 
 static const float VIEW_WIDTH = 75.0;
-static const float VIEW_PADDING = 2.0;
+static const float VIEW_PADDING = 20.0;
 static const float INDICATOR_WIDTH = 1.0;
 static const float INDICATOR_HEIGHT = 10.0;
 
