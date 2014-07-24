@@ -11,8 +11,6 @@
 #import "UIImageView+Tools.h"
 
 @interface CAECloudsDelegate ()
-@property (strong, nonatomic) NSNumber *percentCloudy;
-@property (strong, nonatomic) NSNumber *probabilityOfPrecipitation;
 @end
 
 @implementation CAECloudsDelegate

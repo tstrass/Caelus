@@ -12,5 +12,8 @@
 
 @interface CAECloudsDelegate : NSObject <CAEDiscreteMeterViewDelegate, CAEDiscreteMeterViewDataSource>
 - (instancetype)initWithPercentCloudy:(NSNumber *)percentCloudy ChanceOfPrecipitation:(NSNumber *)probabilityOfPrecipitation;
+
+@property (strong, nonatomic) NSNumber *percentCloudy;
+@property (strong, nonatomic) NSNumber *probabilityOfPrecipitation;
 @end
 
