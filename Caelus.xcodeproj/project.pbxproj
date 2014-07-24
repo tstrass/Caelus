@@ -16,7 +16,7 @@
 		E29C575819771C5300BE483B /* SnowPlace.gpx in Resources */ = {isa = PBXBuildFile; fileRef = E29C575719771C5300BE483B /* SnowPlace.gpx */; };
 		E29C575C19771E1900BE483B /* SouthPole.gpx in Resources */ = {isa = PBXBuildFile; fileRef = E29C575B19771E1900BE483B /* SouthPole.gpx */; };
 		E29C575E19771FB600BE483B /* Butler, Antarctica.gpx in Resources */ = {isa = PBXBuildFile; fileRef = E29C575D19771FB600BE483B /* Butler, Antarctica.gpx */; };
-		E2A2B15A19797AA10059F39E /* CAEHoursScrollViewDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E2A2B15919797AA10059F39E /* CAEHoursScrollViewDelegate.m */; };
+		E2A2B15A19797AA10059F39E /* CAEHoursScrollViewDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = E2A2B15919797AA10059F39E /* CAEHoursScrollViewDataSource.m */; };
 		E2B95EC41958B084008528D4 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2B95EC31958B084008528D4 /* CoreLocation.framework */; };
 		E2CE3CD1196AE30A00E9D07B /* CAECurrentConditions.m in Sources */ = {isa = PBXBuildFile; fileRef = E2CE3CD0196AE30A00E9D07B /* CAECurrentConditions.m */; };
 		E2CE3CD4196AF3CA00E9D07B /* CAELocationData.m in Sources */ = {isa = PBXBuildFile; fileRef = E2CE3CD3196AF3CA00E9D07B /* CAELocationData.m */; };
@@ -31,8 +31,6 @@
 		E2E1EEFA1954BB9600A0B541 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E2E1EEF91954BB9600A0B541 /* main.m */; };
 		E2E1EEFE1954BB9600A0B541 /* CAEAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E2E1EEFD1954BB9600A0B541 /* CAEAppDelegate.m */; };
 		E2E1EF011954BB9600A0B541 /* Main_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E2E1EEFF1954BB9600A0B541 /* Main_iPhone.storyboard */; };
-		E2E1EF041954BB9600A0B541 /* Main_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E2E1EF021954BB9600A0B541 /* Main_iPad.storyboard */; };
-		E2E1EF071954BB9600A0B541 /* CAEMasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E2E1EF061954BB9600A0B541 /* CAEMasterViewController.m */; };
 		E2E1EF0A1954BB9600A0B541 /* CAEDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E2E1EF091954BB9600A0B541 /* CAEDetailViewController.m */; };
 		E2E1EF0C1954BB9600A0B541 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E2E1EF0B1954BB9600A0B541 /* Images.xcassets */; };
 		E2E1EF131954BB9700A0B541 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2E1EF121954BB9700A0B541 /* XCTest.framework */; };
@@ -72,8 +70,8 @@
 		E29C575719771C5300BE483B /* SnowPlace.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = SnowPlace.gpx; path = ../SnowPlace.gpx; sourceTree = "<group>"; };
 		E29C575B19771E1900BE483B /* SouthPole.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = SouthPole.gpx; path = ../SouthPole.gpx; sourceTree = "<group>"; };
 		E29C575D19771FB600BE483B /* Butler, Antarctica.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = "Butler, Antarctica.gpx"; path = "../Butler, Antarctica.gpx"; sourceTree = "<group>"; };
-		E2A2B15819797AA10059F39E /* CAEHoursScrollViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAEHoursScrollViewDelegate.h; sourceTree = "<group>"; };
-		E2A2B15919797AA10059F39E /* CAEHoursScrollViewDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CAEHoursScrollViewDelegate.m; sourceTree = "<group>"; };
+		E2A2B15819797AA10059F39E /* CAEHoursScrollViewDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAEHoursScrollViewDataSource.h; sourceTree = "<group>"; };
+		E2A2B15919797AA10059F39E /* CAEHoursScrollViewDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CAEHoursScrollViewDataSource.m; sourceTree = "<group>"; };
 		E2B95EC31958B084008528D4 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		E2B95EC51958B4AF008528D4 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		E2CE3CCF196AE30A00E9D07B /* CAECurrentConditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAECurrentConditions.h; sourceTree = "<group>"; };
@@ -99,9 +97,6 @@
 		E2E1EEFC1954BB9600A0B541 /* CAEAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CAEAppDelegate.h; sourceTree = "<group>"; };
 		E2E1EEFD1954BB9600A0B541 /* CAEAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CAEAppDelegate.m; sourceTree = "<group>"; };
 		E2E1EF001954BB9600A0B541 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPhone.storyboard; sourceTree = "<group>"; };
-		E2E1EF031954BB9600A0B541 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPad.storyboard; sourceTree = "<group>"; };
-		E2E1EF051954BB9600A0B541 /* CAEMasterViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CAEMasterViewController.h; sourceTree = "<group>"; };
-		E2E1EF061954BB9600A0B541 /* CAEMasterViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CAEMasterViewController.m; sourceTree = "<group>"; };
 		E2E1EF081954BB9600A0B541 /* CAEDetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CAEDetailViewController.h; sourceTree = "<group>"; };
 		E2E1EF091954BB9600A0B541 /* CAEDetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CAEDetailViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		E2E1EF0B1954BB9600A0B541 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
@@ -200,8 +195,8 @@
 				E2089BF71976D04A00E0D643 /* CAEPrecipitationDelegate.m */,
 				E259FEC919702AF7000E032C /* CAECloudsDelegate.h */,
 				E259FECA19702AF7000E032C /* CAECloudsDelegate.m */,
-				E2A2B15819797AA10059F39E /* CAEHoursScrollViewDelegate.h */,
-				E2A2B15919797AA10059F39E /* CAEHoursScrollViewDelegate.m */,
+				E2A2B15819797AA10059F39E /* CAEHoursScrollViewDataSource.h */,
+				E2A2B15919797AA10059F39E /* CAEHoursScrollViewDataSource.m */,
 			);
 			name = Delegate;
 			sourceTree = "<group>";
@@ -247,14 +242,11 @@
 				E2E1EEFC1954BB9600A0B541 /* CAEAppDelegate.h */,
 				E2E1EEFD1954BB9600A0B541 /* CAEAppDelegate.m */,
 				E2E1EEFF1954BB9600A0B541 /* Main_iPhone.storyboard */,
-				E2E1EF021954BB9600A0B541 /* Main_iPad.storyboard */,
-				E2E1EF051954BB9600A0B541 /* CAEMasterViewController.h */,
-				E2E1EF061954BB9600A0B541 /* CAEMasterViewController.m */,
 				E2E1EF081954BB9600A0B541 /* CAEDetailViewController.h */,
 				E2E1EF091954BB9600A0B541 /* CAEDetailViewController.m */,
-				E2E1EF0B1954BB9600A0B541 /* Images.xcassets */,
-				E2E1EEF41954BB9600A0B541 /* Supporting Files */,
 				E20001A919630E4C007659E3 /* Model */,
+				E2E1EEF41954BB9600A0B541 /* Supporting Files */,
+				E2E1EF0B1954BB9600A0B541 /* Images.xcassets */,
 			);
 			path = Caelus;
 			sourceTree = "<group>";
@@ -369,7 +361,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				E2EB122D196EEB1900BC0DEA /* Tufts.gpx in Resources */,
-				E2E1EF041954BB9600A0B541 /* Main_iPad.storyboard in Resources */,
 				E2EB122C196EEB1900BC0DEA /* Clayton.gpx in Resources */,
 				E29C575819771C5300BE483B /* SnowPlace.gpx in Resources */,
 				E2E1EF0C1954BB9600A0B541 /* Images.xcassets in Resources */,
@@ -407,10 +398,9 @@
 				E2CE3CD1196AE30A00E9D07B /* CAECurrentConditions.m in Sources */,
 				E2CFFDAA19786F530075B89E /* UIView+Tools.m in Sources */,
 				E259FED119707388000E032C /* UIImageView+Tools.m in Sources */,
-				E2E1EF071954BB9600A0B541 /* CAEMasterViewController.m in Sources */,
 				E2CFFDA71978631D0075B89E /* CAEHorizontalScrollView.m in Sources */,
 				E2CE3CD7196B317300E9D07B /* CAESunPhase.m in Sources */,
-				E2A2B15A19797AA10059F39E /* CAEHoursScrollViewDelegate.m in Sources */,
+				E2A2B15A19797AA10059F39E /* CAEHoursScrollViewDataSource.m in Sources */,
 				E2E1EEFE1954BB9600A0B541 /* CAEAppDelegate.m in Sources */,
 				E2CE3CD4196AF3CA00E9D07B /* CAELocationData.m in Sources */,
 				E29571F91964A3D4009B725C /* CAEWeatherHour.m in Sources */,
@@ -450,14 +440,6 @@
 				E2E1EF001954BB9600A0B541 /* Base */,
 			);
 			name = Main_iPhone.storyboard;
-			sourceTree = "<group>";
-		};
-		E2E1EF021954BB9600A0B541 /* Main_iPad.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				E2E1EF031954BB9600A0B541 /* Base */,
-			);
-			name = Main_iPad.storyboard;
 			sourceTree = "<group>";
 		};
 		E2E1EF1B1954BB9700A0B541 /* InfoPlist.strings */ = {
