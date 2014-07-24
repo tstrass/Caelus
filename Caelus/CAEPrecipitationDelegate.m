@@ -9,8 +9,6 @@
 #import "CAEPrecipitationDelegate.h"
 
 @interface CAEPrecipitationDelegate ()
-@property (nonatomic) PrecipType precipType;
-@property (strong, nonatomic) NSNumber *probability;
 @end
 
 @implementation CAEPrecipitationDelegate
