@@ -56,6 +56,10 @@
 
 // Current UI state
 @property (nonatomic) NSInteger currentHour;
+
+// Delegates
+@property (strong, nonatomic) CAECloudsDelegate *cloudsDelegate;
+@property (strong, nonatomic) CAEPrecipitationDelegate *precipitationDelegate;
 @end
 
 @implementation CAEDetailViewController
@@ -98,7 +102,7 @@ const int MAX_SNOW_SURE = 28;
 
 	[self setUpLocationManager];
 
-	self.view.backgroundColor = [UIColor blackColor];
+	self.view.backgroundColor = [self backgroundColorFromWeatherData];
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -165,33 +169,33 @@ const int MAX_SNOW_SURE = 28;
 }
 
 - (void)formatViewForWeather {
-	[UIView animateWithDuration:1.0 animations: ^{
-	    self.view.backgroundColor = [self backgroundColorFromWeatherData];
-	}];
+	//[UIView animateWithDuration:1.0 animations: ^{
+	//    self.view.backgroundColor = [self backgroundColorFromWeatherData];
+	//}];
 	[self formatCloudsView];
 	[self formatPrecpitationView];
 	[self populateHoursScrollView];
 }
 
 - (void)formatCloudsView {
-    CAEWeatherHour *currentHour = [self.hourlyWeather.weatherHours objectAtIndex:self.currentHour];
-	NSNumber *propabilityOfPrecip = currentHour.probabilityOfPrecipitation;
-	NSNumber *percentCloudy = currentHour.cloudCover;
+    CAEWeatherHour *firstHour = [self.hourlyWeather.weatherHours objectAtIndex:self.currentHour];
+	NSNumber *propabilityOfPrecip = firstHour.probabilityOfPrecipitation;
+	NSNumber *percentCloudy = firstHour.cloudCover;
 
-	CAECloudsDelegate *cloudsDelegate = [[CAECloudsDelegate alloc] initWithPercentCloudy:percentCloudy ChanceOfPrecipitation:propabilityOfPrecip];
-	self.cloudsMeterView.dataSource = cloudsDelegate;
-	self.cloudsMeterView.delegate = cloudsDelegate;
+	self.cloudsDelegate = [[CAECloudsDelegate alloc] initWithPercentCloudy:percentCloudy ChanceOfPrecipitation:propabilityOfPrecip];
+	self.cloudsMeterView.dataSource = self.cloudsDelegate;
+	self.cloudsMeterView.delegate = self.cloudsDelegate;
 	[self.cloudsMeterView reload];
 }
 
 - (void)formatPrecpitationView {
-	CAEWeatherHour *currentHour = [self.hourlyWeather.weatherHours objectAtIndex:self.currentHour];
-	NSNumber *probabilityOfPrecip = currentHour.probabilityOfPrecipitation;
-	PrecipType precipType = [self precipTypeFromIconName:currentHour.iconName Temperature:currentHour.fTemp];
+	CAEWeatherHour *firstHour = [self.hourlyWeather.weatherHours objectAtIndex:self.currentHour];
+	NSNumber *probabilityOfPrecip = firstHour.probabilityOfPrecipitation;
+	PrecipType precipType = [self precipTypeFromIconName:firstHour.iconName Temperature:firstHour.fTemp];
 
-	CAEPrecipitationDelegate *precipitationDelegate = [[CAEPrecipitationDelegate alloc] initWithPrecipType:precipType Probability:probabilityOfPrecip];
-	self.precipitationMeterView.dataSource = precipitationDelegate;
-	self.precipitationMeterView.delegate = precipitationDelegate;
+    self.precipitationDelegate = [[CAEPrecipitationDelegate alloc] initWithPrecipType:precipType Probability:probabilityOfPrecip];
+	self.precipitationMeterView.dataSource = self.precipitationDelegate;
+	self.precipitationMeterView.delegate = self.precipitationDelegate;
 	[self.precipitationMeterView reload];
 }
 
@@ -209,6 +213,25 @@ const int MAX_SNOW_SURE = 28;
 	self.currentLocationLabel.font = [UIFont fontWithName:@"Times New Roman" size:12];
 	self.currentLocationLabel.adjustsFontSizeToFitWidth = YES;
 	self.currentLocationLabel.minimumScaleFactor = 0.3;
+}
+
+- (void)reloadViewsForWeather {
+    CAEWeatherHour *weatherHour = [self.hourlyWeather.weatherHours objectAtIndex:self.currentHour];
+    [self updateCloudsForHour:weatherHour];
+    [self updatePrecipitation:weatherHour];
+}
+
+- (void)updateCloudsForHour:(CAEWeatherHour *)weatherHour {
+    self.cloudsDelegate.percentCloudy = weatherHour.cloudCover;
+    self.cloudsDelegate.probabilityOfPrecipitation = weatherHour.probabilityOfPrecipitation;
+    [self.cloudsMeterView reload];
+}
+
+- (void)updatePrecipitation:(CAEWeatherHour *)weatherHour {
+    self.precipitationDelegate.precipType = [self precipTypeFromIconName:weatherHour.iconName
+                                                             Temperature:weatherHour.fTemp];
+    self.precipitationDelegate.probability = weatherHour.probabilityOfPrecipitation;
+    [self.precipitationMeterView reload];
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -448,7 +471,7 @@ const int MAX_SNOW_SURE = 28;
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 - (void)scrollViewSubviewDidChange:(NSInteger)index {
     self.currentHour = index;
-    [self formatViewForWeather];
+    [self reloadViewsForWeather];
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -17,4 +17,7 @@ typedef NS_ENUM(NSInteger, PrecipType) {
 
 @interface CAEPrecipitationDelegate : NSObject <CAEDiscreteMeterViewDelegate, CAEDiscreteMeterViewDataSource>
 - (instancetype)initWithPrecipType:(PrecipType)precipType Probability:(NSNumber *)probability;
+
+@property (nonatomic) PrecipType precipType;
+@property (strong, nonatomic) NSNumber *probability;
 @end
