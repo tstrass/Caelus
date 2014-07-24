@@ -314,7 +314,7 @@ const int MAX_SNOW_SURE = 28;
 
 	if (dict) {
 		self.currentConditions = [[CAECurrentConditions alloc] initWithConditionsDict:dict];
-		[self layoutCurrentConditionsLabel];
+		//[self layoutCurrentConditionsLabel];
 	}
 }
 
@@ -328,7 +328,7 @@ const int MAX_SNOW_SURE = 28;
 
 	if (dict) {
 		self.astronomy = [[CAEAstronomy alloc] initWithAstronomyDict:dict];
-		[self layoutAstronomyLabel];
+		//[self layoutAstronomyLabel];
 	}
 }
 
@@ -339,7 +339,7 @@ const int MAX_SNOW_SURE = 28;
 	                                                       error:&error];
 	if (dict) {
 		self.hourlyWeather = [[CAEHourlyWeather alloc] initWithHourlyDict:dict];
-		[self layoutHourlyScrollView];
+		//[self layoutHourlyScrollView];
 	}
 }
 
@@ -457,10 +457,6 @@ const int MAX_SNOW_SURE = 28;
 
 - (BOOL)prefersStatusBarHidden {
 	return YES;
-}
-
-- (IBAction)reloadHoursScrollView:(id)sender {
-	[self.hoursScrollView reload];
 }
 
 @end
