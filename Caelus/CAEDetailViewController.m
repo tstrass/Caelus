@@ -34,6 +34,7 @@
 @property (weak, nonatomic) IBOutlet CAEDiscreteMeterView *cloudsMeterView;
 @property (weak, nonatomic) IBOutlet CAEDiscreteMeterView *precipitationMeterView;
 @property (weak, nonatomic) IBOutlet CAEHorizontalScrollView *hoursScrollView;
+@property (weak, nonatomic) IBOutlet UILabel *temperatureLabel;
 
 // Requests
 @property (strong, nonatomic) NSMutableArray *requestsArray;
@@ -169,9 +170,7 @@ const int MAX_SNOW_SURE = 28;
 }
 
 - (void)formatViewForWeather {
-	//[UIView animateWithDuration:1.0 animations: ^{
-	//    self.view.backgroundColor = [self backgroundColorFromWeatherData];
-	//}];
+    
 	[self formatCloudsView];
 	[self formatPrecpitationView];
 	[self populateHoursScrollView];
@@ -217,8 +216,13 @@ const int MAX_SNOW_SURE = 28;
 
 - (void)reloadViewsForWeather {
     CAEWeatherHour *weatherHour = [self.hourlyWeather.weatherHours objectAtIndex:self.currentHour];
+    [self updateTemperatureLabelForHour:weatherHour];
     [self updateCloudsForHour:weatherHour];
     [self updatePrecipitation:weatherHour];
+}
+
+- (void)updateTemperatureLabelForHour:(CAEWeatherHour *)weatherHour {
+    self.temperatureLabel.text = [NSString stringWithFormat:@"%lu°F", [weatherHour.fTemp integerValue]];
 }
 
 - (void)updateCloudsForHour:(CAEWeatherHour *)weatherHour {
