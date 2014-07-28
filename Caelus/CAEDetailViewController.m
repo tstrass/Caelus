@@ -170,10 +170,14 @@ const int MAX_SNOW_SURE = 28;
 }
 
 - (void)formatViewForWeather {
-    
+    [self formatTemperatureLabel];
 	[self formatCloudsView];
 	[self formatPrecpitationView];
 	[self populateHoursScrollView];
+}
+
+- (void)formatTemperatureLabel {
+    self.temperatureLabel.text = [NSString stringWithFormat:@"%lu°F", [self.currentConditions.fTemp integerValue]];
 }
 
 - (void)formatCloudsView {
