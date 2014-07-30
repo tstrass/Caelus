@@ -16,12 +16,12 @@
 // View
 #import "CAEDiscreteMeterView.h"
 #import "CAEHorizontalScrollView.h"
-#import "UIColor+WeatherTools.h"
 
 // Model
 #import "CAECurrentConditions.h"
 #import "CAEAstronomy.h"
 #import "CAEHourlyWeather.h"
+#import "CAEAstronomy+Tools.h"
 
 @interface CAEDetailViewController () <CAEHorizontalScrollViewDelegate>
 @property (strong, nonatomic) UIPopoverController *masterPopoverController;
@@ -485,9 +485,7 @@ const int MAX_SNOW_SURE = 28;
 
 - (void)scrollViewPercentageAcrossSubview:(CGFloat)percentage {
     CAEWeatherHour *weatherHour = [self.hourlyWeather.weatherHours objectAtIndex:self.currentHour];
-    self.view.backgroundColor = [UIColor backgroundColorFromWeatherHour:weatherHour
-                                                              astronomy:self.astronomy
-                                                         hourPercentage:percentage];
+    self.view.backgroundColor = [self.astronomy backgroundColorFromWeatherHour:weatherHour hourPercentage:percentage];
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

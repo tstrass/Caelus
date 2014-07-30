@@ -11,7 +11,5 @@
 #import "CAEAstronomy.h"
 
 @interface UIColor (WeatherTools)
-+ (UIColor *)backgroundColorFromWeatherHour:(CAEWeatherHour *)weatherHour
-                                  astronomy:(CAEAstronomy *)astronomy
-                             hourPercentage:(CGFloat)hourPercentage;
+
 @end

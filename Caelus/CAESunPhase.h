@@ -29,7 +29,7 @@
 /** minutes past the hour */
 @property (strong, nonatomic) NSNumber *sunriseMinute;
 /** minutes into the day, i.e. in the range [0, 1440] */
-@property (nonatomic) NSNumber *sunriseMinuteTime;
+@property (nonatomic) CGFloat sunriseMinuteTime;
 
 // sunset
 /** 24 hour time */
@@ -37,5 +37,10 @@
 /** minutes past the hour */
 @property (strong, nonatomic) NSNumber *sunsetMinute;
 /** minutes into the day, i.e. in the range [0, 1440] */
-@property (nonatomic) NSNumber *sunsetMinuteTime;
+@property (nonatomic) CGFloat sunsetMinuteTime;
+
+@property (nonatomic) CGFloat sunriseStartMinuteTime;
+@property (nonatomic) CGFloat dayStartMinuteTime;
+@property (nonatomic) CGFloat sunsetStartMinuteTime;
+@property (nonatomic) CGFloat nightStartMinuteTime;
 @end
