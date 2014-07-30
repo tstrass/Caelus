@@ -28,10 +28,14 @@
 @property (strong, nonatomic) NSNumber *sunriseHour;
 /** minutes past the hour */
 @property (strong, nonatomic) NSNumber *sunriseMinute;
+/** minutes into the day, i.e. in the range [0, 1440] */
+@property (nonatomic) NSNumber *sunriseMinuteTime;
 
 // sunset
 /** 24 hour time */
 @property (strong, nonatomic) NSNumber *sunsetHour;
 /** minutes past the hour */
 @property (strong, nonatomic) NSNumber *sunsetMinute;
+/** minutes into the day, i.e. in the range [0, 1440] */
+@property (nonatomic) NSNumber *sunsetMinuteTime;
 @end

@@ -16,6 +16,7 @@
 // View
 #import "CAEDiscreteMeterView.h"
 #import "CAEHorizontalScrollView.h"
+#import "UIColor+WeatherTools.h"
 
 // Model
 #import "CAECurrentConditions.h"
@@ -119,7 +120,7 @@ const int MAX_SNOW_SURE = 28;
 - (void)setUpAPIRequests {
 	self.requestsArray = [[NSMutableArray alloc] init];
 	[self makeCurrentConditionsRequestWithLocation:self.geolocation];
-	//[self makeAstronomyRequestWithLocation:self.geolocation];
+	[self makeAstronomyRequestWithLocation:self.geolocation];
 	[self makeHourlyWeatherRequestWithLocation:self.geolocation];
 }
 
@@ -170,18 +171,18 @@ const int MAX_SNOW_SURE = 28;
 }
 
 - (void)formatViewForWeather {
-    [self formatTemperatureLabel];
+	[self formatTemperatureLabel];
 	[self formatCloudsView];
 	[self formatPrecpitationView];
 	[self populateHoursScrollView];
 }
 
 - (void)formatTemperatureLabel {
-    self.temperatureLabel.text = [NSString stringWithFormat:@"%lu°F", [self.currentConditions.fTemp integerValue]];
+	self.temperatureLabel.text = [NSString stringWithFormat:@"%lu°F", [self.currentConditions.fTemp integerValue]];
 }
 
 - (void)formatCloudsView {
-    CAEWeatherHour *firstHour = [self.hourlyWeather.weatherHours objectAtIndex:self.currentHour];
+	CAEWeatherHour *firstHour = [self.hourlyWeather.weatherHours objectAtIndex:self.currentHour];
 	NSNumber *propabilityOfPrecip = firstHour.probabilityOfPrecipitation;
 	NSNumber *percentCloudy = firstHour.cloudCover;
 
@@ -196,7 +197,7 @@ const int MAX_SNOW_SURE = 28;
 	NSNumber *probabilityOfPrecip = firstHour.probabilityOfPrecipitation;
 	PrecipType precipType = [self precipTypeFromIconName:firstHour.iconName Temperature:firstHour.fTemp];
 
-    self.precipitationDelegate = [[CAEPrecipitationDelegate alloc] initWithPrecipType:precipType Probability:probabilityOfPrecip];
+	self.precipitationDelegate = [[CAEPrecipitationDelegate alloc] initWithPrecipType:precipType Probability:probabilityOfPrecip];
 	self.precipitationMeterView.dataSource = self.precipitationDelegate;
 	self.precipitationMeterView.delegate = self.precipitationDelegate;
 	[self.precipitationMeterView reload];
@@ -205,7 +206,7 @@ const int MAX_SNOW_SURE = 28;
 - (void)populateHoursScrollView {
 	CAEHoursScrollViewDataSource *hoursScrollViewDataSource = [[CAEHoursScrollViewDataSource alloc] initWithWeatherHoursArray:self.hourlyWeather.weatherHours];
 	self.hoursScrollView.dataSource = hoursScrollViewDataSource;
-	self.hoursScrollView.hoursDelegate = self;
+	self.hoursScrollView.delegate = self;
 	[self.hoursScrollView reload];
 }
 
@@ -219,27 +220,27 @@ const int MAX_SNOW_SURE = 28;
 }
 
 - (void)reloadViewsForWeather {
-    CAEWeatherHour *weatherHour = [self.hourlyWeather.weatherHours objectAtIndex:self.currentHour];
-    [self updateTemperatureLabelForHour:weatherHour];
-    [self updateCloudsForHour:weatherHour];
-    [self updatePrecipitation:weatherHour];
+	CAEWeatherHour *weatherHour = [self.hourlyWeather.weatherHours objectAtIndex:self.currentHour];
+	[self updateTemperatureLabelForHour:weatherHour];
+	[self updateCloudsForHour:weatherHour];
+	[self updatePrecipitation:weatherHour];
 }
 
 - (void)updateTemperatureLabelForHour:(CAEWeatherHour *)weatherHour {
-    self.temperatureLabel.text = [NSString stringWithFormat:@"%lu°F", [weatherHour.fTemp integerValue]];
+	self.temperatureLabel.text = [NSString stringWithFormat:@"%lu°F", [weatherHour.fTemp integerValue]];
 }
 
 - (void)updateCloudsForHour:(CAEWeatherHour *)weatherHour {
-    self.cloudsDelegate.percentCloudy = weatherHour.cloudCover;
-    self.cloudsDelegate.probabilityOfPrecipitation = weatherHour.probabilityOfPrecipitation;
-    [self.cloudsMeterView reload];
+	self.cloudsDelegate.percentCloudy = weatherHour.cloudCover;
+	self.cloudsDelegate.probabilityOfPrecipitation = weatherHour.probabilityOfPrecipitation;
+	[self.cloudsMeterView reload];
 }
 
 - (void)updatePrecipitation:(CAEWeatherHour *)weatherHour {
-    self.precipitationDelegate.precipType = [self precipTypeFromIconName:weatherHour.iconName
-                                                             Temperature:weatherHour.fTemp];
-    self.precipitationDelegate.probability = weatherHour.probabilityOfPrecipitation;
-    [self.precipitationMeterView reload];
+	self.precipitationDelegate.precipType = [self precipTypeFromIconName:weatherHour.iconName
+	                                                         Temperature:weatherHour.fTemp];
+	self.precipitationDelegate.probability = weatherHour.probabilityOfPrecipitation;
+	[self.precipitationMeterView reload];
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -282,11 +283,11 @@ const int MAX_SNOW_SURE = 28;
 		        self.currentConditionsResponseData = data;
 		        [self parseCurrentWeatherJSON];
 			}
-		    else if ([self.requestsArray indexOfObject:request] == 3) {
+		    else if ([self.requestsArray indexOfObject:request] == 1) {
 		        self.astronomyResponseData = data;
 		        [self parseAstronomyJSON];
 			}
-		    else if ([self.requestsArray indexOfObject:request] == 1) {
+		    else if ([self.requestsArray indexOfObject:request] == 2) {
 		        self.hourlyWeatherResponseData = data;
 		        NSString *string = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
 		        NSLog(@"%@", string);
@@ -478,8 +479,15 @@ const int MAX_SNOW_SURE = 28;
 #pragma mark - CAEHorizontalScrollView Delegate Methods
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 - (void)scrollViewSubviewDidChange:(NSInteger)index {
-    self.currentHour = index;
-    [self reloadViewsForWeather];
+	self.currentHour = index;
+	[self reloadViewsForWeather];
+}
+
+- (void)scrollViewPercentageAcrossSubview:(CGFloat)percentage {
+    CAEWeatherHour *weatherHour = [self.hourlyWeather.weatherHours objectAtIndex:self.currentHour];
+    self.view.backgroundColor = [UIColor backgroundColorFromWeatherHour:weatherHour
+                                                              astronomy:self.astronomy
+                                                         hourPercentage:percentage];
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

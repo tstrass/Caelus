@@ -9,6 +9,7 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #import "CAEWeatherHour.h"
+#import "CAEWeatherHour+Tools.h"
 
 @interface CAEHoursScrollViewDataSource ()
 @property (strong, nonatomic) NSNumber *numberOfHours;
@@ -57,12 +58,7 @@
 
 - (NSString *)timeStringFromIndex:(NSInteger)index {
 	CAEWeatherHour *weatherHour = [self.weatherHours objectAtIndex:index];
-	NSInteger hour = weatherHour.hour.integerValue;
-	NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-	dateFormatter.dateFormat = @"HH:mm";
-	NSDate *date = [dateFormatter dateFromString:[NSString stringWithFormat:@"%lu:00", hour]];
-	dateFormatter.dateFormat = @"h:mm a";
-	return [dateFormatter stringFromDate:date];
+	return [weatherHour timeStringFromWeatherHour];
 }
 
 - (NSString *)dayStringFromIndex:(NSInteger)index {

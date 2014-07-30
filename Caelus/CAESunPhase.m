@@ -35,6 +35,9 @@
 
 	self.sunsetHour = [NSNumber numberWithInteger:[[sunsetDict objectForKey:@"hour"] integerValue]];
 	self.sunsetMinute = [NSNumber numberWithInteger:[[sunsetDict objectForKey:@"minute"] integerValue]];
+    
+    self.sunriseMinuteTime = [NSNumber numberWithFloat:[self.sunriseHour floatValue] * 60.0 + [self.sunriseMinute floatValue]];
+    self.sunsetMinuteTime = [NSNumber numberWithFloat:[self.sunsetHour floatValue] * 60.0 + [self.sunsetMinute floatValue]];
 }
 
 @end
