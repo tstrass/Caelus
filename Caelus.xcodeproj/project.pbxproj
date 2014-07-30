@@ -11,6 +11,7 @@
 		E2089BF81976D04A00E0D643 /* CAEPrecipitationDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E2089BF71976D04A00E0D643 /* CAEPrecipitationDelegate.m */; };
 		E2445E901989383400864231 /* UIColor+WeatherTools.m in Sources */ = {isa = PBXBuildFile; fileRef = E2445E8F1989383400864231 /* UIColor+WeatherTools.m */; };
 		E2445E9319893DF900864231 /* CAEWeatherHour+Tools.m in Sources */ = {isa = PBXBuildFile; fileRef = E2445E9219893DF900864231 /* CAEWeatherHour+Tools.m */; };
+		E2445E96198991D000864231 /* CAEAstronomy+Tools.m in Sources */ = {isa = PBXBuildFile; fileRef = E2445E95198991D000864231 /* CAEAstronomy+Tools.m */; };
 		E259FECB19702AF7000E032C /* CAECloudsDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E259FECA19702AF7000E032C /* CAECloudsDelegate.m */; };
 		E259FED119707388000E032C /* UIImageView+Tools.m in Sources */ = {isa = PBXBuildFile; fileRef = E259FED019707388000E032C /* UIImageView+Tools.m */; };
 		E29571F61964A1B1009B725C /* CAEHourlyWeather.m in Sources */ = {isa = PBXBuildFile; fileRef = E29571F51964A1B1009B725C /* CAEHourlyWeather.m */; };
@@ -65,6 +66,8 @@
 		E2445E8F1989383400864231 /* UIColor+WeatherTools.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+WeatherTools.m"; sourceTree = "<group>"; };
 		E2445E9119893DF900864231 /* CAEWeatherHour+Tools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CAEWeatherHour+Tools.h"; sourceTree = "<group>"; };
 		E2445E9219893DF900864231 /* CAEWeatherHour+Tools.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CAEWeatherHour+Tools.m"; sourceTree = "<group>"; };
+		E2445E94198991D000864231 /* CAEAstronomy+Tools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CAEAstronomy+Tools.h"; sourceTree = "<group>"; };
+		E2445E95198991D000864231 /* CAEAstronomy+Tools.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CAEAstronomy+Tools.m"; sourceTree = "<group>"; };
 		E259FEC919702AF7000E032C /* CAECloudsDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAECloudsDelegate.h; sourceTree = "<group>"; };
 		E259FECA19702AF7000E032C /* CAECloudsDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CAECloudsDelegate.m; sourceTree = "<group>"; };
 		E259FECF19707388000E032C /* UIImageView+Tools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+Tools.h"; sourceTree = "<group>"; };
@@ -257,6 +260,8 @@
 				E2445E8F1989383400864231 /* UIColor+WeatherTools.m */,
 				E2445E9119893DF900864231 /* CAEWeatherHour+Tools.h */,
 				E2445E9219893DF900864231 /* CAEWeatherHour+Tools.m */,
+				E2445E94198991D000864231 /* CAEAstronomy+Tools.h */,
+				E2445E95198991D000864231 /* CAEAstronomy+Tools.m */,
 			);
 			path = Caelus;
 			sourceTree = "<group>";
@@ -410,6 +415,7 @@
 				E2CFFDAA19786F530075B89E /* UIView+Tools.m in Sources */,
 				E259FED119707388000E032C /* UIImageView+Tools.m in Sources */,
 				E2445E901989383400864231 /* UIColor+WeatherTools.m in Sources */,
+				E2445E96198991D000864231 /* CAEAstronomy+Tools.m in Sources */,
 				E2CFFDA71978631D0075B89E /* CAEHorizontalScrollView.m in Sources */,
 				E2CE3CD7196B317300E9D07B /* CAESunPhase.m in Sources */,
 				E2A2B15A19797AA10059F39E /* CAEHoursScrollViewDataSource.m in Sources */,
