@@ -104,7 +104,7 @@ const int MAX_SNOW_SURE = 28;
 
 	[self setUpLocationManager];
 
-	self.view.backgroundColor = [self backgroundColorFromWeatherData];
+	self.view.backgroundColor = [UIColor colorWithRed:0.400 green:0.800 blue:1.000 alpha:1.000];
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -128,41 +128,6 @@ const int MAX_SNOW_SURE = 28;
 #pragma mark - Format
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// temporary: to display raw current conditions weather data
-- (void)layoutCurrentConditionsLabel {
-	self.currentConditionsLabel.text = [NSString stringWithFormat:@"Current conditions in %@, %@:\n   %ld°F\n   Wind: %@\n   %f inches of rain", self.currentConditions.location.city, self.currentConditions.location.country, (long)[self.currentConditions.fTemp integerValue], self.currentConditions.windDescription, [self.currentConditions.precipIn floatValue]];
-	self.currentConditionsLabel.numberOfLines = 4;
-	self.currentConditionsLabel.font = [UIFont fontWithName:@"Times New Roman" size:12];
-}
-
-// temporary: to display raw astronomy data
-- (void)layoutAstronomyLabel {
-	self.astronomyLabel.text = [NSString stringWithFormat:@"Current Light Period: %@\nSunrise: %ld:%ld\nSunset: %ld:%ld\nMoon: %@\n            %ld%% illuminated\n             %ld days old", [self lightPeriodNameFromEnum], (long)[self.astronomy.sunPhase.sunriseHour integerValue], (long)[self.astronomy.sunPhase.sunriseMinute integerValue], (long)[self.astronomy.sunPhase.sunsetHour integerValue], (long)[self.astronomy.sunPhase.sunsetMinute integerValue], self.astronomy.moonPhase.phase, (long)[self.astronomy.moonPhase.percentIlluminated integerValue], (long)[self.astronomy.moonPhase.age integerValue]];
-	self.astronomyLabel.numberOfLines = 6;
-	self.astronomyLabel.font = [UIFont fontWithName:@"Times New Roman" size:12];
-}
-
-// temporary: to display raw hourly weather data
-- (void)layoutHourlyScrollView {
-	self.hourlyScrollView.backgroundColor = [UIColor whiteColor];
-	CGFloat labelWidth = self.hourlyScrollView.frame.size.width - 10;
-	int counter = 0;
-	for (CAEWeatherHour *weatherHour in self.hourlyWeather.weatherHours) {
-		UILabel *hourLabel = [[UILabel alloc] init];
-		hourLabel.numberOfLines = 2;
-		hourLabel.text = [NSString stringWithFormat:@"%@ %ld:00\n  %lu°F, %@ (%lu%% cloudy), %lu%% chance of precipitation", weatherHour.weekdayNameAbbrev, [weatherHour.hour longValue], [weatherHour.fTemp longValue], weatherHour.condition, [weatherHour.cloudCover longValue], [weatherHour.probabilityOfPrecipitation longValue]];
-		hourLabel.font = [UIFont fontWithName:@"Times New Roman" size:10];
-		[hourLabel sizeToFit];
-		hourLabel.frame = CGRectMake(5, 5, labelWidth, hourLabel.frame.size.height);
-
-		UIView *hourView = [[UIView alloc] initWithFrame:CGRectMake(0, counter * 30, labelWidth + 10, hourLabel.frame.size.height + 5)];
-		[hourView addSubview:hourLabel];
-		[self.hourlyScrollView addSubview:hourView];
-		counter++;
-	}
-	self.hourlyScrollView.contentSize = CGSizeMake(self.hourlyScrollView.frame.size.width, counter * 30);
-}
-
 - (void)formatLocationLabel {
 	self.currentLocationLabel.text = [NSString stringWithFormat:@"Current Location: %@", self.geolocation];
 	self.currentLocationLabel.font = [UIFont fontWithName:@"Times New Roman" size:12];
@@ -171,6 +136,8 @@ const int MAX_SNOW_SURE = 28;
 }
 
 - (void)formatViewForWeather {
+    CAEWeatherHour *firstHour = [self.hourlyWeather.weatherHours firstObject];
+    self.view.backgroundColor = [self.astronomy backgroundColorFromWeatherHour:firstHour hourPercentage:0.5];
 	[self formatTemperatureLabel];
 	[self formatCloudsView];
 	[self formatPrecpitationView];
@@ -211,7 +178,7 @@ const int MAX_SNOW_SURE = 28;
 }
 
 - (void)formatViewForFailedLocation {
-	self.view.backgroundColor = [self backgroundColorFromWeatherData];
+	self.view.backgroundColor = [UIColor colorWithRed:0.400 green:0.800 blue:1.000 alpha:1.000];
 	self.currentLocationLabel.text = @"Cannot detect a location.";
 	self.currentLocationLabel.textAlignment = NSTextAlignmentCenter;
 	self.currentLocationLabel.font = [UIFont fontWithName:@"Times New Roman" size:12];
@@ -392,87 +359,6 @@ const int MAX_SNOW_SURE = 28;
 	else {
 		return ([fTemp integerValue] > 32) ? RAIN : SNOW;
 	}
-}
-
-/**
- *  Determine the background color, based on temp and sunniness
- *
- *  @return background color
- */
-- (UIColor *)backgroundColorFromWeatherData {
-	NSLog(@"Determining background color with temp:%ld, sunrise:%ld:%ld, sunset:%ld:%ld", (long)[self.currentConditions.fTemp integerValue], (long)[self.astronomy.sunPhase.sunriseHour integerValue], (long)[self.astronomy.sunPhase.sunriseMinute integerValue], (long)[self.astronomy.sunPhase.sunsetHour integerValue], (long)[self.astronomy.sunPhase.sunsetMinute integerValue]);
-
-	UIColor *backgroundColor = [[UIColor alloc] init];
-
-	backgroundColor = [UIColor colorWithRed:0.438 green:0.640 blue:0.865 alpha:1.000];
-	return backgroundColor;
-}
-
-- (UIColor *)colorFromLightPeriod:(LightPeriod)lightPeriod {
-	UIColor *color = [[UIColor alloc] init];
-	switch (lightPeriod) {
-		case NIGHT:
-
-			break;
-
-		case DAWN:
-
-			break;
-
-		case SUNRISE:
-
-			break;
-
-		case DAY:
-
-			break;
-
-		case SUNSET:
-
-			break;
-
-		case DUSK:
-
-			break;
-
-		default:
-			break;
-	}
-	return color;
-}
-
-- (NSString *)lightPeriodNameFromEnum {
-	NSString *lightPeriodName;
-	switch (self.astronomy.lightPeriod) {
-		case NIGHT:
-			lightPeriodName = @"Night";
-			break;
-
-		case DAWN:
-			lightPeriodName = @"Dawn";
-			break;
-
-		case SUNRISE:
-			lightPeriodName = @"Sunrise";
-			break;
-
-		case DAY:
-			lightPeriodName = @"Day";
-			break;
-
-		case SUNSET:
-			lightPeriodName = @"Sunset";
-			break;
-
-		case DUSK:
-			lightPeriodName = @"Dusk";
-			break;
-
-		default:
-			NSLog(@"Error: object does not have a valid lightPeriod");
-			break;
-	}
-	return lightPeriodName;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

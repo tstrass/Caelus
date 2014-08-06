@@ -29,8 +29,8 @@ static const float MAX_BLUE = 1.000;
         CGFloat sunriseGreenRange = MAX_GREEN - MIN_GREEN;
         CGFloat sunriseBlueRange = MAX_BLUE - MIN_BLUE;
         CGFloat timeRange = sunPhase.dayStartMinuteTime - sunPhase.sunriseStartMinuteTime;
-        CGFloat greenValue = (currentMinuteTime - sunPhase.sunriseStartMinuteTime) * sunriseGreenRange / timeRange + sunriseGreenRange;
-        CGFloat blueValue = (currentMinuteTime - sunPhase.sunriseStartMinuteTime) * sunriseBlueRange / timeRange + sunriseBlueRange;
+        CGFloat greenValue = (currentMinuteTime - sunPhase.sunriseStartMinuteTime) / timeRange * sunriseGreenRange + MIN_GREEN;
+        CGFloat blueValue = (currentMinuteTime - sunPhase.sunriseStartMinuteTime) * sunriseBlueRange / timeRange + MIN_BLUE;
         return [UIColor colorWithRed:0.000 green:greenValue blue:blueValue alpha:1.000];
     } else {
         // sunset
@@ -38,8 +38,8 @@ static const float MAX_BLUE = 1.000;
         CGFloat sunsetBlueRange = MAX_BLUE - MIN_BLUE;
         CGFloat timeRange = sunPhase.nightStartMinuteTime - sunPhase.sunsetStartMinuteTime;
         CGFloat newTime = sunPhase.nightStartMinuteTime - (currentMinuteTime - sunPhase.sunsetStartMinuteTime);
-        CGFloat greenValue = (newTime - sunPhase.sunsetStartMinuteTime) * sunsetGreenRange / timeRange + sunsetGreenRange;
-        CGFloat blueValue = (newTime - sunPhase.sunsetStartMinuteTime) * sunsetBlueRange / timeRange + sunsetBlueRange;
+        CGFloat greenValue = (newTime - sunPhase.sunsetStartMinuteTime) * sunsetGreenRange / timeRange + MIN_GREEN;
+        CGFloat blueValue = (newTime - sunPhase.sunsetStartMinuteTime) * sunsetBlueRange / timeRange + MIN_BLUE;
         return [UIColor colorWithRed:0.000 green:greenValue blue:blueValue alpha:1.000];
     }
     
