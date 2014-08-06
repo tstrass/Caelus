@@ -84,6 +84,7 @@ const int MAX_SNOW_SURE = 28;
 	if (self.detailItem) {
 		self.detailDescriptionLabel.text = [self.detailItem description];
 	}
+    [self makeGradientOverlay];
 	self.cloudsMeterView.backgroundColor = [UIColor clearColor];
 	self.precipitationMeterView.backgroundColor = [UIColor clearColor];
 	self.hoursScrollView.layer.borderWidth = 1.0;
@@ -208,6 +209,16 @@ const int MAX_SNOW_SURE = 28;
 	                                                         Temperature:weatherHour.fTemp];
 	self.precipitationDelegate.probability = weatherHour.probabilityOfPrecipitation;
 	[self.precipitationMeterView reload];
+}
+
+- (void)makeGradientOverlay {
+    UIColor *topColor = [UIColor colorWithWhite:1.000 alpha:0.350];
+    UIColor *bottomColor = [UIColor colorWithWhite:1.000 alpha:0.000];
+
+    CAGradientLayer *gradient = [CAGradientLayer layer];
+    gradient.colors = [NSArray arrayWithObjects:(id)topColor.CGColor, (id)bottomColor.CGColor, nil];
+    gradient.frame = self.view.frame;
+    [self.view.layer insertSublayer:gradient atIndex:0];
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
