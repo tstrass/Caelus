@@ -9,5 +9,10 @@
 #import "CAEWeatherHour.h"
 
 @interface CAEWeatherHour (Tools)
+/**
+ *  Uses the weatherHour property of a CAEWeatherHour to make a time string
+ *
+ *  @return NSString for the time, in the format h:mm, which is 12 hour format with no leading zero
+ */
 - (NSString *)timeStringFromWeatherHour;
 @end
