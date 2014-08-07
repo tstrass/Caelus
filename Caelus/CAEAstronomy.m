@@ -27,10 +27,10 @@
 
 @implementation CAEAstronomy
 
-const unsigned long DAWN_DURATION = 30;
-const unsigned long DUSK_DURATION = 30;
-const unsigned long SUNRISE_DURATION = 30;
-const unsigned long SUNSET_DURATION = 30;
+static const unsigned long DAWN_DURATION = 30;
+static const unsigned long DUSK_DURATION = 30;
+static const unsigned long SUNRISE_DURATION = 30;
+static const unsigned long SUNSET_DURATION = 30;
 
 - (id)init {
 	self = [super init];

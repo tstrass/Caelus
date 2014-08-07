@@ -12,8 +12,8 @@
 @protocol CAEHorizontalScrollViewDataSource;
 
 @interface CAEHorizontalScrollView : UIView
-@property (nonatomic, strong) id<CAEHorizontalScrollViewDelegate> hoursDelegate;
-@property (nonatomic, strong) id<CAEHorizontalScrollViewDataSource> dataSource;
+@property (nonatomic, strong) id <CAEHorizontalScrollViewDelegate> delegate;
+@property (nonatomic, strong) id <CAEHorizontalScrollViewDataSource> dataSource;
 
 - (void)reload;
 @end
@@ -21,6 +21,7 @@
 @protocol CAEHorizontalScrollViewDelegate <NSObject>
 @optional
 - (void)scrollViewSubviewDidChange:(NSInteger)index;
+- (void)scrollViewPercentageAcrossSubview:(CGFloat)percentage;
 @end
 
 @protocol CAEHorizontalScrollViewDataSource <NSObject>

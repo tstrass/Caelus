@@ -9,6 +9,11 @@
 #import "CAESunPhase.h"
 
 @implementation CAESunPhase
+static const float DAWN_DURATION = 30.0;
+static const float DUSK_DURATION = 30.0;
+static const float SUNRISE_DURATION = 30.0;
+static const float SUNSET_DURATION = 30.0;
+
 - (id)initWithSunPhaseDict:(NSDictionary *)sunPhaseDict {
 	self = [super init];
 	if (self) {
@@ -35,6 +40,14 @@
 
 	self.sunsetHour = [NSNumber numberWithInteger:[[sunsetDict objectForKey:@"hour"] integerValue]];
 	self.sunsetMinute = [NSNumber numberWithInteger:[[sunsetDict objectForKey:@"minute"] integerValue]];
+    
+    self.sunriseMinuteTime = [self.sunriseHour floatValue] * 60.0 + [self.sunriseMinute floatValue];
+    self.sunsetMinuteTime = [self.sunsetHour floatValue] * 60.0 + [self.sunsetMinute floatValue];
+    
+    self.sunriseStartMinuteTime = self.sunriseMinuteTime - DAWN_DURATION;
+    self.dayStartMinuteTime = self.sunriseMinuteTime + SUNRISE_DURATION;
+    self.sunsetStartMinuteTime = self.sunsetMinuteTime - SUNSET_DURATION;
+    self.nightStartMinuteTime = self.sunsetMinuteTime + DUSK_DURATION;
 }
 
 @end
