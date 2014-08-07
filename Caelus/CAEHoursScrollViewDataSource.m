@@ -51,6 +51,9 @@
 	UILabel *hourLabel = [[UILabel alloc] init];
 	hourLabel.numberOfLines = 2;
 	hourLabel.text = [NSString stringWithFormat:@"%@\n%@", [self timeStringFromIndex:index], [self dayStringFromIndex:index]];
+    hourLabel.shadowOffset = CGSizeMake(0.5, 0.5);
+    hourLabel.shadowColor = [UIColor colorWithWhite:0.200 alpha:1.000];
+    hourLabel.textColor = [UIColor colorWithWhite:0.902 alpha:1.000];
 	hourLabel.frame = CGRectMake(0, 0, 60, horizontalScrollView.frame.size.height);
 	hourLabel.textAlignment = NSTextAlignmentCenter;
 	return hourLabel;

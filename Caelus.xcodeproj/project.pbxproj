@@ -27,6 +27,7 @@
 		E2CE3CDA196B351A00E9D07B /* CAEMoonPhase.m in Sources */ = {isa = PBXBuildFile; fileRef = E2CE3CD9196B351A00E9D07B /* CAEMoonPhase.m */; };
 		E2CFFDA71978631D0075B89E /* CAEHorizontalScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = E2CFFDA61978631D0075B89E /* CAEHorizontalScrollView.m */; };
 		E2CFFDAA19786F530075B89E /* UIView+Tools.m in Sources */ = {isa = PBXBuildFile; fileRef = E2CFFDA919786F530075B89E /* UIView+Tools.m */; };
+		E2D37CCB1994099B007C4B67 /* UIView+SizingTools.m in Sources */ = {isa = PBXBuildFile; fileRef = E2D37CCA1994099B007C4B67 /* UIView+SizingTools.m */; };
 		E2E1EEEE1954BB9600A0B541 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2E1EEED1954BB9600A0B541 /* Foundation.framework */; };
 		E2E1EEF01954BB9600A0B541 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2E1EEEF1954BB9600A0B541 /* CoreGraphics.framework */; };
 		E2E1EEF21954BB9600A0B541 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2E1EEF11954BB9600A0B541 /* UIKit.framework */; };
@@ -95,6 +96,8 @@
 		E2CFFDA61978631D0075B89E /* CAEHorizontalScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CAEHorizontalScrollView.m; sourceTree = "<group>"; };
 		E2CFFDA819786F530075B89E /* UIView+Tools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Tools.h"; sourceTree = "<group>"; };
 		E2CFFDA919786F530075B89E /* UIView+Tools.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Tools.m"; sourceTree = "<group>"; };
+		E2D37CC91994099B007C4B67 /* UIView+SizingTools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+SizingTools.h"; sourceTree = "<group>"; };
+		E2D37CCA1994099B007C4B67 /* UIView+SizingTools.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+SizingTools.m"; sourceTree = "<group>"; };
 		E2E1EEEA1954BB9600A0B541 /* Caelus.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Caelus.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E2E1EEED1954BB9600A0B541 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		E2E1EEEF1954BB9600A0B541 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -256,6 +259,8 @@
 				E20001A919630E4C007659E3 /* Model */,
 				E2E1EEF41954BB9600A0B541 /* Supporting Files */,
 				E2E1EF0B1954BB9600A0B541 /* Images.xcassets */,
+				E2D37CC91994099B007C4B67 /* UIView+SizingTools.h */,
+				E2D37CCA1994099B007C4B67 /* UIView+SizingTools.m */,
 				E2445E8E1989383400864231 /* UIColor+WeatherTools.h */,
 				E2445E8F1989383400864231 /* UIColor+WeatherTools.m */,
 				E2445E9119893DF900864231 /* CAEWeatherHour+Tools.h */,
@@ -417,6 +422,7 @@
 				E2445E901989383400864231 /* UIColor+WeatherTools.m in Sources */,
 				E2445E96198991D000864231 /* CAEAstronomy+Tools.m in Sources */,
 				E2CFFDA71978631D0075B89E /* CAEHorizontalScrollView.m in Sources */,
+				E2D37CCB1994099B007C4B67 /* UIView+SizingTools.m in Sources */,
 				E2CE3CD7196B317300E9D07B /* CAESunPhase.m in Sources */,
 				E2A2B15A19797AA10059F39E /* CAEHoursScrollViewDataSource.m in Sources */,
 				E2E1EEFE1954BB9600A0B541 /* CAEAppDelegate.m in Sources */,

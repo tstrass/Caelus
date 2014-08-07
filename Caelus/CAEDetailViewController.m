@@ -36,6 +36,7 @@
 @property (weak, nonatomic) IBOutlet CAEDiscreteMeterView *precipitationMeterView;
 @property (weak, nonatomic) IBOutlet CAEHorizontalScrollView *hoursScrollView;
 @property (weak, nonatomic) IBOutlet UILabel *temperatureLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *bottomShadow;
 
 // Requests
 @property (strong, nonatomic) NSMutableArray *requestsArray;
@@ -84,10 +85,15 @@ const int MAX_SNOW_SURE = 28;
 	if (self.detailItem) {
 		self.detailDescriptionLabel.text = [self.detailItem description];
 	}
-    [self makeGradientOverlay];
-	self.cloudsMeterView.backgroundColor = [UIColor clearColor];
-	self.precipitationMeterView.backgroundColor = [UIColor clearColor];
-	self.hoursScrollView.layer.borderWidth = 1.0;
+	[self makeGradientOverlay];
+    
+    self.bottomShadow.transform = CGAffineTransformMakeRotation(M_PI);
+//    self.hoursScrollView.layer.shouldRasterize = YES;
+//    self.hoursScrollView.layer.shadowOffset = CGSizeMake(5, 5);
+//    self.hoursScrollView.layer.shadowColor = [[UIColor blackColor] CGColor];
+//    self.hoursScrollView.layer.shadowRadius = 4.0;
+//    self.hoursScrollView.layer.shadowOpacity = 0.8;
+//    self.hoursScrollView.layer.shadowPath = [[UIBezierPath bezierPathWithRect:self.hoursScrollView.layer.bounds] CGPath];
 }
 
 - (void)viewDidLoad {
@@ -137,12 +143,12 @@ const int MAX_SNOW_SURE = 28;
 }
 
 - (void)formatViewForWeather {
-    CAEWeatherHour *firstHour = [self.hourlyWeather.weatherHours firstObject];
-    self.view.backgroundColor = [self.astronomy backgroundColorFromWeatherHour:firstHour hourPercentage:0.5];
+	CAEWeatherHour *firstHour = [self.hourlyWeather.weatherHours firstObject];
+	self.view.backgroundColor = [self.astronomy backgroundColorFromWeatherHour:firstHour hourPercentage:0.5];
 	[self formatTemperatureLabel];
 	[self formatCloudsView];
 	[self formatPrecpitationView];
-	[self populateHoursScrollView];
+	[self setUpHoursScrollView];
 }
 
 - (void)formatTemperatureLabel {
@@ -171,7 +177,7 @@ const int MAX_SNOW_SURE = 28;
 	[self.precipitationMeterView reload];
 }
 
-- (void)populateHoursScrollView {
+- (void)setUpHoursScrollView {
 	CAEHoursScrollViewDataSource *hoursScrollViewDataSource = [[CAEHoursScrollViewDataSource alloc] initWithWeatherHoursArray:self.hourlyWeather.weatherHours];
 	self.hoursScrollView.dataSource = hoursScrollViewDataSource;
 	self.hoursScrollView.delegate = self;
@@ -212,13 +218,13 @@ const int MAX_SNOW_SURE = 28;
 }
 
 - (void)makeGradientOverlay {
-    UIColor *topColor = [UIColor colorWithWhite:1.000 alpha:0.350];
-    UIColor *bottomColor = [UIColor colorWithWhite:1.000 alpha:0.000];
+	UIColor *topColor = [UIColor colorWithWhite:1.000 alpha:0.350];
+	UIColor *bottomColor = [UIColor colorWithWhite:1.000 alpha:0.000];
 
-    CAGradientLayer *gradient = [CAGradientLayer layer];
-    gradient.colors = [NSArray arrayWithObjects:(id)topColor.CGColor, (id)bottomColor.CGColor, nil];
-    gradient.frame = self.view.frame;
-    [self.view.layer insertSublayer:gradient atIndex:0];
+	CAGradientLayer *gradient = [CAGradientLayer layer];
+	gradient.colors = [NSArray arrayWithObjects:(id)topColor.CGColor, (id)bottomColor.CGColor, nil];
+	gradient.frame = self.view.frame;
+	[self.view.layer insertSublayer:gradient atIndex:0];
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -381,8 +387,8 @@ const int MAX_SNOW_SURE = 28;
 }
 
 - (void)scrollViewPercentageAcrossSubview:(CGFloat)percentage {
-    CAEWeatherHour *weatherHour = [self.hourlyWeather.weatherHours objectAtIndex:self.currentHour];
-    self.view.backgroundColor = [self.astronomy backgroundColorFromWeatherHour:weatherHour hourPercentage:percentage];
+	CAEWeatherHour *weatherHour = [self.hourlyWeather.weatherHours objectAtIndex:self.currentHour];
+	self.view.backgroundColor = [self.astronomy backgroundColorFromWeatherHour:weatherHour hourPercentage:percentage];
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
