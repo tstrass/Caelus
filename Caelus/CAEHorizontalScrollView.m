@@ -7,6 +7,7 @@
 //
 
 #import "CAEHorizontalScrollView.h"
+#import "UIView+SizingTools.h"
 
 @interface CAEHorizontalScrollView () <UIScrollViewDelegate>
 @property (strong, nonatomic) UIView *indicatorView;
@@ -29,6 +30,15 @@ static const float INDICATOR_HEIGHT = 10.0;
 		[self setUpIndicatorView];
 	}
 	return self;
+}
+
+- (id)initWithCoder:(NSCoder *)aDecoder {
+    self = [super initWithCoder:aDecoder];
+    if (self) {
+        [self setUpIndicatorView];
+        [self setUpScrollView];
+    }
+    return self;
 }
 
 - (void)reload {
@@ -63,6 +73,7 @@ static const float INDICATOR_HEIGHT = 10.0;
 - (void)setUpScrollView {
 	self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
 	self.scrollView.delegate = self;
+    self.scrollView.backgroundColor = [UIColor clearColor];
 	[self addSubview:self.scrollView];
 }
 
@@ -70,6 +81,10 @@ static const float INDICATOR_HEIGHT = 10.0;
 	self.indicatorView = [[UIView alloc] init];
 	self.indicatorView.frame = CGRectMake((self.frame.size.width / 2) - (INDICATOR_WIDTH / 2), self.layer.borderWidth, INDICATOR_WIDTH, INDICATOR_HEIGHT);
 	self.indicatorView.backgroundColor = [UIColor redColor];
+    id bottomIndicator = [NSKeyedUnarchiver unarchiveObjectWithData:[NSKeyedArchiver archivedDataWithRootObject:self.indicatorView]];
+    [bottomIndicator setY:self.frame.size.height - INDICATOR_HEIGHT];
+    [self addSubview:bottomIndicator];
+    
 	[self addSubview:self.indicatorView];
 }
 
