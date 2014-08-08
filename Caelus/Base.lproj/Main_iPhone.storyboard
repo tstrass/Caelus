@@ -34,26 +34,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lSO-ft-mzW">
-                                <rect key="frame" x="20" y="222" width="280" height="59"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Current Location:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cO3-Yo-0zk">
-                                <rect key="frame" x="20" y="289" width="280" height="21"/>
-                                <fontDescription key="fontDescription" name="TimesNewRomanPSMT" family="Times New Roman" pointSize="12"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GlV-iD-YS7">
-                                <rect key="frame" x="20" y="384" width="280" height="78"/>
-                            </scrollView>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7XL-R3-CxK">
-                                <rect key="frame" x="20" y="289" width="280" height="87"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="k41-yB-8Mm" customClass="CAEDiscreteMeterView">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="48"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -78,19 +58,25 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="drop-shadow" translatesAutoresizingMaskIntoConstraints="NO" id="IN7-3m-FIs">
                                 <rect key="frame" x="0.0" y="548" width="320" height="7"/>
                             </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="sun" translatesAutoresizingMaskIntoConstraints="NO" id="jbb-aD-cQj">
+                                <rect key="frame" x="99" y="193" width="123" height="117"/>
+                            </imageView>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Current Location:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cO3-Yo-0zk">
+                                <rect key="frame" x="20" y="400" width="280" height="21"/>
+                                <fontDescription key="fontDescription" name="TimesNewRomanPSMT" family="Times New Roman" pointSize="12"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
                     <navigationItem key="navigationItem" title="Detail" id="cra-N8-TIN"/>
                     <connections>
-                        <outlet property="astronomyLabel" destination="7XL-R3-CxK" id="I6D-Fh-idv"/>
                         <outlet property="bottomShadow" destination="IN7-3m-FIs" id="Ova-eE-6cf"/>
                         <outlet property="cloudsMeterView" destination="k41-yB-8Mm" id="cvz-lB-6qJ"/>
-                        <outlet property="currentConditionsLabel" destination="lSO-ft-mzW" id="nYl-KM-IQv"/>
                         <outlet property="currentLocationLabel" destination="cO3-Yo-0zk" id="b51-vm-DRv"/>
-                        <outlet property="hourlyScrollView" destination="GlV-iD-YS7" id="h23-LA-ZJk"/>
                         <outlet property="hoursScrollView" destination="iH9-4E-1Ep" id="CSY-lh-glb"/>
                         <outlet property="precipitationMeterView" destination="ye2-m0-hfE" id="tgU-Py-3NF"/>
+                        <outlet property="sunImageView" destination="jbb-aD-cQj" id="ncs-vT-L7M"/>
                         <outlet property="temperatureLabel" destination="blv-Nt-TnY" id="xsa-mQ-3JX"/>
                     </connections>
                 </viewController>
@@ -101,6 +87,7 @@
     </scenes>
     <resources>
         <image name="drop-shadow" width="320" height="2"/>
+        <image name="sun" width="400" height="400"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>

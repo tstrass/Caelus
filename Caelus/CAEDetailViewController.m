@@ -29,14 +29,17 @@
 
 // UI objects in storyboard
 @property (weak, nonatomic) IBOutlet UILabel *currentLocationLabel;
-@property (weak, nonatomic) IBOutlet UILabel *currentConditionsLabel;
-@property (weak, nonatomic) IBOutlet UILabel *astronomyLabel;
-@property (weak, nonatomic) IBOutlet UIScrollView *hourlyScrollView;
 @property (weak, nonatomic) IBOutlet CAEDiscreteMeterView *cloudsMeterView;
 @property (weak, nonatomic) IBOutlet CAEDiscreteMeterView *precipitationMeterView;
 @property (weak, nonatomic) IBOutlet CAEHorizontalScrollView *hoursScrollView;
 @property (weak, nonatomic) IBOutlet UILabel *temperatureLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *bottomShadow;
+@property (weak, nonatomic) IBOutlet UIImageView *sunImageView;
+
+@property (nonatomic) CGFloat startSunAngle;
+@property (nonatomic) CGFloat endSunAngle;
+@property (nonatomic) CGFloat arcRadius;
+@property (nonatomic) CGPoint arcCenter;
 
 // Requests
 @property (strong, nonatomic) NSMutableArray *requestsArray;
@@ -86,14 +89,8 @@ const int MAX_SNOW_SURE = 28;
 		self.detailDescriptionLabel.text = [self.detailItem description];
 	}
 	[self makeGradientOverlay];
-    
+
     self.bottomShadow.transform = CGAffineTransformMakeRotation(M_PI);
-//    self.hoursScrollView.layer.shouldRasterize = YES;
-//    self.hoursScrollView.layer.shadowOffset = CGSizeMake(5, 5);
-//    self.hoursScrollView.layer.shadowColor = [[UIColor blackColor] CGColor];
-//    self.hoursScrollView.layer.shadowRadius = 4.0;
-//    self.hoursScrollView.layer.shadowOpacity = 0.8;
-//    self.hoursScrollView.layer.shadowPath = [[UIBezierPath bezierPathWithRect:self.hoursScrollView.layer.bounds] CGPath];
 }
 
 - (void)viewDidLoad {
@@ -108,7 +105,8 @@ const int MAX_SNOW_SURE = 28;
 		// iOS 6
 		[[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationSlide];
 	}
-
+    [self calculateSunAngles];
+    
 	[self setUpLocationManager];
 
 	self.view.backgroundColor = [UIColor colorWithRed:0.400 green:0.800 blue:1.000 alpha:1.000];
@@ -121,6 +119,7 @@ const int MAX_SNOW_SURE = 28;
 	self.locationManager = [[CLLocationManager alloc]init];
 	self.locationManager.delegate = self;
 	self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+    [self.locationManager requestAlwaysAuthorization];
 	[self.locationManager startUpdatingLocation];
 }
 
@@ -134,6 +133,20 @@ const int MAX_SNOW_SURE = 28;
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark - Format
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+- (void)positionSunForWeatherHour:(CAEWeatherHour *)weatherHour hourPercentage:(CGFloat)percentage {
+    CGFloat currentMinuteTime = [weatherHour.hour floatValue] * 60.0 + (percentage * 60.0);
+    if (currentMinuteTime > self.astronomy.sunPhase.sunriseStartMinuteTime && currentMinuteTime < self.astronomy.sunPhase.nightStartMinuteTime) {
+        CGFloat angleRange = self.startSunAngle - self.endSunAngle;
+        CGFloat timeRange = self.astronomy.sunPhase.nightStartMinuteTime - self.astronomy.sunPhase.sunriseStartMinuteTime;
+        CGFloat adjustedTime = self.astronomy.sunPhase.nightStartMinuteTime - (currentMinuteTime - self.astronomy.sunPhase.sunriseStartMinuteTime);
+        CGFloat currentAngle = (adjustedTime - self.astronomy.sunPhase.sunriseStartMinuteTime) / timeRange * angleRange + self.endSunAngle;
+        [self.sunImageView setCenter:CGPointMake(self.arcCenter.x + (self.arcRadius * cosf(currentAngle * M_PI / 180)), self.arcCenter.y - (self.arcRadius * sinf(currentAngle * M_PI / 180)))];
+        NSLog(@"angle: %f", currentAngle);
+        NSLog(@"sun center: (%f, %f)", self.sunImageView.center.x, self.sunImageView.center.y);
+    }
+    
+}
 
 - (void)formatLocationLabel {
 	self.currentLocationLabel.text = [NSString stringWithFormat:@"Current Location: %@", self.geolocation];
@@ -273,8 +286,8 @@ const int MAX_SNOW_SURE = 28;
 			}
 		    else if ([self.requestsArray indexOfObject:request] == 2) {
 		        self.hourlyWeatherResponseData = data;
-		        NSString *string = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-		        NSLog(@"%@", string);
+		        //NSString *string = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+		        //NSLog(@"%@", string);
 		        [self parseHourlyWeatherJSON];
 			}
 		    outstandingRequests--;
@@ -378,6 +391,15 @@ const int MAX_SNOW_SURE = 28;
 	}
 }
 
+- (void)calculateSunAngles {
+    CGRect arcRect = CGRectMake(0 - self.sunImageView.frame.size.width / 2, 220, 320 + self.sunImageView.frame.size.width, 100);
+    self.arcRadius = (arcRect.size.height / 2) + powf(arcRect.size.width, 2)/(8 * arcRect.size.height);
+    self.arcCenter = CGPointMake(arcRect.size.width / 2 + arcRect.origin.x, arcRect.origin.y + self.arcRadius);
+    CGFloat arcAngle = acosf(arcRect.size.width / (2 * self.arcRadius));
+    self.startSunAngle = 180 - arcAngle;
+    self.endSunAngle = arcAngle;
+}
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark - CAEHorizontalScrollView Delegate Methods
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -389,6 +411,7 @@ const int MAX_SNOW_SURE = 28;
 - (void)scrollViewPercentageAcrossSubview:(CGFloat)percentage {
 	CAEWeatherHour *weatherHour = [self.hourlyWeather.weatherHours objectAtIndex:self.currentHour];
 	self.view.backgroundColor = [self.astronomy backgroundColorFromWeatherHour:weatherHour hourPercentage:percentage];
+    [self positionSunForWeatherHour:weatherHour hourPercentage:percentage];
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
