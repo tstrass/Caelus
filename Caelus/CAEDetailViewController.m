@@ -265,7 +265,8 @@ const int MAX_SNOW_SURE = 28;
 	    if (![self.geolocation isEqualToString:@"Not Found"]) {
 	        self.geolocation = [self requestStringWithCurrentLocation];
 	        [self setUpAPIRequests];
-	        [self sendRequestsAndParseData];
+            [self formatViewForWeather]; // Temporary- use with mock service call
+	        // [self sendRequestsAndParseData];
 		}
 	}];
 }
@@ -295,16 +296,20 @@ const int MAX_SNOW_SURE = 28;
 		                       completionHandler: ^(NSURLResponse *response, NSData *data, NSError *connectionError) {
 		    if ([self.requestsArray indexOfObject:request] == 0) {
 		        self.currentConditionsResponseData = data;
+                NSString *string = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+                NSLog(@"%@", string);
 		        [self parseCurrentWeatherJSON];
 			}
 		    else if ([self.requestsArray indexOfObject:request] == 1) {
 		        self.astronomyResponseData = data;
+                NSString *string = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+                NSLog(@"%@", string);
 		        [self parseAstronomyJSON];
 			}
 		    else if ([self.requestsArray indexOfObject:request] == 2) {
 		        self.hourlyWeatherResponseData = data;
-		        //NSString *string = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-		        //NSLog(@"%@", string);
+		        NSString *string = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+		        NSLog(@"%@", string);
 		        [self parseHourlyWeatherJSON];
 			}
 		    outstandingRequests--;
@@ -315,27 +320,42 @@ const int MAX_SNOW_SURE = 28;
 
 - (void)makeCurrentConditionsRequestWithLocation:(NSString *)location {
 	// encode city search for URL and make URL request
-	NSString *weatherRequest = [NSString stringWithFormat:@"http://api.wunderground.com/api/f29e980ec760f4cc/conditions/q/%@.json", location];
-	NSLog(@"%@", weatherRequest);
-	NSURL *apiURL = [NSURL URLWithString:weatherRequest];
-	NSURLRequest *request = [[NSURLRequest alloc] initWithURL:apiURL];
-	[self.requestsArray addObject:request];
+//	NSString *weatherRequest = [NSString stringWithFormat:@"http://api.wunderground.com/api/f29e980ec760f4cc/conditions/q/%@.json", location];
+//	NSLog(@"%@", weatherRequest);
+//	NSURL *apiURL = [NSURL URLWithString:weatherRequest];
+//	NSURLRequest *request = [[NSURLRequest alloc] initWithURL:apiURL];
+//	[self.requestsArray addObject:request];
+
+    // mock service call
+    NSString *jsonPath = [[NSBundle mainBundle] pathForResource:@"current-conditions" ofType:@"json"];
+    self.currentConditionsResponseData = [NSData dataWithContentsOfFile:jsonPath];
+    [self parseCurrentWeatherJSON];
 }
 
 - (void)makeAstronomyRequestWithLocation:(NSString *)location {
 	// encode city search for URL and make URL request
-	NSString *astronomyRequest = [NSString stringWithFormat:@"http://api.wunderground.com/api/f29e980ec760f4cc/astronomy/q/%@.json", location];
-	NSURL *apiURL = [NSURL URLWithString:astronomyRequest];
-	NSURLRequest *request = [[NSURLRequest alloc] initWithURL:apiURL];
-	[self.requestsArray addObject:request];
+//	NSString *astronomyRequest = [NSString stringWithFormat:@"http://api.wunderground.com/api/f29e980ec760f4cc/astronomy/q/%@.json", location];
+//	NSURL *apiURL = [NSURL URLWithString:astronomyRequest];
+//	NSURLRequest *request = [[NSURLRequest alloc] initWithURL:apiURL];
+//	[self.requestsArray addObject:request];
+
+    // mock service
+    NSString *jsonPath = [[NSBundle mainBundle] pathForResource:@"astronomy" ofType:@"json"];
+    self.astronomyResponseData = [NSData dataWithContentsOfFile:jsonPath];
+    [self parseAstronomyJSON];
 }
 
 - (void)makeHourlyWeatherRequestWithLocation:(NSString *)location {
 	// encode city search for URL and make URL request
-	NSString *hourlyRequest = [NSString stringWithFormat:@"http://api.wunderground.com/api/f29e980ec760f4cc/hourly/q/%@.json", location];
-	NSURL *apiURL = [NSURL URLWithString:hourlyRequest];
-	NSURLRequest *request = [[NSURLRequest alloc] initWithURL:apiURL];
-	[self.requestsArray addObject:request];
+//	NSString *hourlyRequest = [NSString stringWithFormat:@"http://api.wunderground.com/api/f29e980ec760f4cc/hourly/q/%@.json", location];
+//	NSURL *apiURL = [NSURL URLWithString:hourlyRequest];
+//	NSURLRequest *request = [[NSURLRequest alloc] initWithURL:apiURL];
+//	[self.requestsArray addObject:request];
+    
+    // temporary: mock service call
+    NSString *jsonPath = [[NSBundle mainBundle] pathForResource:@"hourly" ofType:@"json"];
+    self.hourlyWeatherResponseData = [NSData dataWithContentsOfFile:jsonPath];
+    [self parseHourlyWeatherJSON];
 }
 
 - (NSString *)requestStringWithCurrentLocation {
