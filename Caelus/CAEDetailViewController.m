@@ -121,8 +121,10 @@ const int MAX_SNOW_SURE = 28;
 	self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
     if ([CLLocationManager authorizationStatus] != kCLAuthorizationStatusNotDetermined) {
         [self.locationManager startUpdatingLocation];
-    } else {
+    } else if ([self.locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)]) {
         [self.locationManager requestWhenInUseAuthorization];
+    } else {
+        [self.locationManager startUpdatingLocation];
     }
 }
 

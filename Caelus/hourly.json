@@ -29,7 +29,7 @@
 		"feelslike": {"english": "78", "metric": "26"},
 		"qpf": {"english": "0.0", "metric": "0"},
 		"snow": {"english": "0.0", "metric": "0"},
-		"pop": "12",
+		"pop": "25",
 		"mslp": {"english": "29.92", "metric": "1013"}
 		}
 		,
@@ -54,7 +54,7 @@
 		"feelslike": {"english": "80", "metric": "27"},
 		"qpf": {"english": "0.0", "metric": "0"},
 		"snow": {"english": "0.0", "metric": "0"},
-		"pop": "10",
+		"pop": "20",
 		"mslp": {"english": "29.92", "metric": "1013"}
 		}
 		,
@@ -68,7 +68,7 @@
 		"icon": "clear",
 		"icon_url":"http://icons.wxug.com/i/c/k/clear.gif",
 		"fctcode": "1",
-		"sky": "26",
+		"sky": "56",
 		"wspd": {"english": "11", "metric": "18"},
 		"wdir": {"dir": "NW", "degrees": "320"},
 		"wx": "Mostly Sunny",
@@ -79,7 +79,7 @@
 		"feelslike": {"english": "85", "metric": "29"},
 		"qpf": {"english": "0.0", "metric": "0"},
 		"snow": {"english": "0.0", "metric": "0"},
-		"pop": "8",
+		"pop": "25",
 		"mslp": {"english": "29.91", "metric": "1013"}
 		}
 		,
@@ -93,7 +93,7 @@
 		"icon": "clear",
 		"icon_url":"http://icons.wxug.com/i/c/k/clear.gif",
 		"fctcode": "1",
-		"sky": "23",
+		"sky": "53",
 		"wspd": {"english": "11", "metric": "18"},
 		"wdir": {"dir": "NW", "degrees": "316"},
 		"wx": "Mostly Sunny",
@@ -104,7 +104,7 @@
 		"feelslike": {"english": "84", "metric": "29"},
 		"qpf": {"english": "0.0", "metric": "0"},
 		"snow": {"english": "0.0", "metric": "0"},
-		"pop": "1",
+		"pop": "30",
 		"mslp": {"english": "29.9", "metric": "1013"}
 		}
 		,
@@ -118,7 +118,7 @@
 		"icon": "clear",
 		"icon_url":"http://icons.wxug.com/i/c/k/clear.gif",
 		"fctcode": "1",
-		"sky": "22",
+		"sky": "62",
 		"wspd": {"english": "11", "metric": "18"},
 		"wdir": {"dir": "NW", "degrees": "313"},
 		"wx": "Mostly Sunny",
@@ -129,7 +129,7 @@
 		"feelslike": {"english": "84", "metric": "29"},
 		"qpf": {"english": "0.0", "metric": "0"},
 		"snow": {"english": "0.0", "metric": "0"},
-		"pop": "0",
+		"pop": "40",
 		"mslp": {"english": "29.89", "metric": "1012"}
 		}
 		,
@@ -143,7 +143,7 @@
 		"icon": "clear",
 		"icon_url":"http://icons.wxug.com/i/c/k/clear.gif",
 		"fctcode": "1",
-		"sky": "19",
+		"sky": "49",
 		"wspd": {"english": "11", "metric": "18"},
 		"wdir": {"dir": "NW", "degrees": "313"},
 		"wx": "Sunny",
@@ -154,7 +154,7 @@
 		"feelslike": {"english": "85", "metric": "29"},
 		"qpf": {"english": "0.0", "metric": "0"},
 		"snow": {"english": "0.0", "metric": "0"},
-		"pop": "0",
+		"pop": "60",
 		"mslp": {"english": "29.87", "metric": "1012"}
 		}
 		,
@@ -168,7 +168,7 @@
 		"icon": "clear",
 		"icon_url":"http://icons.wxug.com/i/c/k/clear.gif",
 		"fctcode": "1",
-		"sky": "21",
+		"sky": "51",
 		"wspd": {"english": "12", "metric": "19"},
 		"wdir": {"dir": "NW", "degrees": "310"},
 		"wx": "Mostly Sunny",
@@ -179,7 +179,7 @@
 		"feelslike": {"english": "85", "metric": "29"},
 		"qpf": {"english": "0.0", "metric": "0"},
 		"snow": {"english": "0.0", "metric": "0"},
-		"pop": "5",
+		"pop": "50",
 		"mslp": {"english": "29.86", "metric": "1011"}
 		}
 		,
@@ -218,7 +218,7 @@
 		"icon": "clear",
 		"icon_url":"http://icons.wxug.com/i/c/k/clear.gif",
 		"fctcode": "1",
-		"sky": "27",
+		"sky": "77",
 		"wspd": {"english": "10", "metric": "16"},
 		"wdir": {"dir": "NW", "degrees": "311"},
 		"wx": "Mostly Sunny",
@@ -243,7 +243,7 @@
 		"icon": "clear",
 		"icon_url":"http://icons.wxug.com/i/c/k/clear.gif",
 		"fctcode": "1",
-		"sky": "21",
+		"sky": "90",
 		"wspd": {"english": "9", "metric": "14"},
 		"wdir": {"dir": "NW", "degrees": "312"},
 		"wx": "Mostly Sunny",
@@ -254,7 +254,7 @@
 		"feelslike": {"english": "76", "metric": "24"},
 		"qpf": {"english": "0.0", "metric": "0"},
 		"snow": {"english": "0.0", "metric": "0"},
-		"pop": "11",
+		"pop": "0",
 		"mslp": {"english": "29.86", "metric": "1011"}
 		}
 		,
@@ -268,7 +268,7 @@
 		"icon": "clear",
 		"icon_url":"http://icons.wxug.com/i/c/k/nt_clear.gif",
 		"fctcode": "1",
-		"sky": "22",
+		"sky": "82",
 		"wspd": {"english": "8", "metric": "13"},
 		"wdir": {"dir": "WNW", "degrees": "304"},
 		"wx": "Mostly Clear",
@@ -293,7 +293,7 @@
 		"icon": "clear",
 		"icon_url":"http://icons.wxug.com/i/c/k/nt_clear.gif",
 		"fctcode": "1",
-		"sky": "23",
+		"sky": "63",
 		"wspd": {"english": "7", "metric": "11"},
 		"wdir": {"dir": "WNW", "degrees": "301"},
 		"wx": "Mostly Clear",
@@ -318,7 +318,7 @@
 		"icon": "clear",
 		"icon_url":"http://icons.wxug.com/i/c/k/nt_clear.gif",
 		"fctcode": "1",
-		"sky": "20",
+		"sky": "40",
 		"wspd": {"english": "8", "metric": "13"},
 		"wdir": {"dir": "NW", "degrees": "307"},
 		"wx": "Mostly Clear",
@@ -329,7 +329,7 @@
 		"feelslike": {"english": "72", "metric": "22"},
 		"qpf": {"english": "0.0", "metric": "0"},
 		"snow": {"english": "0.0", "metric": "0"},
-		"pop": "2",
+		"pop": "44",
 		"mslp": {"english": "29.91", "metric": "1013"}
 		}
 		,
@@ -343,7 +343,7 @@
 		"icon": "clear",
 		"icon_url":"http://icons.wxug.com/i/c/k/nt_clear.gif",
 		"fctcode": "1",
-		"sky": "15",
+		"sky": "55",
 		"wspd": {"english": "9", "metric": "14"},
 		"wdir": {"dir": "NW", "degrees": "305"},
 		"wx": "Clear",
@@ -354,7 +354,7 @@
 		"feelslike": {"english": "70", "metric": "21"},
 		"qpf": {"english": "0.0", "metric": "0"},
 		"snow": {"english": "0.0", "metric": "0"},
-		"pop": "2",
+		"pop": "57",
 		"mslp": {"english": "29.91", "metric": "1013"}
 		}
 		,
@@ -368,7 +368,7 @@
 		"icon": "clear",
 		"icon_url":"http://icons.wxug.com/i/c/k/nt_clear.gif",
 		"fctcode": "1",
-		"sky": "3",
+		"sky": "63",
 		"wspd": {"english": "9", "metric": "14"},
 		"wdir": {"dir": "NW", "degrees": "308"},
 		"wx": "Clear",
@@ -379,7 +379,7 @@
 		"feelslike": {"english": "69", "metric": "21"},
 		"qpf": {"english": "0.0", "metric": "0"},
 		"snow": {"english": "0.0", "metric": "0"},
-		"pop": "2",
+		"pop": "68",
 		"mslp": {"english": "29.92", "metric": "1013"}
 		}
 		,
@@ -393,7 +393,7 @@
 		"icon": "clear",
 		"icon_url":"http://icons.wxug.com/i/c/k/nt_clear.gif",
 		"fctcode": "1",
-		"sky": "2",
+		"sky": "62",
 		"wspd": {"english": "8", "metric": "13"},
 		"wdir": {"dir": "NW", "degrees": "304"},
 		"wx": "Clear",
@@ -404,7 +404,7 @@
 		"feelslike": {"english": "68", "metric": "20"},
 		"qpf": {"english": "0.0", "metric": "0"},
 		"snow": {"english": "0.0", "metric": "0"},
-		"pop": "2",
+		"pop": "80",
 		"mslp": {"english": "29.91", "metric": "1013"}
 		}
 		,
@@ -418,7 +418,7 @@
 		"icon": "clear",
 		"icon_url":"http://icons.wxug.com/i/c/k/nt_clear.gif",
 		"fctcode": "1",
-		"sky": "1",
+		"sky": "61",
 		"wspd": {"english": "8", "metric": "13"},
 		"wdir": {"dir": "NW", "degrees": "305"},
 		"wx": "Clear",
@@ -429,7 +429,7 @@
 		"feelslike": {"english": "66", "metric": "19"},
 		"qpf": {"english": "0.0", "metric": "0"},
 		"snow": {"english": "0.0", "metric": "0"},
-		"pop": "3",
+		"pop": "100",
 		"mslp": {"english": "29.9", "metric": "1013"}
 		}
 		,
@@ -443,7 +443,7 @@
 		"icon": "clear",
 		"icon_url":"http://icons.wxug.com/i/c/k/nt_clear.gif",
 		"fctcode": "1",
-		"sky": "0",
+		"sky": "50",
 		"wspd": {"english": "7", "metric": "11"},
 		"wdir": {"dir": "WNW", "degrees": "302"},
 		"wx": "Clear",
@@ -454,7 +454,7 @@
 		"feelslike": {"english": "65", "metric": "18"},
 		"qpf": {"english": "0.0", "metric": "0"},
 		"snow": {"english": "0.0", "metric": "0"},
-		"pop": "3",
+		"pop": "100",
 		"mslp": {"english": "29.91", "metric": "1013"}
 		}
 		,
@@ -468,7 +468,7 @@
 		"icon": "clear",
 		"icon_url":"http://icons.wxug.com/i/c/k/nt_clear.gif",
 		"fctcode": "1",
-		"sky": "0",
+		"sky": "60",
 		"wspd": {"english": "8", "metric": "13"},
 		"wdir": {"dir": "WNW", "degrees": "299"},
 		"wx": "Clear",
@@ -479,7 +479,7 @@
 		"feelslike": {"english": "64", "metric": "18"},
 		"qpf": {"english": "0.0", "metric": "0"},
 		"snow": {"english": "0.0", "metric": "0"},
-		"pop": "3",
+		"pop": "100",
 		"mslp": {"english": "29.91", "metric": "1013"}
 		}
 		,
@@ -493,7 +493,7 @@
 		"icon": "clear",
 		"icon_url":"http://icons.wxug.com/i/c/k/nt_clear.gif",
 		"fctcode": "1",
-		"sky": "1",
+		"sky": "71",
 		"wspd": {"english": "8", "metric": "13"},
 		"wdir": {"dir": "WNW", "degrees": "301"},
 		"wx": "Clear",
@@ -504,7 +504,7 @@
 		"feelslike": {"english": "64", "metric": "18"},
 		"qpf": {"english": "0.0", "metric": "0"},
 		"snow": {"english": "0.0", "metric": "0"},
-		"pop": "3",
+		"pop": "90",
 		"mslp": {"english": "29.93", "metric": "1014"}
 		}
 		,
@@ -518,7 +518,7 @@
 		"icon": "clear",
 		"icon_url":"http://icons.wxug.com/i/c/k/clear.gif",
 		"fctcode": "1",
-		"sky": "1",
+		"sky": "81",
 		"wspd": {"english": "9", "metric": "14"},
 		"wdir": {"dir": "NW", "degrees": "305"},
 		"wx": "Sunny",
@@ -529,7 +529,7 @@
 		"feelslike": {"english": "64", "metric": "18"},
 		"qpf": {"english": "0.0", "metric": "0"},
 		"snow": {"english": "0.0", "metric": "0"},
-		"pop": "3",
+		"pop": "82",
 		"mslp": {"english": "29.94", "metric": "1014"}
 		}
 		,
@@ -543,7 +543,7 @@
 		"icon": "clear",
 		"icon_url":"http://icons.wxug.com/i/c/k/clear.gif",
 		"fctcode": "1",
-		"sky": "5",
+		"sky": "95",
 		"wspd": {"english": "10", "metric": "16"},
 		"wdir": {"dir": "NW", "degrees": "313"},
 		"wx": "Sunny",
@@ -554,7 +554,7 @@
 		"feelslike": {"english": "65", "metric": "18"},
 		"qpf": {"english": "0.0", "metric": "0"},
 		"snow": {"english": "0.0", "metric": "0"},
-		"pop": "3",
+		"pop": "73",
 		"mslp": {"english": "29.95", "metric": "1014"}
 		}
 		,
@@ -568,7 +568,7 @@
 		"icon": "clear",
 		"icon_url":"http://icons.wxug.com/i/c/k/clear.gif",
 		"fctcode": "1",
-		"sky": "9",
+		"sky": "79",
 		"wspd": {"english": "11", "metric": "18"},
 		"wdir": {"dir": "NW", "degrees": "317"},
 		"wx": "Sunny",
@@ -579,7 +579,7 @@
 		"feelslike": {"english": "67", "metric": "19"},
 		"qpf": {"english": "0.0", "metric": "0"},
 		"snow": {"english": "0.0", "metric": "0"},
-		"pop": "2",
+		"pop": "72",
 		"mslp": {"english": "29.96", "metric": "1015"}
 		}
 		,
@@ -593,18 +593,18 @@
 		"icon": "clear",
 		"icon_url":"http://icons.wxug.com/i/c/k/clear.gif",
 		"fctcode": "1",
-		"sky": "13",
+		"sky": "73",
 		"wspd": {"english": "12", "metric": "19"},
 		"wdir": {"dir": "NW", "degrees": "318"},
 		"wx": "Sunny",
-		"uvi": "4",
+		"uvi": "54",
 		"humidity": "69",
 		"windchill": {"english": "-9999", "metric": "-9999"},
 		"heatindex": {"english": "-9999", "metric": "-9999"},
 		"feelslike": {"english": "70", "metric": "21"},
 		"qpf": {"english": "0.0", "metric": "0"},
 		"snow": {"english": "0.0", "metric": "0"},
-		"pop": "1",
+		"pop": "61",
 		"mslp": {"english": "29.96", "metric": "1015"}
 		}
 		,
@@ -618,18 +618,18 @@
 		"icon": "clear",
 		"icon_url":"http://icons.wxug.com/i/c/k/clear.gif",
 		"fctcode": "1",
-		"sky": "8",
+		"sky": "68",
 		"wspd": {"english": "14", "metric": "23"},
 		"wdir": {"dir": "NW", "degrees": "319"},
 		"wx": "Sunny",
-		"uvi": "6",
+		"uvi": "66",
 		"humidity": "63",
 		"windchill": {"english": "-9999", "metric": "-9999"},
 		"heatindex": {"english": "-9999", "metric": "-9999"},
 		"feelslike": {"english": "72", "metric": "22"},
 		"qpf": {"english": "0.0", "metric": "0"},
 		"snow": {"english": "0.0", "metric": "0"},
-		"pop": "1",
+		"pop": "41",
 		"mslp": {"english": "29.96", "metric": "1015"}
 		}
 		,
@@ -643,18 +643,18 @@
 		"icon": "clear",
 		"icon_url":"http://icons.wxug.com/i/c/k/clear.gif",
 		"fctcode": "1",
-		"sky": "1",
+		"sky": "51",
 		"wspd": {"english": "14", "metric": "23"},
 		"wdir": {"dir": "NW", "degrees": "324"},
 		"wx": "Sunny",
-		"uvi": "8",
+		"uvi": "88",
 		"humidity": "58",
 		"windchill": {"english": "-9999", "metric": "-9999"},
 		"heatindex": {"english": "-9999", "metric": "-9999"},
 		"feelslike": {"english": "74", "metric": "23"},
 		"qpf": {"english": "0.0", "metric": "0"},
 		"snow": {"english": "0.0", "metric": "0"},
-		"pop": "0",
+		"pop": "60",
 		"mslp": {"english": "29.97", "metric": "1015"}
 		}
 		,
@@ -668,7 +668,7 @@
 		"icon": "clear",
 		"icon_url":"http://icons.wxug.com/i/c/k/clear.gif",
 		"fctcode": "1",
-		"sky": "1",
+		"sky": "41",
 		"wspd": {"english": "14", "metric": "23"},
 		"wdir": {"dir": "NNW", "degrees": "327"},
 		"wx": "Sunny",
@@ -679,7 +679,7 @@
 		"feelslike": {"english": "76", "metric": "24"},
 		"qpf": {"english": "0.0", "metric": "0"},
 		"snow": {"english": "0.0", "metric": "0"},
-		"pop": "0",
+		"pop": "70",
 		"mslp": {"english": "29.97", "metric": "1015"}
 		}
 		,
@@ -693,18 +693,18 @@
 		"icon": "clear",
 		"icon_url":"http://icons.wxug.com/i/c/k/clear.gif",
 		"fctcode": "1",
-		"sky": "1",
+		"sky": "41",
 		"wspd": {"english": "13", "metric": "21"},
 		"wdir": {"dir": "NNW", "degrees": "329"},
 		"wx": "Sunny",
-		"uvi": "9",
+		"uvi": "79",
 		"humidity": "49",
 		"windchill": {"english": "-9999", "metric": "-9999"},
 		"heatindex": {"english": "-9999", "metric": "-9999"},
 		"feelslike": {"english": "77", "metric": "25"},
 		"qpf": {"english": "0.0", "metric": "0"},
 		"snow": {"english": "0.0", "metric": "0"},
-		"pop": "0",
+		"pop": "50",
 		"mslp": {"english": "29.96", "metric": "1015"}
 		}
 		,
@@ -718,7 +718,7 @@
 		"icon": "clear",
 		"icon_url":"http://icons.wxug.com/i/c/k/clear.gif",
 		"fctcode": "1",
-		"sky": "1",
+		"sky": "31",
 		"wspd": {"english": "13", "metric": "21"},
 		"wdir": {"dir": "NNW", "degrees": "330"},
 		"wx": "Sunny",
@@ -729,7 +729,7 @@
 		"feelslike": {"english": "77", "metric": "25"},
 		"qpf": {"english": "0.0", "metric": "0"},
 		"snow": {"english": "0.0", "metric": "0"},
-		"pop": "0",
+		"pop": "70",
 		"mslp": {"english": "29.95", "metric": "1014"}
 		}
 		,
@@ -743,7 +743,7 @@
 		"icon": "clear",
 		"icon_url":"http://icons.wxug.com/i/c/k/clear.gif",
 		"fctcode": "1",
-		"sky": "0",
+		"sky": "30",
 		"wspd": {"english": "13", "metric": "21"},
 		"wdir": {"dir": "NNW", "degrees": "331"},
 		"wx": "Sunny",
@@ -754,7 +754,7 @@
 		"feelslike": {"english": "77", "metric": "25"},
 		"qpf": {"english": "0.0", "metric": "0"},
 		"snow": {"english": "0.0", "metric": "0"},
-		"pop": "0",
+		"pop": "70",
 		"mslp": {"english": "29.95", "metric": "1014"}
 		}
 		,
@@ -768,7 +768,7 @@
 		"icon": "clear",
 		"icon_url":"http://icons.wxug.com/i/c/k/clear.gif",
 		"fctcode": "1",
-		"sky": "0",
+		"sky": "40",
 		"wspd": {"english": "12", "metric": "19"},
 		"wdir": {"dir": "NNW", "degrees": "331"},
 		"wx": "Sunny",
@@ -779,7 +779,7 @@
 		"feelslike": {"english": "77", "metric": "25"},
 		"qpf": {"english": "0.0", "metric": "0"},
 		"snow": {"english": "0.0", "metric": "0"},
-		"pop": "0",
+		"pop": "50",
 		"mslp": {"english": "29.94", "metric": "1014"}
 		}
 		,
@@ -793,7 +793,7 @@
 		"icon": "clear",
 		"icon_url":"http://icons.wxug.com/i/c/k/clear.gif",
 		"fctcode": "1",
-		"sky": "0",
+		"sky": "50",
 		"wspd": {"english": "11", "metric": "18"},
 		"wdir": {"dir": "NNW", "degrees": "334"},
 		"wx": "Sunny",
@@ -804,7 +804,7 @@
 		"feelslike": {"english": "76", "metric": "24"},
 		"qpf": {"english": "0.0", "metric": "0"},
 		"snow": {"english": "0.0", "metric": "0"},
-		"pop": "0",
+		"pop": "40",
 		"mslp": {"english": "29.95", "metric": "1014"}
 		}
 		,
@@ -818,7 +818,7 @@
 		"icon": "clear",
 		"icon_url":"http://icons.wxug.com/i/c/k/clear.gif",
 		"fctcode": "1",
-		"sky": "0",
+		"sky": "60",
 		"wspd": {"english": "10", "metric": "16"},
 		"wdir": {"dir": "NNW", "degrees": "338"},
 		"wx": "Sunny",
@@ -829,7 +829,7 @@
 		"feelslike": {"english": "74", "metric": "23"},
 		"qpf": {"english": "0.0", "metric": "0"},
 		"snow": {"english": "0.0", "metric": "0"},
-		"pop": "0",
+		"pop": "30",
 		"mslp": {"english": "29.95", "metric": "1014"}
 		}
 		,
@@ -843,7 +843,7 @@
 		"icon": "clear",
 		"icon_url":"http://icons.wxug.com/i/c/k/nt_clear.gif",
 		"fctcode": "1",
-		"sky": "0",
+		"sky": "70",
 		"wspd": {"english": "7", "metric": "11"},
 		"wdir": {"dir": "NNW", "degrees": "334"},
 		"wx": "Clear",
@@ -854,7 +854,7 @@
 		"feelslike": {"english": "71", "metric": "22"},
 		"qpf": {"english": "0.0", "metric": "0"},
 		"snow": {"english": "0.0", "metric": "0"},
-		"pop": "1",
+		"pop": "21",
 		"mslp": {"english": "29.97", "metric": "1015"}
 		}
 		,
@@ -868,7 +868,7 @@
 		"icon": "clear",
 		"icon_url":"http://icons.wxug.com/i/c/k/nt_clear.gif",
 		"fctcode": "1",
-		"sky": "1",
+		"sky": "81",
 		"wspd": {"english": "6", "metric": "10"},
 		"wdir": {"dir": "NW", "degrees": "326"},
 		"wx": "Clear",
@@ -879,7 +879,7 @@
 		"feelslike": {"english": "69", "metric": "21"},
 		"qpf": {"english": "0.0", "metric": "0"},
 		"snow": {"english": "0.0", "metric": "0"},
-		"pop": "1",
+		"pop": "21",
 		"mslp": {"english": "29.99", "metric": "1016"}
 		}
 		,
@@ -893,7 +893,7 @@
 		"icon": "clear",
 		"icon_url":"http://icons.wxug.com/i/c/k/nt_clear.gif",
 		"fctcode": "1",
-		"sky": "1",
+		"sky": "91",
 		"wspd": {"english": "5", "metric": "8"},
 		"wdir": {"dir": "NW", "degrees": "325"},
 		"wx": "Clear",
