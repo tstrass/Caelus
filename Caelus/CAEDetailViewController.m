@@ -119,8 +119,11 @@ const int MAX_SNOW_SURE = 28;
 	self.locationManager = [[CLLocationManager alloc]init];
 	self.locationManager.delegate = self;
 	self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
-    [self.locationManager requestAlwaysAuthorization];
-	[self.locationManager startUpdatingLocation];
+    if ([CLLocationManager authorizationStatus] != kCLAuthorizationStatusNotDetermined) {
+        [self.locationManager startUpdatingLocation];
+    } else {
+        [self.locationManager requestWhenInUseAuthorization];
+    }
 }
 
 - (void)setUpAPIRequests {
@@ -264,6 +267,12 @@ const int MAX_SNOW_SURE = 28;
 	[self formatViewForFailedLocation];
 }
 
+- (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status {
+    if (status == kCLAuthorizationStatusAuthorizedWhenInUse) {
+        [self.locationManager startUpdatingLocation];
+    }
+}
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark - Request Set Up Methods
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -395,7 +404,7 @@ const int MAX_SNOW_SURE = 28;
     CGRect arcRect = CGRectMake(0 - self.sunImageView.frame.size.width / 2, 220, 320 + self.sunImageView.frame.size.width, 100);
     self.arcRadius = (arcRect.size.height / 2) + powf(arcRect.size.width, 2)/(8 * arcRect.size.height);
     self.arcCenter = CGPointMake(arcRect.size.width / 2 + arcRect.origin.x, arcRect.origin.y + self.arcRadius);
-    CGFloat arcAngle = acosf(arcRect.size.width / (2 * self.arcRadius));
+    CGFloat arcAngle = cosf(arcRect.size.width / 2 / self.arcRadius) * (180 / M_PI);
     self.startSunAngle = 180 - arcAngle;
     self.endSunAngle = arcAngle;
 }

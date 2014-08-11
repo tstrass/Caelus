@@ -56,6 +56,27 @@
 			remoteGlobalIDString = E2E1EEE91954BB9600A0B541;
 			remoteInfo = Caelus;
 		};
+		E264A0F3199569DF00A7F36F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E2E1EEE21954BB9600A0B541 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E2E1EEE91954BB9600A0B541;
+			remoteInfo = Caelus;
+		};
+		E264A0F5199569EF00A7F36F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E2E1EEE21954BB9600A0B541 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E2E1EEE91954BB9600A0B541;
+			remoteInfo = Caelus;
+		};
+		E264A0F7199569F800A7F36F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E2E1EEE21954BB9600A0B541 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E2E1EEE91954BB9600A0B541;
+			remoteInfo = Caelus;
+		};
 		E2E1EF161954BB9700A0B541 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E2E1EEE21954BB9600A0B541 /* Project object */;
@@ -340,6 +361,9 @@
 			dependencies = (
 				E2E1EF171954BB9700A0B541 /* PBXTargetDependency */,
 				E264A0F2199569DF00A7F36F /* PBXTargetDependency */,
+				E264A0F4199569DF00A7F36F /* PBXTargetDependency */,
+				E264A0F6199569EF00A7F36F /* PBXTargetDependency */,
+				E264A0F8199569F800A7F36F /* PBXTargetDependency */,
 			);
 			name = CaelusTests;
 			productName = CaelusTests;
@@ -454,6 +478,21 @@
 			isa = PBXTargetDependency;
 			target = E2E1EEE91954BB9600A0B541 /* Caelus */;
 			targetProxy = E264A0F1199569DF00A7F36F /* PBXContainerItemProxy */;
+		};
+		E264A0F4199569DF00A7F36F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E2E1EEE91954BB9600A0B541 /* Caelus */;
+			targetProxy = E264A0F3199569DF00A7F36F /* PBXContainerItemProxy */;
+		};
+		E264A0F6199569EF00A7F36F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E2E1EEE91954BB9600A0B541 /* Caelus */;
+			targetProxy = E264A0F5199569EF00A7F36F /* PBXContainerItemProxy */;
+		};
+		E264A0F8199569F800A7F36F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E2E1EEE91954BB9600A0B541 /* Caelus */;
+			targetProxy = E264A0F7199569F800A7F36F /* PBXContainerItemProxy */;
 		};
 		E2E1EF171954BB9700A0B541 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
