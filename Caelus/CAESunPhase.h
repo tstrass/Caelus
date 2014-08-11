@@ -36,11 +36,17 @@
 @property (strong, nonatomic) NSNumber *sunsetHour;
 /** minutes past the hour */
 @property (strong, nonatomic) NSNumber *sunsetMinute;
-/** minutes into the day, i.e. in the range [0, 1440] */
+/** time of sunset: minutes into the day, i.e. in the range [0, 1440] */
 @property (nonatomic) CGFloat sunsetMinuteTime;
 
+
+// endpoints of light intervals
+/** time sunrise starts: minutes into the day, i.e. in the range [0, 1440] */
 @property (nonatomic) CGFloat sunriseStartMinuteTime;
+/** time day starts: minutes into the day, i.e. in the range [0, 1440] */
 @property (nonatomic) CGFloat dayStartMinuteTime;
+/** time sunset starts: minutes into the day, i.e. in the range [0, 1440] */
 @property (nonatomic) CGFloat sunsetStartMinuteTime;
+/** time night starts: minutes into the day, i.e. in the range [0, 1440] */
 @property (nonatomic) CGFloat nightStartMinuteTime;
 @end

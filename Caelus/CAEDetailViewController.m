@@ -71,9 +71,6 @@
 
 @implementation CAEDetailViewController
 
-#define DUSK_MINUTE = self.sunsetMinuteTime + 30;
-#define DAWN_MINUTE = self.sunriseMinuteTime - 30;
-
 /** if there's precipitation you know it will be raining at or above this farenheit value */
 const int MIN_RAIN_SURE = 40;
 /** if there's precipitation you know it will be frozen at or below this farenheit value */
