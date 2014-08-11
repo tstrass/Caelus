@@ -158,8 +158,7 @@ const int MAX_SNOW_SURE = 28;
 }
 
 - (void)formatLocationLabel {
-	self.currentLocationLabel.text = [NSString stringWithFormat:@"Current Location: %@", self.geolocation];
-	self.currentLocationLabel.font = [UIFont fontWithName:@"Times New Roman" size:12];
+	self.currentLocationLabel.text = [NSString stringWithFormat:@"%@", self.geolocation];
 	self.currentLocationLabel.adjustsFontSizeToFitWidth = YES;
 	self.currentLocationLabel.minimumScaleFactor = 0.3;
 }
@@ -430,7 +429,7 @@ const int MAX_SNOW_SURE = 28;
 /** Calculations to determine arc path for sun image */
 - (void)calculateSunAngles {
     // rectangle containing the desired arc, with endpoints at bottom corners of rect
-    CGRect arcRect = CGRectMake((-2) - self.sunImageView.frame.size.width / 2, 250, [[UIScreen mainScreen] bounds].size.width + 4 + self.sunImageView.frame.size.width, 100);
+    CGRect arcRect = CGRectMake((-2) - self.sunImageView.frame.size.width / 2, self.sunImageView.frame.size.height / 2 + 5, [[UIScreen mainScreen] bounds].size.width + 4 + self.sunImageView.frame.size.width, 100);
     // radius of circle defined by arc
     self.arcRadius = (arcRect.size.height / 2) + powf(arcRect.size.width, 2)/(8 * arcRect.size.height);
     // center of circle defined by arc
