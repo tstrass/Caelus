@@ -42,7 +42,6 @@ static const float MAX_BLUE = 1.000;
         CGFloat blueValue = (newTime - sunPhase.sunsetStartMinuteTime) * sunsetBlueRange / timeRange + MIN_BLUE;
         return [UIColor colorWithRed:0.000 green:greenValue blue:blueValue alpha:1.000];
     }
-    
 }
 
 @end
