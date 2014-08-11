@@ -9,10 +9,10 @@
 #import "CAESunPhase.h"
 
 @implementation CAESunPhase
-static const float DAWN_DURATION = 30.0;
-static const float DUSK_DURATION = 30.0;
-static const float SUNRISE_DURATION = 30.0;
-static const float SUNSET_DURATION = 30.0;
+static const float DAWN_DURATION = 120.0;
+static const float DUSK_DURATION = 120.0;
+static const float SUNRISE_DURATION = 120.0;
+static const float SUNSET_DURATION = 120.0;
 
 - (id)initWithSunPhaseDict:(NSDictionary *)sunPhaseDict {
 	self = [super init];
