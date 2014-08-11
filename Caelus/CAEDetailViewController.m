@@ -139,16 +139,17 @@ const int MAX_SNOW_SURE = 28;
 
 - (void)positionSunForWeatherHour:(CAEWeatherHour *)weatherHour hourPercentage:(CGFloat)percentage {
     CGFloat currentMinuteTime = [weatherHour.hour floatValue] * 60.0 + (percentage * 60.0);
+    // if its not night, position the sun image
     if (currentMinuteTime > self.astronomy.sunPhase.sunriseStartMinuteTime && currentMinuteTime < self.astronomy.sunPhase.nightStartMinuteTime) {
+        // map the current time to an angle at which to position the sun using the predetermined point and radius
         CGFloat angleRange = self.startSunAngle - self.endSunAngle;
         CGFloat timeRange = self.astronomy.sunPhase.nightStartMinuteTime - self.astronomy.sunPhase.sunriseStartMinuteTime;
         CGFloat adjustedTime = self.astronomy.sunPhase.nightStartMinuteTime - (currentMinuteTime - self.astronomy.sunPhase.sunriseStartMinuteTime);
         CGFloat currentAngle = (adjustedTime - self.astronomy.sunPhase.sunriseStartMinuteTime) / timeRange * angleRange + self.endSunAngle;
+        
+        // set the position of the sun, keep in mind that Y values decrease as position moves "up" on screen
         [self.sunImageView setCenter:CGPointMake(self.arcCenter.x + (self.arcRadius * cosf(currentAngle * M_PI / 180)), self.arcCenter.y - (self.arcRadius * sinf(currentAngle * M_PI / 180)))];
-        NSLog(@"angle: %f", currentAngle);
-        NSLog(@"sun center: (%f, %f)", self.sunImageView.center.x, self.sunImageView.center.y);
     }
-    
 }
 
 - (void)formatLocationLabel {
@@ -400,10 +401,15 @@ const int MAX_SNOW_SURE = 28;
 	}
 }
 
+/** Calculations to determine arc path for sun image */
 - (void)calculateSunAngles {
-    CGRect arcRect = CGRectMake(0 - self.sunImageView.frame.size.width / 2, 220, 320 + self.sunImageView.frame.size.width, 100);
+    // rectangle containing the desired arc, with endpoints at bottom corners of rect
+    CGRect arcRect = CGRectMake((-2) - self.sunImageView.frame.size.width / 2, 220, [[UIScreen mainScreen] bounds].size.width + 4 + self.sunImageView.frame.size.width, 100);
+    // radius of circle defined by arc
     self.arcRadius = (arcRect.size.height / 2) + powf(arcRect.size.width, 2)/(8 * arcRect.size.height);
+    // center of circle defined by arc
     self.arcCenter = CGPointMake(arcRect.size.width / 2 + arcRect.origin.x, arcRect.origin.y + self.arcRadius);
+    // angle above x-axis for both endpoints of the arc (defines sides of hypothetical sector)
     CGFloat arcAngle = cosf(arcRect.size.width / 2 / self.arcRadius) * (180 / M_PI);
     self.startSunAngle = 180 - arcAngle;
     self.endSunAngle = arcAngle;
