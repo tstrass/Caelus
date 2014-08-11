@@ -50,6 +50,10 @@
         UIImageView *subviewImageView = [[UIImageView alloc] initWithImage:subviewImage];
         xValue += SUBVIEW_H_PADDING;
         subviewImageView.frame = CGRectMake(xValue, SUBVIEW_V_PADDING, subviewWidth, [subviewImageView heightForWidth:subviewWidth]);
+        subviewImageView.layer.shadowOffset = CGSizeMake(1, 1);
+        subviewImageView.layer.shadowColor = [[UIColor grayColor] CGColor];
+        subviewImageView.layer.shadowRadius = 4.0f;
+        subviewImageView.layer.shadowOpacity = 1.00f;
         [self addSubview:subviewImageView];
         xValue += subviewWidth + SUBVIEW_H_PADDING;
     }
