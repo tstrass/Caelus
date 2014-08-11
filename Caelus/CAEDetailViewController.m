@@ -36,6 +36,7 @@
 @property (weak, nonatomic) IBOutlet UIImageView *bottomShadow;
 @property (weak, nonatomic) IBOutlet UIImageView *sunImageView;
 
+// Metrics for sun positioning
 @property (nonatomic) CGFloat startSunAngle;
 @property (nonatomic) CGFloat endSunAngle;
 @property (nonatomic) CGFloat arcRadius;
@@ -90,6 +91,7 @@ const int MAX_SNOW_SURE = 28;
 	}
 	[self makeGradientOverlay];
 
+    // rotate bottom shadow of scrollView 180 degrees
     self.bottomShadow.transform = CGAffineTransformMakeRotation(M_PI);
 }
 
@@ -105,6 +107,7 @@ const int MAX_SNOW_SURE = 28;
 		// iOS 6
 		[[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationSlide];
 	}
+    self.sunImageView.hidden = YES;
     [self calculateSunAngles];
     
 	[self setUpLocationManager];
@@ -137,10 +140,11 @@ const int MAX_SNOW_SURE = 28;
 #pragma mark - Format
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-- (void)positionSunForWeatherHour:(CAEWeatherHour *)weatherHour hourPercentage:(CGFloat)percentage {
-    CGFloat currentMinuteTime = [weatherHour.hour floatValue] * 60.0 + (percentage * 60.0);
+- (void)positionSunForHour:(NSNumber *)hour hourPercentage:(CGFloat)percentage {
+    CGFloat currentMinuteTime = [hour floatValue] * 60.0 + (percentage * 60.0);
     // if its not night, position the sun image
     if (currentMinuteTime > self.astronomy.sunPhase.sunriseStartMinuteTime && currentMinuteTime < self.astronomy.sunPhase.nightStartMinuteTime) {
+        self.sunImageView.hidden = NO;
         // map the current time to an angle at which to position the sun using the predetermined point and radius
         CGFloat angleRange = self.startSunAngle - self.endSunAngle;
         CGFloat timeRange = self.astronomy.sunPhase.nightStartMinuteTime - self.astronomy.sunPhase.sunriseStartMinuteTime;
@@ -149,6 +153,8 @@ const int MAX_SNOW_SURE = 28;
         
         // set the position of the sun, keep in mind that Y values decrease as position moves "up" on screen
         [self.sunImageView setCenter:CGPointMake(self.arcCenter.x + (self.arcRadius * cosf(currentAngle * M_PI / 180)), self.arcCenter.y - (self.arcRadius * sinf(currentAngle * M_PI / 180)))];
+    } else {
+        self.sunImageView.hidden = YES;
     }
 }
 
@@ -199,6 +205,7 @@ const int MAX_SNOW_SURE = 28;
 	self.hoursScrollView.dataSource = hoursScrollViewDataSource;
 	self.hoursScrollView.delegate = self;
 	[self.hoursScrollView reload];
+    self.sunImageView.hidden = NO;
 }
 
 - (void)formatViewForFailedLocation {
@@ -426,7 +433,7 @@ const int MAX_SNOW_SURE = 28;
 - (void)scrollViewPercentageAcrossSubview:(CGFloat)percentage {
 	CAEWeatherHour *weatherHour = [self.hourlyWeather.weatherHours objectAtIndex:self.currentHour];
 	self.view.backgroundColor = [self.astronomy backgroundColorFromWeatherHour:weatherHour hourPercentage:percentage];
-    [self positionSunForWeatherHour:weatherHour hourPercentage:percentage];
+    [self positionSunForHour:weatherHour.hour hourPercentage:percentage];
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
