@@ -17,11 +17,11 @@
 		E2445E96198991D000864231 /* CAEAstronomy+Tools.m in Sources */ = {isa = PBXBuildFile; fileRef = E2445E95198991D000864231 /* CAEAstronomy+Tools.m */; };
 		E259FECB19702AF7000E032C /* CAECloudsDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E259FECA19702AF7000E032C /* CAECloudsDelegate.m */; };
 		E259FED119707388000E032C /* UIImageView+Tools.m in Sources */ = {isa = PBXBuildFile; fileRef = E259FED019707388000E032C /* UIImageView+Tools.m */; };
+		E28C8E54199A6E22003CF1C7 /* Butler, Antarctica.gpx in Resources */ = {isa = PBXBuildFile; fileRef = E28C8E51199A6E22003CF1C7 /* Butler, Antarctica.gpx */; };
+		E28C8E55199A6E22003CF1C7 /* SnowPlace.gpx in Resources */ = {isa = PBXBuildFile; fileRef = E28C8E52199A6E22003CF1C7 /* SnowPlace.gpx */; };
+		E28C8E56199A6E22003CF1C7 /* SouthPole.gpx in Resources */ = {isa = PBXBuildFile; fileRef = E28C8E53199A6E22003CF1C7 /* SouthPole.gpx */; };
 		E29571F61964A1B1009B725C /* CAEHourlyWeather.m in Sources */ = {isa = PBXBuildFile; fileRef = E29571F51964A1B1009B725C /* CAEHourlyWeather.m */; };
 		E29571F91964A3D4009B725C /* CAEWeatherHour.m in Sources */ = {isa = PBXBuildFile; fileRef = E29571F81964A3D4009B725C /* CAEWeatherHour.m */; };
-		E29C575819771C5300BE483B /* SnowPlace.gpx in Resources */ = {isa = PBXBuildFile; fileRef = E29C575719771C5300BE483B /* SnowPlace.gpx */; };
-		E29C575C19771E1900BE483B /* SouthPole.gpx in Resources */ = {isa = PBXBuildFile; fileRef = E29C575B19771E1900BE483B /* SouthPole.gpx */; };
-		E29C575E19771FB600BE483B /* Butler, Antarctica.gpx in Resources */ = {isa = PBXBuildFile; fileRef = E29C575D19771FB600BE483B /* Butler, Antarctica.gpx */; };
 		E2A2B15A19797AA10059F39E /* CAEHoursScrollViewDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = E2A2B15919797AA10059F39E /* CAEHoursScrollViewDataSource.m */; };
 		E2B95EC41958B084008528D4 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2B95EC31958B084008528D4 /* CoreLocation.framework */; };
 		E2CE3CD1196AE30A00E9D07B /* CAECurrentConditions.m in Sources */ = {isa = PBXBuildFile; fileRef = E2CE3CD0196AE30A00E9D07B /* CAECurrentConditions.m */; };
@@ -107,13 +107,13 @@
 		E259FECA19702AF7000E032C /* CAECloudsDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CAECloudsDelegate.m; sourceTree = "<group>"; };
 		E259FECF19707388000E032C /* UIImageView+Tools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+Tools.h"; sourceTree = "<group>"; };
 		E259FED019707388000E032C /* UIImageView+Tools.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+Tools.m"; sourceTree = "<group>"; };
+		E28C8E51199A6E22003CF1C7 /* Butler, Antarctica.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "Butler, Antarctica.gpx"; sourceTree = "<group>"; };
+		E28C8E52199A6E22003CF1C7 /* SnowPlace.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = SnowPlace.gpx; sourceTree = "<group>"; };
+		E28C8E53199A6E22003CF1C7 /* SouthPole.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = SouthPole.gpx; sourceTree = "<group>"; };
 		E29571F41964A1B1009B725C /* CAEHourlyWeather.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAEHourlyWeather.h; sourceTree = "<group>"; };
 		E29571F51964A1B1009B725C /* CAEHourlyWeather.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CAEHourlyWeather.m; sourceTree = "<group>"; };
 		E29571F71964A3D4009B725C /* CAEWeatherHour.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAEWeatherHour.h; sourceTree = "<group>"; };
 		E29571F81964A3D4009B725C /* CAEWeatherHour.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CAEWeatherHour.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		E29C575719771C5300BE483B /* SnowPlace.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = SnowPlace.gpx; path = ../SnowPlace.gpx; sourceTree = "<group>"; };
-		E29C575B19771E1900BE483B /* SouthPole.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = SouthPole.gpx; path = ../SouthPole.gpx; sourceTree = "<group>"; };
-		E29C575D19771FB600BE483B /* Butler, Antarctica.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = "Butler, Antarctica.gpx"; path = "../Butler, Antarctica.gpx"; sourceTree = "<group>"; };
 		E2A2B15819797AA10059F39E /* CAEHoursScrollViewDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAEHoursScrollViewDataSource.h; sourceTree = "<group>"; };
 		E2A2B15919797AA10059F39E /* CAEHoursScrollViewDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CAEHoursScrollViewDataSource.m; sourceTree = "<group>"; };
 		E2B95EC31958B084008528D4 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
@@ -187,9 +187,9 @@
 		53E52C2BB7D62E4CE62BE87F /* GPX */ = {
 			isa = PBXGroup;
 			children = (
-				E29C575D19771FB600BE483B /* Butler, Antarctica.gpx */,
-				E29C575B19771E1900BE483B /* SouthPole.gpx */,
-				E29C575719771C5300BE483B /* SnowPlace.gpx */,
+				E28C8E51199A6E22003CF1C7 /* Butler, Antarctica.gpx */,
+				E28C8E52199A6E22003CF1C7 /* SnowPlace.gpx */,
+				E28C8E53199A6E22003CF1C7 /* SouthPole.gpx */,
 				E2EB122A196EEB1900BC0DEA /* Clayton.gpx */,
 				E2EB122B196EEB1900BC0DEA /* Tufts.gpx */,
 			);
@@ -432,14 +432,14 @@
 				E22C99CE199921AE007BE153 /* astronomy.json in Resources */,
 				E2EB122D196EEB1900BC0DEA /* Tufts.gpx in Resources */,
 				E2EB122C196EEB1900BC0DEA /* Clayton.gpx in Resources */,
+				E28C8E55199A6E22003CF1C7 /* SnowPlace.gpx in Resources */,
 				E2257C5D19991CF5009B6518 /* hourly.json in Resources */,
-				E29C575819771C5300BE483B /* SnowPlace.gpx in Resources */,
 				E2E1EF0C1954BB9600A0B541 /* Images.xcassets in Resources */,
 				E22C99D0199921F5007BE153 /* current-conditions.json in Resources */,
-				E29C575E19771FB600BE483B /* Butler, Antarctica.gpx in Resources */,
-				E29C575C19771E1900BE483B /* SouthPole.gpx in Resources */,
 				E2E1EF011954BB9600A0B541 /* Main_iPhone.storyboard in Resources */,
 				E2E1EEF81954BB9600A0B541 /* InfoPlist.strings in Resources */,
+				E28C8E54199A6E22003CF1C7 /* Butler, Antarctica.gpx in Resources */,
+				E28C8E56199A6E22003CF1C7 /* SouthPole.gpx in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
