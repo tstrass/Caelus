@@ -121,9 +121,14 @@ const int MAX_SNOW_SURE = 28;
 	self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
     if ([CLLocationManager authorizationStatus] != kCLAuthorizationStatusNotDetermined) {
         [self.locationManager startUpdatingLocation];
-    } else if ([self.locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)]) {
+    }
+    // Only compile the following code if running iOS 8 or later
+    #if __IPHONE_OS_VERSION_MAX_ALLOWED >= 80000
+    else if ([self.locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)]) {
         [self.locationManager requestWhenInUseAuthorization];
-    } else {
+    }
+    #endif
+    else {
         [self.locationManager startUpdatingLocation];
     }
 }
@@ -275,9 +280,12 @@ const int MAX_SNOW_SURE = 28;
 }
 
 - (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status {
+    // Only compile the following code if running iOS 8 or later
+    #if __IPHONE_OS_VERSION_MAX_ALLOWED >= 80000
     if (status == kCLAuthorizationStatusAuthorizedWhenInUse) {
         [self.locationManager startUpdatingLocation];
     }
+    #endif
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
