@@ -1,5 +1,5 @@
 //
-//  CAEDetailViewController.h
+//  CAEWeatherViewController.h
 //  Caelus
 //
 //  Created by Thomas Strassner on 6/20/14.
@@ -11,9 +11,5 @@
 typedef void (^weatherParsingComplete)(BOOL);
 typedef void (^astronomyParsingComplete)(BOOL);
 
-@interface CAEDetailViewController : UIViewController <UISplitViewControllerDelegate, NSURLConnectionDelegate, CLLocationManagerDelegate>
-
-@property (strong, nonatomic) id detailItem;
-
-@property (weak, nonatomic) IBOutlet UILabel *detailDescriptionLabel;
+@interface CAEWeatherViewController : UIViewController <UISplitViewControllerDelegate, NSURLConnectionDelegate, CLLocationManagerDelegate>
 @end
