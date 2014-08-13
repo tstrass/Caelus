@@ -23,6 +23,12 @@
 		E29571F61964A1B1009B725C /* CAEHourlyWeather.m in Sources */ = {isa = PBXBuildFile; fileRef = E29571F51964A1B1009B725C /* CAEHourlyWeather.m */; };
 		E29571F91964A3D4009B725C /* CAEWeatherHour.m in Sources */ = {isa = PBXBuildFile; fileRef = E29571F81964A3D4009B725C /* CAEWeatherHour.m */; };
 		E2A2B15A19797AA10059F39E /* CAEHoursScrollViewDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = E2A2B15919797AA10059F39E /* CAEHoursScrollViewDataSource.m */; };
+		E2B52AEA199BF22400BA88CA /* ECPercentDrivenInteractiveTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = E2B52ADE199BF22400BA88CA /* ECPercentDrivenInteractiveTransition.m */; };
+		E2B52AEB199BF22400BA88CA /* ECSlidingAnimationController.m in Sources */ = {isa = PBXBuildFile; fileRef = E2B52AE0199BF22400BA88CA /* ECSlidingAnimationController.m */; };
+		E2B52AEC199BF22400BA88CA /* ECSlidingInteractiveTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = E2B52AE3199BF22400BA88CA /* ECSlidingInteractiveTransition.m */; };
+		E2B52AED199BF22400BA88CA /* ECSlidingSegue.m in Sources */ = {isa = PBXBuildFile; fileRef = E2B52AE5199BF22400BA88CA /* ECSlidingSegue.m */; };
+		E2B52AEE199BF22400BA88CA /* ECSlidingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E2B52AE7199BF22400BA88CA /* ECSlidingViewController.m */; };
+		E2B52AEF199BF22400BA88CA /* UIViewController+ECSlidingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E2B52AE9199BF22400BA88CA /* UIViewController+ECSlidingViewController.m */; };
 		E2B95EC41958B084008528D4 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2B95EC31958B084008528D4 /* CoreLocation.framework */; };
 		E2CE3CD1196AE30A00E9D07B /* CAECurrentConditions.m in Sources */ = {isa = PBXBuildFile; fileRef = E2CE3CD0196AE30A00E9D07B /* CAECurrentConditions.m */; };
 		E2CE3CD4196AF3CA00E9D07B /* CAELocationData.m in Sources */ = {isa = PBXBuildFile; fileRef = E2CE3CD3196AF3CA00E9D07B /* CAELocationData.m */; };
@@ -116,6 +122,19 @@
 		E29571F81964A3D4009B725C /* CAEWeatherHour.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CAEWeatherHour.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		E2A2B15819797AA10059F39E /* CAEHoursScrollViewDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAEHoursScrollViewDataSource.h; sourceTree = "<group>"; };
 		E2A2B15919797AA10059F39E /* CAEHoursScrollViewDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CAEHoursScrollViewDataSource.m; sourceTree = "<group>"; };
+		E2B52ADD199BF22400BA88CA /* ECPercentDrivenInteractiveTransition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ECPercentDrivenInteractiveTransition.h; sourceTree = "<group>"; };
+		E2B52ADE199BF22400BA88CA /* ECPercentDrivenInteractiveTransition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ECPercentDrivenInteractiveTransition.m; sourceTree = "<group>"; };
+		E2B52ADF199BF22400BA88CA /* ECSlidingAnimationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ECSlidingAnimationController.h; sourceTree = "<group>"; };
+		E2B52AE0199BF22400BA88CA /* ECSlidingAnimationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ECSlidingAnimationController.m; sourceTree = "<group>"; };
+		E2B52AE1199BF22400BA88CA /* ECSlidingConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ECSlidingConstants.h; sourceTree = "<group>"; };
+		E2B52AE2199BF22400BA88CA /* ECSlidingInteractiveTransition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ECSlidingInteractiveTransition.h; sourceTree = "<group>"; };
+		E2B52AE3199BF22400BA88CA /* ECSlidingInteractiveTransition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ECSlidingInteractiveTransition.m; sourceTree = "<group>"; };
+		E2B52AE4199BF22400BA88CA /* ECSlidingSegue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ECSlidingSegue.h; sourceTree = "<group>"; };
+		E2B52AE5199BF22400BA88CA /* ECSlidingSegue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ECSlidingSegue.m; sourceTree = "<group>"; };
+		E2B52AE6199BF22400BA88CA /* ECSlidingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ECSlidingViewController.h; sourceTree = "<group>"; };
+		E2B52AE7199BF22400BA88CA /* ECSlidingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ECSlidingViewController.m; sourceTree = "<group>"; };
+		E2B52AE8199BF22400BA88CA /* UIViewController+ECSlidingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+ECSlidingViewController.h"; sourceTree = "<group>"; };
+		E2B52AE9199BF22400BA88CA /* UIViewController+ECSlidingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+ECSlidingViewController.m"; sourceTree = "<group>"; };
 		E2B95EC31958B084008528D4 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		E2B95EC51958B4AF008528D4 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		E2CE3CCF196AE30A00E9D07B /* CAECurrentConditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAECurrentConditions.h; sourceTree = "<group>"; };
@@ -257,6 +276,26 @@
 			name = Delegate;
 			sourceTree = "<group>";
 		};
+		E2B52ADC199BF22400BA88CA /* ECSlidingViewController */ = {
+			isa = PBXGroup;
+			children = (
+				E2B52ADD199BF22400BA88CA /* ECPercentDrivenInteractiveTransition.h */,
+				E2B52ADE199BF22400BA88CA /* ECPercentDrivenInteractiveTransition.m */,
+				E2B52ADF199BF22400BA88CA /* ECSlidingAnimationController.h */,
+				E2B52AE0199BF22400BA88CA /* ECSlidingAnimationController.m */,
+				E2B52AE1199BF22400BA88CA /* ECSlidingConstants.h */,
+				E2B52AE2199BF22400BA88CA /* ECSlidingInteractiveTransition.h */,
+				E2B52AE3199BF22400BA88CA /* ECSlidingInteractiveTransition.m */,
+				E2B52AE4199BF22400BA88CA /* ECSlidingSegue.h */,
+				E2B52AE5199BF22400BA88CA /* ECSlidingSegue.m */,
+				E2B52AE6199BF22400BA88CA /* ECSlidingViewController.h */,
+				E2B52AE7199BF22400BA88CA /* ECSlidingViewController.m */,
+				E2B52AE8199BF22400BA88CA /* UIViewController+ECSlidingViewController.h */,
+				E2B52AE9199BF22400BA88CA /* UIViewController+ECSlidingViewController.m */,
+			);
+			path = ECSlidingViewController;
+			sourceTree = "<group>";
+		};
 		E2E1EEE11954BB9600A0B541 = {
 			isa = PBXGroup;
 			children = (
@@ -312,6 +351,7 @@
 				E2445E9219893DF900864231 /* CAEWeatherHour+Tools.m */,
 				E2445E94198991D000864231 /* CAEAstronomy+Tools.h */,
 				E2445E95198991D000864231 /* CAEAstronomy+Tools.m */,
+				E2B52ADC199BF22400BA88CA /* ECSlidingViewController */,
 			);
 			path = Caelus;
 			sourceTree = "<group>";
@@ -460,18 +500,24 @@
 			files = (
 				E2445E9319893DF900864231 /* CAEWeatherHour+Tools.m in Sources */,
 				E29571F61964A1B1009B725C /* CAEHourlyWeather.m in Sources */,
+				E2B52AEF199BF22400BA88CA /* UIViewController+ECSlidingViewController.m in Sources */,
 				E20001A819630E3B007659E3 /* CAEAstronomy.m in Sources */,
 				E2E1EF0A1954BB9600A0B541 /* CAEWeatherViewController.m in Sources */,
 				E2E1EEFA1954BB9600A0B541 /* main.m in Sources */,
 				E2CE3CDA196B351A00E9D07B /* CAEMoonPhase.m in Sources */,
 				E2F18E3119757B1900C013FA /* CAEDiscreteMeterView.m in Sources */,
+				E2B52AEB199BF22400BA88CA /* ECSlidingAnimationController.m in Sources */,
 				E2089BF81976D04A00E0D643 /* CAEPrecipitationDelegate.m in Sources */,
 				E2EA38E7196EE2B30089896B /* CAEWeatherInformation.m in Sources */,
+				E2B52AEC199BF22400BA88CA /* ECSlidingInteractiveTransition.m in Sources */,
+				E2B52AEE199BF22400BA88CA /* ECSlidingViewController.m in Sources */,
 				E259FECB19702AF7000E032C /* CAECloudsDelegate.m in Sources */,
+				E2B52AED199BF22400BA88CA /* ECSlidingSegue.m in Sources */,
 				E2CE3CD1196AE30A00E9D07B /* CAECurrentConditions.m in Sources */,
 				E2CFFDAA19786F530075B89E /* UIView+Tools.m in Sources */,
 				E259FED119707388000E032C /* UIImageView+Tools.m in Sources */,
 				E2445E901989383400864231 /* UIColor+WeatherTools.m in Sources */,
+				E2B52AEA199BF22400BA88CA /* ECPercentDrivenInteractiveTransition.m in Sources */,
 				E2445E96198991D000864231 /* CAEAstronomy+Tools.m in Sources */,
 				E2CFFDA71978631D0075B89E /* CAEHorizontalScrollView.m in Sources */,
 				E2D37CCB1994099B007C4B67 /* UIView+SizingTools.m in Sources */,
