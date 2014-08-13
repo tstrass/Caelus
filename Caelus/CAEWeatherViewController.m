@@ -1,11 +1,11 @@
 //
-//  CAEDetailViewController.m
+//  CAEWeatherViewController.m
 //  Caelus
 //
 //  Created by Thomas Strassner on 6/20/14.
 //  Copyright (c) 2014 Enterprise Holdings, Inc. All rights reserved.
 //
-#import "CAEDetailViewController.h"
+#import "CAEWeatherViewController.h"
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // Delegate
@@ -23,7 +23,7 @@
 #import "CAEHourlyWeather.h"
 #import "CAEAstronomy+Tools.h"
 
-@interface CAEDetailViewController () <CAEHorizontalScrollViewDelegate>
+@interface CAEWeatherViewController () <CAEHorizontalScrollViewDelegate>
 @property (strong, nonatomic) UIPopoverController *masterPopoverController;
 - (void)configureView;
 
@@ -69,7 +69,7 @@
 @property (strong, nonatomic) CAEPrecipitationDelegate *precipitationDelegate;
 @end
 
-@implementation CAEDetailViewController
+@implementation CAEWeatherViewController
 
 /** if there's precipitation you know it will be raining at or above this farenheit value */
 const int MIN_RAIN_SURE = 40;
@@ -81,11 +81,6 @@ const int MAX_SNOW_SURE = 28;
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 - (void)configureView {
-	// Update the user interface for the detail item.
-
-	if (self.detailItem) {
-		self.detailDescriptionLabel.text = [self.detailItem description];
-	}
 	[self makeGradientOverlay];
 
     // rotate bottom shadow of scrollView 180 degrees
