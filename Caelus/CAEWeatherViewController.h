@@ -11,5 +11,5 @@
 typedef void (^weatherParsingComplete)(BOOL);
 typedef void (^astronomyParsingComplete)(BOOL);
 
-@interface CAEWeatherViewController : UIViewController <UISplitViewControllerDelegate, NSURLConnectionDelegate, CLLocationManagerDelegate>
+@interface CAEWeatherViewController : UIViewController <NSURLConnectionDelegate, CLLocationManagerDelegate>
 @end

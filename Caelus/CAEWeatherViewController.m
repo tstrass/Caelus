@@ -8,6 +8,8 @@
 #import "CAEWeatherViewController.h"
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+#import "UIViewController+ECSlidingViewController.h"
+
 // Delegate
 #import "CAECloudsDelegate.h"
 #import "CAEPrecipitationDelegate.h"
@@ -99,6 +101,9 @@ const int MAX_SNOW_SURE = 28;
 		// iOS 6
 		[[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationSlide];
 	}
+    
+    [self.navigationController setNavigationBarHidden:YES];
+    
     self.sunImageView.hidden = YES;
     [self calculateSunAngles];
     
@@ -463,6 +468,14 @@ const int MAX_SNOW_SURE = 28;
 
 - (BOOL)prefersStatusBarHidden {
 	return YES;
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+#pragma mark - UIViewController delegate methods
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+- (IBAction)menuButtonPressed:(id)sender {
+    [self.slidingViewController anchorTopViewToRightAnimated:YES];
 }
 
 @end
