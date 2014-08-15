@@ -61,7 +61,6 @@
 
 // Geolocation
 @property (strong, nonatomic) CLLocationManager *locationManager;
-@property (strong, nonatomic) NSString *geolocation;
 
 // Current UI state
 @property (nonatomic) NSInteger currentHour;

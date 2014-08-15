@@ -229,9 +229,7 @@
 		E2257C5B19991C5F009B6518 /* Mock Service */ = {
 			isa = PBXGroup;
 			children = (
-				E22C99CF199921F5007BE153 /* current-conditions.json */,
-				E22C99CD199921AE007BE153 /* astronomy.json */,
-				E2257C5C19991CF5009B6518 /* hourly.json */,
+				E2BDD79D199E578600F3360D /* Clayton */,
 			);
 			name = "Mock Service";
 			sourceTree = "<group>";
@@ -262,6 +260,16 @@
 				E2A2B15919797AA10059F39E /* CAEHoursScrollViewDataSource.m */,
 			);
 			name = Delegate;
+			sourceTree = "<group>";
+		};
+		E2BDD79D199E578600F3360D /* Clayton */ = {
+			isa = PBXGroup;
+			children = (
+				E22C99CF199921F5007BE153 /* current-conditions.json */,
+				E22C99CD199921AE007BE153 /* astronomy.json */,
+				E2257C5C19991CF5009B6518 /* hourly.json */,
+			);
+			name = Clayton;
 			sourceTree = "<group>";
 		};
 		E2E1EEE11954BB9600A0B541 = {
