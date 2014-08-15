@@ -8,8 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import <CoreLocation/CoreLocation.h>
-typedef void (^weatherParsingComplete)(BOOL);
-typedef void (^astronomyParsingComplete)(BOOL);
+
+#import "CocoaLumberjack.h"
+
+/** When MOCK_SERVICE is defined, the app will use a mock service instead of calling the weather API */
+#define MOCK_SERVICE
 
 @interface CAEWeatherViewController : UIViewController <NSURLConnectionDelegate, CLLocationManagerDelegate>
 /** Coordinates of location, i.e. @"(24.12,-9.2)"*/
