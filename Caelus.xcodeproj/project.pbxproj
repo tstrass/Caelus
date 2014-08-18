@@ -7,16 +7,22 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4842FED9C03A48768B49E91A /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 690A64D2DC764807B4BE6E96 /* libPods.a */; };
 		E20001A819630E3B007659E3 /* CAEAstronomy.m in Sources */ = {isa = PBXBuildFile; fileRef = E20001A719630E3B007659E3 /* CAEAstronomy.m */; };
 		E2089BF81976D04A00E0D643 /* CAEPrecipitationDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E2089BF71976D04A00E0D643 /* CAEPrecipitationDelegate.m */; };
-		E2257C5D19991CF5009B6518 /* hourly.json in Resources */ = {isa = PBXBuildFile; fileRef = E2257C5C19991CF5009B6518 /* hourly.json */; };
-		E22C99CE199921AE007BE153 /* astronomy.json in Resources */ = {isa = PBXBuildFile; fileRef = E22C99CD199921AE007BE153 /* astronomy.json */; };
-		E22C99D0199921F5007BE153 /* current-conditions.json in Resources */ = {isa = PBXBuildFile; fileRef = E22C99CF199921F5007BE153 /* current-conditions.json */; };
+		E2257C5D19991CF5009B6518 /* clayton-hourly.json in Resources */ = {isa = PBXBuildFile; fileRef = E2257C5C19991CF5009B6518 /* clayton-hourly.json */; };
+		E22C99CE199921AE007BE153 /* clayton-astronomy.json in Resources */ = {isa = PBXBuildFile; fileRef = E22C99CD199921AE007BE153 /* clayton-astronomy.json */; };
+		E22C99D0199921F5007BE153 /* clayton-current-conditions.json in Resources */ = {isa = PBXBuildFile; fileRef = E22C99CF199921F5007BE153 /* clayton-current-conditions.json */; };
+		E23C2B92199D4F1D00AB4EA8 /* CAESideTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E23C2B91199D4F1D00AB4EA8 /* CAESideTableViewController.m */; };
 		E2445E901989383400864231 /* UIColor+WeatherTools.m in Sources */ = {isa = PBXBuildFile; fileRef = E2445E8F1989383400864231 /* UIColor+WeatherTools.m */; };
 		E2445E9319893DF900864231 /* CAEWeatherHour+Tools.m in Sources */ = {isa = PBXBuildFile; fileRef = E2445E9219893DF900864231 /* CAEWeatherHour+Tools.m */; };
 		E2445E96198991D000864231 /* CAEAstronomy+Tools.m in Sources */ = {isa = PBXBuildFile; fileRef = E2445E95198991D000864231 /* CAEAstronomy+Tools.m */; };
 		E259FECB19702AF7000E032C /* CAECloudsDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E259FECA19702AF7000E032C /* CAECloudsDelegate.m */; };
 		E259FED119707388000E032C /* UIImageView+Tools.m in Sources */ = {isa = PBXBuildFile; fileRef = E259FED019707388000E032C /* UIImageView+Tools.m */; };
+		E283962919A2548000B17875 /* tufts-hourly.json in Resources */ = {isa = PBXBuildFile; fileRef = E283962819A2548000B17875 /* tufts-hourly.json */; };
+		E283962D19A2612300B17875 /* tufts-current-conditions.json in Resources */ = {isa = PBXBuildFile; fileRef = E283962C19A2612300B17875 /* tufts-current-conditions.json */; };
+		E283962F19A2619800B17875 /* tufts-astronomy.json in Resources */ = {isa = PBXBuildFile; fileRef = E283962E19A2619800B17875 /* tufts-astronomy.json */; };
+		E283963119A2749E00B17875 /* Main_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E283963019A2749E00B17875 /* Main_iPhone.storyboard */; };
 		E28C8E54199A6E22003CF1C7 /* Butler, Antarctica.gpx in Resources */ = {isa = PBXBuildFile; fileRef = E28C8E51199A6E22003CF1C7 /* Butler, Antarctica.gpx */; };
 		E28C8E55199A6E22003CF1C7 /* SnowPlace.gpx in Resources */ = {isa = PBXBuildFile; fileRef = E28C8E52199A6E22003CF1C7 /* SnowPlace.gpx */; };
 		E28C8E56199A6E22003CF1C7 /* SouthPole.gpx in Resources */ = {isa = PBXBuildFile; fileRef = E28C8E53199A6E22003CF1C7 /* SouthPole.gpx */; };
@@ -37,7 +43,6 @@
 		E2E1EEF81954BB9600A0B541 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = E2E1EEF61954BB9600A0B541 /* InfoPlist.strings */; };
 		E2E1EEFA1954BB9600A0B541 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E2E1EEF91954BB9600A0B541 /* main.m */; };
 		E2E1EEFE1954BB9600A0B541 /* CAEAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E2E1EEFD1954BB9600A0B541 /* CAEAppDelegate.m */; };
-		E2E1EF011954BB9600A0B541 /* Main_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E2E1EEFF1954BB9600A0B541 /* Main_iPhone.storyboard */; };
 		E2E1EF0A1954BB9600A0B541 /* CAEWeatherViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E2E1EF091954BB9600A0B541 /* CAEWeatherViewController.m */; };
 		E2E1EF0C1954BB9600A0B541 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E2E1EF0B1954BB9600A0B541 /* Images.xcassets */; };
 		E2E1EF131954BB9700A0B541 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2E1EF121954BB9700A0B541 /* XCTest.framework */; };
@@ -90,13 +95,17 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		5A9337A7227346BABFC4E176 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
+		690A64D2DC764807B4BE6E96 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		E20001A619630E3B007659E3 /* CAEAstronomy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAEAstronomy.h; sourceTree = "<group>"; };
 		E20001A719630E3B007659E3 /* CAEAstronomy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CAEAstronomy.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		E2089BF61976D04A00E0D643 /* CAEPrecipitationDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAEPrecipitationDelegate.h; sourceTree = "<group>"; };
 		E2089BF71976D04A00E0D643 /* CAEPrecipitationDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CAEPrecipitationDelegate.m; sourceTree = "<group>"; };
-		E2257C5C19991CF5009B6518 /* hourly.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = hourly.json; sourceTree = "<group>"; };
-		E22C99CD199921AE007BE153 /* astronomy.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = astronomy.json; sourceTree = "<group>"; };
-		E22C99CF199921F5007BE153 /* current-conditions.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "current-conditions.json"; sourceTree = "<group>"; };
+		E2257C5C19991CF5009B6518 /* clayton-hourly.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "clayton-hourly.json"; sourceTree = "<group>"; };
+		E22C99CD199921AE007BE153 /* clayton-astronomy.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "clayton-astronomy.json"; sourceTree = "<group>"; };
+		E22C99CF199921F5007BE153 /* clayton-current-conditions.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "clayton-current-conditions.json"; sourceTree = "<group>"; };
+		E23C2B90199D4F1D00AB4EA8 /* CAESideTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAESideTableViewController.h; sourceTree = "<group>"; };
+		E23C2B91199D4F1D00AB4EA8 /* CAESideTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CAESideTableViewController.m; sourceTree = "<group>"; };
 		E2445E8E1989383400864231 /* UIColor+WeatherTools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+WeatherTools.h"; sourceTree = "<group>"; };
 		E2445E8F1989383400864231 /* UIColor+WeatherTools.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+WeatherTools.m"; sourceTree = "<group>"; };
 		E2445E9119893DF900864231 /* CAEWeatherHour+Tools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CAEWeatherHour+Tools.h"; sourceTree = "<group>"; };
@@ -107,6 +116,10 @@
 		E259FECA19702AF7000E032C /* CAECloudsDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CAECloudsDelegate.m; sourceTree = "<group>"; };
 		E259FECF19707388000E032C /* UIImageView+Tools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+Tools.h"; sourceTree = "<group>"; };
 		E259FED019707388000E032C /* UIImageView+Tools.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+Tools.m"; sourceTree = "<group>"; };
+		E283962819A2548000B17875 /* tufts-hourly.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "tufts-hourly.json"; sourceTree = "<group>"; };
+		E283962C19A2612300B17875 /* tufts-current-conditions.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "tufts-current-conditions.json"; sourceTree = "<group>"; };
+		E283962E19A2619800B17875 /* tufts-astronomy.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "tufts-astronomy.json"; sourceTree = "<group>"; };
+		E283963019A2749E00B17875 /* Main_iPhone.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main_iPhone.storyboard; sourceTree = "<group>"; };
 		E28C8E51199A6E22003CF1C7 /* Butler, Antarctica.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "Butler, Antarctica.gpx"; sourceTree = "<group>"; };
 		E28C8E52199A6E22003CF1C7 /* SnowPlace.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = SnowPlace.gpx; sourceTree = "<group>"; };
 		E28C8E53199A6E22003CF1C7 /* SouthPole.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = SouthPole.gpx; sourceTree = "<group>"; };
@@ -142,7 +155,6 @@
 		E2E1EEFB1954BB9600A0B541 /* Caelus-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Caelus-Prefix.pch"; sourceTree = "<group>"; };
 		E2E1EEFC1954BB9600A0B541 /* CAEAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CAEAppDelegate.h; sourceTree = "<group>"; };
 		E2E1EEFD1954BB9600A0B541 /* CAEAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CAEAppDelegate.m; sourceTree = "<group>"; };
-		E2E1EF001954BB9600A0B541 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPhone.storyboard; sourceTree = "<group>"; };
 		E2E1EF081954BB9600A0B541 /* CAEWeatherViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CAEWeatherViewController.h; sourceTree = "<group>"; };
 		E2E1EF091954BB9600A0B541 /* CAEWeatherViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CAEWeatherViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		E2E1EF0B1954BB9600A0B541 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
@@ -168,6 +180,7 @@
 				E2E1EEF01954BB9600A0B541 /* CoreGraphics.framework in Frameworks */,
 				E2E1EEF21954BB9600A0B541 /* UIKit.framework in Frameworks */,
 				E2E1EEEE1954BB9600A0B541 /* Foundation.framework in Frameworks */,
+				4842FED9C03A48768B49E91A /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -222,9 +235,8 @@
 		E2257C5B19991C5F009B6518 /* Mock Service */ = {
 			isa = PBXGroup;
 			children = (
-				E22C99CF199921F5007BE153 /* current-conditions.json */,
-				E22C99CD199921AE007BE153 /* astronomy.json */,
-				E2257C5C19991CF5009B6518 /* hourly.json */,
+				E283962719A2521400B17875 /* Tufts */,
+				E2BDD79D199E578600F3360D /* Clayton */,
 			);
 			name = "Mock Service";
 			sourceTree = "<group>";
@@ -244,6 +256,16 @@
 			name = View;
 			sourceTree = "<group>";
 		};
+		E283962719A2521400B17875 /* Tufts */ = {
+			isa = PBXGroup;
+			children = (
+				E283962E19A2619800B17875 /* tufts-astronomy.json */,
+				E283962C19A2612300B17875 /* tufts-current-conditions.json */,
+				E283962819A2548000B17875 /* tufts-hourly.json */,
+			);
+			name = Tufts;
+			sourceTree = "<group>";
+		};
 		E287E3591976F45000066C80 /* Delegate */ = {
 			isa = PBXGroup;
 			children = (
@@ -257,6 +279,16 @@
 			name = Delegate;
 			sourceTree = "<group>";
 		};
+		E2BDD79D199E578600F3360D /* Clayton */ = {
+			isa = PBXGroup;
+			children = (
+				E22C99CF199921F5007BE153 /* clayton-current-conditions.json */,
+				E22C99CD199921AE007BE153 /* clayton-astronomy.json */,
+				E2257C5C19991CF5009B6518 /* clayton-hourly.json */,
+			);
+			name = Clayton;
+			sourceTree = "<group>";
+		};
 		E2E1EEE11954BB9600A0B541 = {
 			isa = PBXGroup;
 			children = (
@@ -265,6 +297,7 @@
 				E2E1EEEC1954BB9600A0B541 /* Frameworks */,
 				E2E1EEEB1954BB9600A0B541 /* Products */,
 				53E52C2BB7D62E4CE62BE87F /* GPX */,
+				5A9337A7227346BABFC4E176 /* Pods.xcconfig */,
 			);
 			sourceTree = "<group>";
 		};
@@ -286,6 +319,7 @@
 				E2E1EEEF1954BB9600A0B541 /* CoreGraphics.framework */,
 				E2E1EEF11954BB9600A0B541 /* UIKit.framework */,
 				E2E1EF121954BB9700A0B541 /* XCTest.framework */,
+				690A64D2DC764807B4BE6E96 /* libPods.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -298,7 +332,7 @@
 				E259FEC819702ABD000E032C /* View */,
 				E2E1EEFC1954BB9600A0B541 /* CAEAppDelegate.h */,
 				E2E1EEFD1954BB9600A0B541 /* CAEAppDelegate.m */,
-				E2E1EEFF1954BB9600A0B541 /* Main_iPhone.storyboard */,
+				E283963019A2749E00B17875 /* Main_iPhone.storyboard */,
 				E2E1EF081954BB9600A0B541 /* CAEWeatherViewController.h */,
 				E2E1EF091954BB9600A0B541 /* CAEWeatherViewController.m */,
 				E20001A919630E4C007659E3 /* Model */,
@@ -312,6 +346,8 @@
 				E2445E9219893DF900864231 /* CAEWeatherHour+Tools.m */,
 				E2445E94198991D000864231 /* CAEAstronomy+Tools.h */,
 				E2445E95198991D000864231 /* CAEAstronomy+Tools.m */,
+				E23C2B90199D4F1D00AB4EA8 /* CAESideTableViewController.h */,
+				E23C2B91199D4F1D00AB4EA8 /* CAESideTableViewController.m */,
 			);
 			path = Caelus;
 			sourceTree = "<group>";
@@ -352,9 +388,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = E2E1EF221954BB9700A0B541 /* Build configuration list for PBXNativeTarget "Caelus" */;
 			buildPhases = (
+				38A694964AA142B098B0B965 /* Check Pods Manifest.lock */,
 				E2E1EEE61954BB9600A0B541 /* Sources */,
 				E2E1EEE71954BB9600A0B541 /* Frameworks */,
 				E2E1EEE81954BB9600A0B541 /* Resources */,
+				1B755A649C1E4A03A696937C /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -429,17 +467,20 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E22C99CE199921AE007BE153 /* astronomy.json in Resources */,
+				E22C99CE199921AE007BE153 /* clayton-astronomy.json in Resources */,
+				E283962D19A2612300B17875 /* tufts-current-conditions.json in Resources */,
 				E2EB122D196EEB1900BC0DEA /* Tufts.gpx in Resources */,
 				E2EB122C196EEB1900BC0DEA /* Clayton.gpx in Resources */,
 				E28C8E55199A6E22003CF1C7 /* SnowPlace.gpx in Resources */,
-				E2257C5D19991CF5009B6518 /* hourly.json in Resources */,
+				E2257C5D19991CF5009B6518 /* clayton-hourly.json in Resources */,
 				E2E1EF0C1954BB9600A0B541 /* Images.xcassets in Resources */,
-				E22C99D0199921F5007BE153 /* current-conditions.json in Resources */,
-				E2E1EF011954BB9600A0B541 /* Main_iPhone.storyboard in Resources */,
+				E22C99D0199921F5007BE153 /* clayton-current-conditions.json in Resources */,
+				E283962F19A2619800B17875 /* tufts-astronomy.json in Resources */,
 				E2E1EEF81954BB9600A0B541 /* InfoPlist.strings in Resources */,
 				E28C8E54199A6E22003CF1C7 /* Butler, Antarctica.gpx in Resources */,
 				E28C8E56199A6E22003CF1C7 /* SouthPole.gpx in Resources */,
+				E283963119A2749E00B17875 /* Main_iPhone.storyboard in Resources */,
+				E283962919A2548000B17875 /* tufts-hourly.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -452,6 +493,39 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		1B755A649C1E4A03A696937C /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		38A694964AA142B098B0B965 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		E2E1EEE61954BB9600A0B541 /* Sources */ = {
@@ -468,6 +542,7 @@
 				E2089BF81976D04A00E0D643 /* CAEPrecipitationDelegate.m in Sources */,
 				E2EA38E7196EE2B30089896B /* CAEWeatherInformation.m in Sources */,
 				E259FECB19702AF7000E032C /* CAECloudsDelegate.m in Sources */,
+				E23C2B92199D4F1D00AB4EA8 /* CAESideTableViewController.m in Sources */,
 				E2CE3CD1196AE30A00E9D07B /* CAECurrentConditions.m in Sources */,
 				E2CFFDAA19786F530075B89E /* UIView+Tools.m in Sources */,
 				E259FED119707388000E032C /* UIImageView+Tools.m in Sources */,
@@ -528,14 +603,6 @@
 				E2E1EEF71954BB9600A0B541 /* en */,
 			);
 			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-		E2E1EEFF1954BB9600A0B541 /* Main_iPhone.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				E2E1EF001954BB9600A0B541 /* Base */,
-			);
-			name = Main_iPhone.storyboard;
 			sourceTree = "<group>";
 		};
 		E2E1EF1B1954BB9700A0B541 /* InfoPlist.strings */ = {
@@ -627,6 +694,7 @@
 		};
 		E2E1EF231954BB9700A0B541 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5A9337A7227346BABFC4E176 /* Pods.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -643,6 +711,7 @@
 		};
 		E2E1EF241954BB9700A0B541 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5A9337A7227346BABFC4E176 /* Pods.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;

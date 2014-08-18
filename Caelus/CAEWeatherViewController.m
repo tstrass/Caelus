@@ -8,6 +8,8 @@
 #import "CAEWeatherViewController.h"
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+#import "UIViewController+ECSlidingViewController.h"
+
 // Delegate
 #import "CAECloudsDelegate.h"
 #import "CAEPrecipitationDelegate.h"
@@ -59,7 +61,6 @@
 
 // Geolocation
 @property (strong, nonatomic) CLLocationManager *locationManager;
-@property (strong, nonatomic) NSString *geolocation;
 
 // Current UI state
 @property (nonatomic) NSInteger currentHour;
@@ -72,9 +73,11 @@
 @implementation CAEWeatherViewController
 
 /** if there's precipitation you know it will be raining at or above this farenheit value */
-const int MIN_RAIN_SURE = 40;
+static int const MIN_RAIN_SURE = 40;
 /** if there's precipitation you know it will be frozen at or below this farenheit value */
-const int MAX_SNOW_SURE = 28;
+static int const MAX_SNOW_SURE = 28;
+
+static int const ddLogLevel = LOG_LEVEL_INFO;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark - Managing the detail item
@@ -99,12 +102,21 @@ const int MAX_SNOW_SURE = 28;
 		// iOS 6
 		[[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationSlide];
 	}
+    
+    [self.navigationController setNavigationBarHidden:YES];
+    
+    self.mockServiceLocation = @"clayton";
+    
     self.sunImageView.hidden = YES;
     [self calculateSunAngles];
-    
-	[self setUpLocationManager];
 
 	self.view.backgroundColor = [UIColor colorWithRed:0.400 green:0.800 blue:1.000 alpha:1.000];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    
+
+    [self setUpLocationManager];
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -158,14 +170,19 @@ const int MAX_SNOW_SURE = 28;
 }
 
 - (void)formatLocationLabel {
+#ifdef MOCK_SERVICE
+    self.currentLocationLabel.text = [self.mockServiceLocation capitalizedString];
+#else
 	self.currentLocationLabel.text = [NSString stringWithFormat:@"%@", self.geolocation];
-	self.currentLocationLabel.adjustsFontSizeToFitWidth = YES;
+#endif
+    self.currentLocationLabel.adjustsFontSizeToFitWidth = YES;
 	self.currentLocationLabel.minimumScaleFactor = 0.3;
 }
 
 - (void)formatViewForWeather {
 	CAEWeatherHour *firstHour = [self.hourlyWeather.weatherHours firstObject];
 	self.view.backgroundColor = [self.astronomy backgroundColorFromWeatherHour:firstHour hourPercentage:0.5];
+    [self formatLocationLabel];
 	[self formatTemperatureLabel];
 	[self formatCloudsView];
 	[self formatPrecpitationView];
@@ -173,7 +190,7 @@ const int MAX_SNOW_SURE = 28;
 }
 
 - (void)formatTemperatureLabel {
-	self.temperatureLabel.text = [NSString stringWithFormat:@"%lu°F", [self.currentConditions.fTemp integerValue]];
+	self.temperatureLabel.text = [NSString stringWithFormat:@"%lu°F", (long)[self.currentConditions.fTemp integerValue]];
 }
 
 - (void)formatCloudsView {
@@ -223,7 +240,7 @@ const int MAX_SNOW_SURE = 28;
 }
 
 - (void)updateTemperatureLabelForHour:(CAEWeatherHour *)weatherHour {
-	self.temperatureLabel.text = [NSString stringWithFormat:@"%lu°F", [weatherHour.fTemp integerValue]];
+	self.temperatureLabel.text = [NSString stringWithFormat:@"%lu°F", (long)[weatherHour.fTemp integerValue]];
 }
 
 - (void)updateCloudsForHour:(CAEWeatherHour *)weatherHour {
@@ -263,8 +280,11 @@ const int MAX_SNOW_SURE = 28;
 	    if (![self.geolocation isEqualToString:@"Not Found"]) {
 	        self.geolocation = [self requestStringWithCurrentLocation];
 	        [self setUpAPIRequests];
-            [self formatViewForWeather]; // Temporary- use with mock service call
-	        // [self sendRequestsAndParseData];
+#           ifdef MOCK_SERVICE
+            [self formatViewForWeather];
+#           else
+	        [self sendRequestsAndParseData];
+#           endif   
 		}
 	}];
 }
@@ -298,20 +318,23 @@ const int MAX_SNOW_SURE = 28;
 		    if ([self.requestsArray indexOfObject:request] == 0) {
 		        self.currentConditionsResponseData = data;
                 NSString *string = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-                NSLog(@"%@", string);
-		        [self parseCurrentWeatherJSON];
+                DDLogInfo(@"%@", string);
+                // NSLog(@"%@", string);
+                [self parseCurrentWeatherJSON];
 			}
 		    else if ([self.requestsArray indexOfObject:request] == 1) {
 		        self.astronomyResponseData = data;
                 NSString *string = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-                NSLog(@"%@", string);
-		        [self parseAstronomyJSON];
+                DDLogInfo(@"%@", string);
+                // NSLog(@"%@", string);
+                [self parseAstronomyJSON];
 			}
 		    else if ([self.requestsArray indexOfObject:request] == 2) {
 		        self.hourlyWeatherResponseData = data;
 		        NSString *string = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-		        NSLog(@"%@", string);
-		        [self parseHourlyWeatherJSON];
+                DDLogInfo(@"%@", string);
+                // NSLog(@"%@", string);
+                [self parseHourlyWeatherJSON];
 			}
 		    outstandingRequests--;
 		    if (outstandingRequests == 0) [self formatViewForWeather];
@@ -320,43 +343,49 @@ const int MAX_SNOW_SURE = 28;
 }
 
 - (void)makeCurrentConditionsRequestWithLocation:(NSString *)location {
-	// encode city search for URL and make URL request
-//	NSString *weatherRequest = [NSString stringWithFormat:@"http://api.wunderground.com/api/f29e980ec760f4cc/conditions/q/%@.json", location];
-//	NSLog(@"%@", weatherRequest);
-//	NSURL *apiURL = [NSURL URLWithString:weatherRequest];
-//	NSURLRequest *request = [[NSURLRequest alloc] initWithURL:apiURL];
-//	[self.requestsArray addObject:request];
-
+#ifdef MOCK_SERVICE
     // mock service call
-    NSString *jsonPath = [[NSBundle mainBundle] pathForResource:@"current-conditions" ofType:@"json"];
+    NSString *jsonPath = [[NSBundle mainBundle] pathForResource:[NSString stringWithFormat:@"%@-current-conditions", self.mockServiceLocation] ofType:@"json"];
     self.currentConditionsResponseData = [NSData dataWithContentsOfFile:jsonPath];
     [self parseCurrentWeatherJSON];
+#else
+    // encode city search for URL and make URL request
+	NSString *weatherRequest = [NSString stringWithFormat:@"http://api.wunderground.com/api/f29e980ec760f4cc/conditions/q/%@.json", location];
+	NSLog(@"%@", weatherRequest);
+	NSURL *apiURL = [NSURL URLWithString:weatherRequest];
+	NSURLRequest *request = [[NSURLRequest alloc] initWithURL:apiURL];
+	[self.requestsArray addObject:request];
+#endif
 }
 
 - (void)makeAstronomyRequestWithLocation:(NSString *)location {
-	// encode city search for URL and make URL request
-//	NSString *astronomyRequest = [NSString stringWithFormat:@"http://api.wunderground.com/api/f29e980ec760f4cc/astronomy/q/%@.json", location];
-//	NSURL *apiURL = [NSURL URLWithString:astronomyRequest];
-//	NSURLRequest *request = [[NSURLRequest alloc] initWithURL:apiURL];
-//	[self.requestsArray addObject:request];
-
+#ifdef MOCK_SERVICE
     // mock service
-    NSString *jsonPath = [[NSBundle mainBundle] pathForResource:@"astronomy" ofType:@"json"];
+    NSString *jsonPath = [[NSBundle mainBundle] pathForResource:[NSString stringWithFormat:@"%@-astronomy", self.mockServiceLocation] ofType:@"json"];
     self.astronomyResponseData = [NSData dataWithContentsOfFile:jsonPath];
     [self parseAstronomyJSON];
+#else
+    // encode city search for URL and make URL request
+    NSString *astronomyRequest = [NSString stringWithFormat:@"http://api.wunderground.com/api/f29e980ec760f4cc/astronomy/q/%@.json", location];
+    NSURL *apiURL = [NSURL URLWithString:astronomyRequest];
+    NSURLRequest *request = [[NSURLRequest alloc] initWithURL:apiURL];
+    [self.requestsArray addObject:request];
+#endif
 }
 
 - (void)makeHourlyWeatherRequestWithLocation:(NSString *)location {
-	// encode city search for URL and make URL request
-//	NSString *hourlyRequest = [NSString stringWithFormat:@"http://api.wunderground.com/api/f29e980ec760f4cc/hourly/q/%@.json", location];
-//	NSURL *apiURL = [NSURL URLWithString:hourlyRequest];
-//	NSURLRequest *request = [[NSURLRequest alloc] initWithURL:apiURL];
-//	[self.requestsArray addObject:request];
-    
+#ifdef MOCK_SERVICE
     // temporary: mock service call
-    NSString *jsonPath = [[NSBundle mainBundle] pathForResource:@"hourly" ofType:@"json"];
+    NSString *jsonPath = [[NSBundle mainBundle] pathForResource:[NSString stringWithFormat:@"%@-hourly", self.mockServiceLocation]ofType:@"json"];
     self.hourlyWeatherResponseData = [NSData dataWithContentsOfFile:jsonPath];
     [self parseHourlyWeatherJSON];
+#else
+    // encode city search for URL and make URL request
+    NSString *hourlyRequest = [NSString stringWithFormat:@"http://api.wunderground.com/api/f29e980ec760f4cc/hourly/q/%@.json", location];
+    NSURL *apiURL = [NSURL URLWithString:hourlyRequest];
+    NSURLRequest *request = [[NSURLRequest alloc] initWithURL:apiURL];
+    [self.requestsArray addObject:request];
+#endif
 }
 
 - (NSString *)requestStringWithCurrentLocation {
@@ -463,6 +492,14 @@ const int MAX_SNOW_SURE = 28;
 
 - (BOOL)prefersStatusBarHidden {
 	return YES;
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+#pragma mark - UIViewController delegate methods
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+- (IBAction)menuButtonPressed:(id)sender {
+    [self.slidingViewController anchorTopViewToRightAnimated:YES];
 }
 
 @end

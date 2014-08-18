@@ -8,7 +8,11 @@
 
 #import "CAEAppDelegate.h"
 
+#import "CocoaLumberjack.h"
+
 @implementation CAEAppDelegate
+
+//static int const ddLogLevel = LOG_LEVEL_INFO;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 	// Override point for customization after application launch.
@@ -17,6 +21,14 @@
 		UINavigationController *navigationController = [splitViewController.viewControllers lastObject];
 		splitViewController.delegate = (id)navigationController.topViewController;
 	}
+
+    [DDLog addLogger:[DDASLLogger sharedInstance]];
+    [DDLog addLogger:[DDTTYLogger sharedInstance]];
+    
+    DDFileLogger *fileLogger = [[DDFileLogger alloc] init];
+    
+    [DDLog addLogger:fileLogger];
+    //DDLogInfo(@"log file at: %@", fileLogger.);
 	return YES;
 }
 

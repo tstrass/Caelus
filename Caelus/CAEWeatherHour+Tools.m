@@ -13,7 +13,7 @@
     NSInteger hour = self.hour.integerValue;
 	NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
 	dateFormatter.dateFormat = @"HH:mm";
-	NSDate *date = [dateFormatter dateFromString:[NSString stringWithFormat:@"%lu:00", hour]];
+	NSDate *date = [dateFormatter dateFromString:[NSString stringWithFormat:@"%lu:00", (long)hour]];
 	dateFormatter.dateFormat = @"h:mm a";
 	return [dateFormatter stringFromDate:date];
 }
