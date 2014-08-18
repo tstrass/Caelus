@@ -19,6 +19,10 @@
 		E2445E96198991D000864231 /* CAEAstronomy+Tools.m in Sources */ = {isa = PBXBuildFile; fileRef = E2445E95198991D000864231 /* CAEAstronomy+Tools.m */; };
 		E259FECB19702AF7000E032C /* CAECloudsDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E259FECA19702AF7000E032C /* CAECloudsDelegate.m */; };
 		E259FED119707388000E032C /* UIImageView+Tools.m in Sources */ = {isa = PBXBuildFile; fileRef = E259FED019707388000E032C /* UIImageView+Tools.m */; };
+		E283962919A2548000B17875 /* tufts-hourly.json in Resources */ = {isa = PBXBuildFile; fileRef = E283962819A2548000B17875 /* tufts-hourly.json */; };
+		E283962D19A2612300B17875 /* tufts-current-conditions.json in Resources */ = {isa = PBXBuildFile; fileRef = E283962C19A2612300B17875 /* tufts-current-conditions.json */; };
+		E283962F19A2619800B17875 /* tufts-astronomy.json in Resources */ = {isa = PBXBuildFile; fileRef = E283962E19A2619800B17875 /* tufts-astronomy.json */; };
+		E283963119A2749E00B17875 /* Main_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E283963019A2749E00B17875 /* Main_iPhone.storyboard */; };
 		E28C8E54199A6E22003CF1C7 /* Butler, Antarctica.gpx in Resources */ = {isa = PBXBuildFile; fileRef = E28C8E51199A6E22003CF1C7 /* Butler, Antarctica.gpx */; };
 		E28C8E55199A6E22003CF1C7 /* SnowPlace.gpx in Resources */ = {isa = PBXBuildFile; fileRef = E28C8E52199A6E22003CF1C7 /* SnowPlace.gpx */; };
 		E28C8E56199A6E22003CF1C7 /* SouthPole.gpx in Resources */ = {isa = PBXBuildFile; fileRef = E28C8E53199A6E22003CF1C7 /* SouthPole.gpx */; };
@@ -39,7 +43,6 @@
 		E2E1EEF81954BB9600A0B541 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = E2E1EEF61954BB9600A0B541 /* InfoPlist.strings */; };
 		E2E1EEFA1954BB9600A0B541 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E2E1EEF91954BB9600A0B541 /* main.m */; };
 		E2E1EEFE1954BB9600A0B541 /* CAEAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E2E1EEFD1954BB9600A0B541 /* CAEAppDelegate.m */; };
-		E2E1EF011954BB9600A0B541 /* Main_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E2E1EEFF1954BB9600A0B541 /* Main_iPhone.storyboard */; };
 		E2E1EF0A1954BB9600A0B541 /* CAEWeatherViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E2E1EF091954BB9600A0B541 /* CAEWeatherViewController.m */; };
 		E2E1EF0C1954BB9600A0B541 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E2E1EF0B1954BB9600A0B541 /* Images.xcassets */; };
 		E2E1EF131954BB9700A0B541 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2E1EF121954BB9700A0B541 /* XCTest.framework */; };
@@ -113,6 +116,10 @@
 		E259FECA19702AF7000E032C /* CAECloudsDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CAECloudsDelegate.m; sourceTree = "<group>"; };
 		E259FECF19707388000E032C /* UIImageView+Tools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+Tools.h"; sourceTree = "<group>"; };
 		E259FED019707388000E032C /* UIImageView+Tools.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+Tools.m"; sourceTree = "<group>"; };
+		E283962819A2548000B17875 /* tufts-hourly.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "tufts-hourly.json"; sourceTree = "<group>"; };
+		E283962C19A2612300B17875 /* tufts-current-conditions.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "tufts-current-conditions.json"; sourceTree = "<group>"; };
+		E283962E19A2619800B17875 /* tufts-astronomy.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "tufts-astronomy.json"; sourceTree = "<group>"; };
+		E283963019A2749E00B17875 /* Main_iPhone.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main_iPhone.storyboard; sourceTree = "<group>"; };
 		E28C8E51199A6E22003CF1C7 /* Butler, Antarctica.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "Butler, Antarctica.gpx"; sourceTree = "<group>"; };
 		E28C8E52199A6E22003CF1C7 /* SnowPlace.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = SnowPlace.gpx; sourceTree = "<group>"; };
 		E28C8E53199A6E22003CF1C7 /* SouthPole.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = SouthPole.gpx; sourceTree = "<group>"; };
@@ -148,7 +155,6 @@
 		E2E1EEFB1954BB9600A0B541 /* Caelus-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Caelus-Prefix.pch"; sourceTree = "<group>"; };
 		E2E1EEFC1954BB9600A0B541 /* CAEAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CAEAppDelegate.h; sourceTree = "<group>"; };
 		E2E1EEFD1954BB9600A0B541 /* CAEAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CAEAppDelegate.m; sourceTree = "<group>"; };
-		E2E1EF001954BB9600A0B541 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPhone.storyboard; sourceTree = "<group>"; };
 		E2E1EF081954BB9600A0B541 /* CAEWeatherViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CAEWeatherViewController.h; sourceTree = "<group>"; };
 		E2E1EF091954BB9600A0B541 /* CAEWeatherViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CAEWeatherViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		E2E1EF0B1954BB9600A0B541 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
@@ -229,6 +235,7 @@
 		E2257C5B19991C5F009B6518 /* Mock Service */ = {
 			isa = PBXGroup;
 			children = (
+				E283962719A2521400B17875 /* Tufts */,
 				E2BDD79D199E578600F3360D /* Clayton */,
 			);
 			name = "Mock Service";
@@ -247,6 +254,16 @@
 				E2CFFDA919786F530075B89E /* UIView+Tools.m */,
 			);
 			name = View;
+			sourceTree = "<group>";
+		};
+		E283962719A2521400B17875 /* Tufts */ = {
+			isa = PBXGroup;
+			children = (
+				E283962E19A2619800B17875 /* tufts-astronomy.json */,
+				E283962C19A2612300B17875 /* tufts-current-conditions.json */,
+				E283962819A2548000B17875 /* tufts-hourly.json */,
+			);
+			name = Tufts;
 			sourceTree = "<group>";
 		};
 		E287E3591976F45000066C80 /* Delegate */ = {
@@ -315,7 +332,7 @@
 				E259FEC819702ABD000E032C /* View */,
 				E2E1EEFC1954BB9600A0B541 /* CAEAppDelegate.h */,
 				E2E1EEFD1954BB9600A0B541 /* CAEAppDelegate.m */,
-				E2E1EEFF1954BB9600A0B541 /* Main_iPhone.storyboard */,
+				E283963019A2749E00B17875 /* Main_iPhone.storyboard */,
 				E2E1EF081954BB9600A0B541 /* CAEWeatherViewController.h */,
 				E2E1EF091954BB9600A0B541 /* CAEWeatherViewController.m */,
 				E20001A919630E4C007659E3 /* Model */,
@@ -451,16 +468,19 @@
 			buildActionMask = 2147483647;
 			files = (
 				E22C99CE199921AE007BE153 /* clayton-astronomy.json in Resources */,
+				E283962D19A2612300B17875 /* tufts-current-conditions.json in Resources */,
 				E2EB122D196EEB1900BC0DEA /* Tufts.gpx in Resources */,
 				E2EB122C196EEB1900BC0DEA /* Clayton.gpx in Resources */,
 				E28C8E55199A6E22003CF1C7 /* SnowPlace.gpx in Resources */,
 				E2257C5D19991CF5009B6518 /* clayton-hourly.json in Resources */,
 				E2E1EF0C1954BB9600A0B541 /* Images.xcassets in Resources */,
 				E22C99D0199921F5007BE153 /* clayton-current-conditions.json in Resources */,
-				E2E1EF011954BB9600A0B541 /* Main_iPhone.storyboard in Resources */,
+				E283962F19A2619800B17875 /* tufts-astronomy.json in Resources */,
 				E2E1EEF81954BB9600A0B541 /* InfoPlist.strings in Resources */,
 				E28C8E54199A6E22003CF1C7 /* Butler, Antarctica.gpx in Resources */,
 				E28C8E56199A6E22003CF1C7 /* SouthPole.gpx in Resources */,
+				E283963119A2749E00B17875 /* Main_iPhone.storyboard in Resources */,
+				E283962919A2548000B17875 /* tufts-hourly.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -583,14 +603,6 @@
 				E2E1EEF71954BB9600A0B541 /* en */,
 			);
 			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-		E2E1EEFF1954BB9600A0B541 /* Main_iPhone.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				E2E1EF001954BB9600A0B541 /* Base */,
-			);
-			name = Main_iPhone.storyboard;
 			sourceTree = "<group>";
 		};
 		E2E1EF1B1954BB9700A0B541 /* InfoPlist.strings */ = {
