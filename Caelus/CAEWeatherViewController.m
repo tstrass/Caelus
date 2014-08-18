@@ -109,10 +109,14 @@ static int const ddLogLevel = LOG_LEVEL_INFO;
     
     self.sunImageView.hidden = YES;
     [self calculateSunAngles];
-    
-	[self setUpLocationManager];
 
 	self.view.backgroundColor = [UIColor colorWithRed:0.400 green:0.800 blue:1.000 alpha:1.000];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    
+
+    [self setUpLocationManager];
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -166,14 +170,19 @@ static int const ddLogLevel = LOG_LEVEL_INFO;
 }
 
 - (void)formatLocationLabel {
+#ifdef MOCK_SERVICE
+    self.currentLocationLabel.text = [self.mockServiceLocation capitalizedString];
+#else
 	self.currentLocationLabel.text = [NSString stringWithFormat:@"%@", self.geolocation];
-	self.currentLocationLabel.adjustsFontSizeToFitWidth = YES;
+#endif
+    self.currentLocationLabel.adjustsFontSizeToFitWidth = YES;
 	self.currentLocationLabel.minimumScaleFactor = 0.3;
 }
 
 - (void)formatViewForWeather {
 	CAEWeatherHour *firstHour = [self.hourlyWeather.weatherHours firstObject];
 	self.view.backgroundColor = [self.astronomy backgroundColorFromWeatherHour:firstHour hourPercentage:0.5];
+    [self formatLocationLabel];
 	[self formatTemperatureLabel];
 	[self formatCloudsView];
 	[self formatPrecpitationView];
@@ -231,7 +240,7 @@ static int const ddLogLevel = LOG_LEVEL_INFO;
 }
 
 - (void)updateTemperatureLabelForHour:(CAEWeatherHour *)weatherHour {
-	self.temperatureLabel.text = [NSString stringWithFormat:@"%lu°F", [weatherHour.fTemp integerValue]];
+	self.temperatureLabel.text = [NSString stringWithFormat:@"%lu°F", (long)[weatherHour.fTemp integerValue]];
 }
 
 - (void)updateCloudsForHour:(CAEWeatherHour *)weatherHour {

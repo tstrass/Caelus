@@ -9,11 +9,13 @@
 #import "CAESideTableViewController.h"
 
 #import "UIViewController+ECSlidingViewController.h"
+#import "CAEWeatherViewController.h"
 
 @interface CAESideTableViewController ()
 @property (nonatomic, strong) NSArray *menuItems;
 
-@property (nonatomic, strong) UINavigationController *weatherVC;
+//@property (nonatomic, strong) UINavigationController *weatherVC;
+@property (nonatomic, strong) CAEWeatherViewController *weatherVC;
 @end
 
 @implementation CAESideTableViewController
@@ -31,7 +33,7 @@
     }
 
     
-    self.weatherVC = (UINavigationController *)self.slidingViewController.topViewController;
+    self.weatherVC = (CAEWeatherViewController *)self.slidingViewController.topViewController;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -74,9 +76,10 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     NSString *menuItem = self.menuItems[indexPath.row];
     
-    if ([menuItem isEqualToString:@"Clayton"]) {
-        self.slidingViewController.topViewController = self.weatherVC;
-    }
+    
+    NSString *locationName = self.menuItems[indexPath.row];
+    self.weatherVC.mockServiceLocation = [locationName lowercaseString];
+    self.slidingViewController.topViewController = self.weatherVC;
     
     [self.slidingViewController resetTopViewAnimated:YES];
 }
