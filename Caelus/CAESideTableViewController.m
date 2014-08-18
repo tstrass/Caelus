@@ -76,9 +76,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     NSString *menuItem = self.menuItems[indexPath.row];
     
-    
-    NSString *locationName = self.menuItems[indexPath.row];
-    self.weatherVC.mockServiceLocation = [locationName lowercaseString];
+    self.weatherVC.mockServiceLocation = [menuItem lowercaseString];
     self.slidingViewController.topViewController = self.weatherVC;
     
     [self.slidingViewController resetTopViewAnimated:YES];
