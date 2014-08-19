@@ -212,6 +212,10 @@
 		E20001A919630E4C007659E3 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				E2445E9119893DF900864231 /* CAEWeatherHour+Tools.h */,
+				E2445E9219893DF900864231 /* CAEWeatherHour+Tools.m */,
+				E2445E94198991D000864231 /* CAEAstronomy+Tools.h */,
+				E2445E95198991D000864231 /* CAEAstronomy+Tools.m */,
 				E20001A619630E3B007659E3 /* CAEAstronomy.h */,
 				E20001A719630E3B007659E3 /* CAEAstronomy.m */,
 				E29571F41964A1B1009B725C /* CAEHourlyWeather.h */,
@@ -244,6 +248,10 @@
 		E259FEC819702ABD000E032C /* View */ = {
 			isa = PBXGroup;
 			children = (
+				E2D37CC91994099B007C4B67 /* UIView+SizingTools.h */,
+				E2D37CCA1994099B007C4B67 /* UIView+SizingTools.m */,
+				E2445E8E1989383400864231 /* UIColor+WeatherTools.h */,
+				E2445E8F1989383400864231 /* UIColor+WeatherTools.m */,
 				E259FECF19707388000E032C /* UIImageView+Tools.h */,
 				E259FED019707388000E032C /* UIImageView+Tools.m */,
 				E2F18E2F19757B1900C013FA /* CAEDiscreteMeterView.h */,
@@ -327,27 +335,11 @@
 		E2E1EEF31954BB9600A0B541 /* Caelus */ = {
 			isa = PBXGroup;
 			children = (
-				E2257C5B19991C5F009B6518 /* Mock Service */,
-				E287E3591976F45000066C80 /* Delegate */,
-				E259FEC819702ABD000E032C /* View */,
-				E2E1EEFC1954BB9600A0B541 /* CAEAppDelegate.h */,
-				E2E1EEFD1954BB9600A0B541 /* CAEAppDelegate.m */,
+				E2ED765A19A3C73000BFA3F4 /* Classes */,
 				E283963019A2749E00B17875 /* Main_iPhone.storyboard */,
-				E2E1EF081954BB9600A0B541 /* CAEWeatherViewController.h */,
-				E2E1EF091954BB9600A0B541 /* CAEWeatherViewController.m */,
-				E20001A919630E4C007659E3 /* Model */,
-				E2E1EEF41954BB9600A0B541 /* Supporting Files */,
 				E2E1EF0B1954BB9600A0B541 /* Images.xcassets */,
-				E2D37CC91994099B007C4B67 /* UIView+SizingTools.h */,
-				E2D37CCA1994099B007C4B67 /* UIView+SizingTools.m */,
-				E2445E8E1989383400864231 /* UIColor+WeatherTools.h */,
-				E2445E8F1989383400864231 /* UIColor+WeatherTools.m */,
-				E2445E9119893DF900864231 /* CAEWeatherHour+Tools.h */,
-				E2445E9219893DF900864231 /* CAEWeatherHour+Tools.m */,
-				E2445E94198991D000864231 /* CAEAstronomy+Tools.h */,
-				E2445E95198991D000864231 /* CAEAstronomy+Tools.m */,
-				E23C2B90199D4F1D00AB4EA8 /* CAESideTableViewController.h */,
-				E23C2B91199D4F1D00AB4EA8 /* CAESideTableViewController.m */,
+				E2257C5B19991C5F009B6518 /* Mock Service */,
+				E2E1EEF41954BB9600A0B541 /* Supporting Files */,
 			);
 			path = Caelus;
 			sourceTree = "<group>";
@@ -379,6 +371,38 @@
 				E2E1EF1B1954BB9700A0B541 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		E2ED765A19A3C73000BFA3F4 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				E2ED765C19A3C95F00BFA3F4 /* Controller */,
+				E259FEC819702ABD000E032C /* View */,
+				E20001A919630E4C007659E3 /* Model */,
+				E287E3591976F45000066C80 /* Delegate */,
+				E2ED765B19A3C76800BFA3F4 /* App Delegate */,
+			);
+			name = Classes;
+			sourceTree = "<group>";
+		};
+		E2ED765B19A3C76800BFA3F4 /* App Delegate */ = {
+			isa = PBXGroup;
+			children = (
+				E2E1EEFC1954BB9600A0B541 /* CAEAppDelegate.h */,
+				E2E1EEFD1954BB9600A0B541 /* CAEAppDelegate.m */,
+			);
+			name = "App Delegate";
+			sourceTree = "<group>";
+		};
+		E2ED765C19A3C95F00BFA3F4 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				E2E1EF081954BB9600A0B541 /* CAEWeatherViewController.h */,
+				E2E1EF091954BB9600A0B541 /* CAEWeatherViewController.m */,
+				E23C2B90199D4F1D00AB4EA8 /* CAESideTableViewController.h */,
+				E23C2B91199D4F1D00AB4EA8 /* CAESideTableViewController.m */,
+			);
+			name = Controller;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
