@@ -114,9 +114,14 @@ static int const ddLogLevel = LOG_LEVEL_INFO;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-    
-
+    [self calculateSunAngles];
+    self.sunImageView.hidden = YES;
+#ifdef MOCK_SERVICE
+    [self setUpAPIRequests];
+    [self formatViewForWeather];
+#else
     [self setUpLocationManager];
+#endif
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -130,11 +135,11 @@ static int const ddLogLevel = LOG_LEVEL_INFO;
         [self.locationManager startUpdatingLocation];
     }
     // Only compile the following code if running iOS 8 or later
-    #if __IPHONE_OS_VERSION_MAX_ALLOWED >= 80000
+#if __IPHONE_OS_VERSION_MAX_ALLOWED >= 80000
     else if ([self.locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)]) {
         [self.locationManager requestWhenInUseAuthorization];
     }
-    #endif
+#endif
     else {
         [self.locationManager startUpdatingLocation];
     }
@@ -191,6 +196,10 @@ static int const ddLogLevel = LOG_LEVEL_INFO;
 
 - (void)formatTemperatureLabel {
 	self.temperatureLabel.text = [NSString stringWithFormat:@"%lu°F", (long)[self.currentConditions.fTemp integerValue]];
+    self.temperatureLabel.layer.shadowOffset = CGSizeMake(1, 1);
+    self.temperatureLabel.layer.shadowColor = [[UIColor grayColor] CGColor];
+    self.temperatureLabel.layer.shadowRadius = 4.0f;
+    self.temperatureLabel.layer.shadowOpacity = 1.00f;
 }
 
 - (void)formatCloudsView {
@@ -280,11 +289,7 @@ static int const ddLogLevel = LOG_LEVEL_INFO;
 	    if (![self.geolocation isEqualToString:@"Not Found"]) {
 	        self.geolocation = [self requestStringWithCurrentLocation];
 	        [self setUpAPIRequests];
-#           ifdef MOCK_SERVICE
-            [self formatViewForWeather];
-#           else
 	        [self sendRequestsAndParseData];
-#           endif   
 		}
 	}];
 }
@@ -499,6 +504,7 @@ static int const ddLogLevel = LOG_LEVEL_INFO;
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 - (IBAction)menuButtonPressed:(id)sender {
+    self.sunImageView.hidden = YES;
     [self.slidingViewController anchorTopViewToRightAnimated:YES];
 }
 
