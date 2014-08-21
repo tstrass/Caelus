@@ -66,8 +66,9 @@ static const float INDICATOR_HEIGHT = 10.0;
 		[self.scrollView addSubview:view];
 		xValue += view.frame.size.width + VIEW_PADDING;
 	}
-
+    
 	[self.scrollView setContentSize:CGSizeMake(xValue + self.xOffset, self.frame.size.height)];
+    [self.scrollView setContentOffset:CGPointMake(0, 0)];
     [self.delegate scrollViewSubviewDidChange:[self currentViewIndex]];
     [self.delegate scrollViewPercentageAcrossSubview:[self percentageAcrossSubview]];
 }
