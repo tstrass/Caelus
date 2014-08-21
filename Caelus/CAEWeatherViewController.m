@@ -86,8 +86,8 @@ static int const ddLogLevel = LOG_LEVEL_INFO;
 - (void)configureView {
 	[self makeGradientOverlay];
 
-    // rotate bottom shadow of scrollView 180 degrees
-    self.bottomShadow.transform = CGAffineTransformMakeRotation(M_PI);
+	// rotate bottom shadow of scrollView 180 degrees
+	self.bottomShadow.transform = CGAffineTransformMakeRotation(M_PI);
 }
 
 - (void)viewDidLoad {
@@ -102,26 +102,31 @@ static int const ddLogLevel = LOG_LEVEL_INFO;
 		// iOS 6
 		[[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationSlide];
 	}
-    
-    [self.navigationController setNavigationBarHidden:YES];
-    
-    self.mockServiceLocation = @"clayton";
-    
-    self.sunImageView.hidden = YES;
-    [self calculateSunAngles];
+
+	[self.navigationController setNavigationBarHidden:YES];
+
+	self.mockServiceLocation = @"clayton";
+
+	self.sunImageView.hidden = YES;
+	[self calculateSunAngles];
 
 	self.view.backgroundColor = [UIColor colorWithRed:0.400 green:0.800 blue:1.000 alpha:1.000];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-    [self calculateSunAngles];
-    self.sunImageView.hidden = YES;
+	[self calculateSunAngles];
+	self.sunImageView.hidden = YES;
 #ifdef MOCK_SERVICE
-    [self setUpAPIRequests];
-    [self formatViewForWeather];
+	[self setUpAPIRequests];
+	[self formatViewForWeather];
 #else
-    [self setUpLocationManager];
+	[self setUpLocationManager];
 #endif
+	self.hoursScrollView.delegate = self;
+}
+
+- (void)awakeFromNib {
+	[super awakeFromNib];
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -131,18 +136,18 @@ static int const ddLogLevel = LOG_LEVEL_INFO;
 	self.locationManager = [[CLLocationManager alloc]init];
 	self.locationManager.delegate = self;
 	self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
-    if ([CLLocationManager authorizationStatus] != kCLAuthorizationStatusNotDetermined) {
-        [self.locationManager startUpdatingLocation];
-    }
-    // Only compile the following code if running iOS 8 or later
+	if ([CLLocationManager authorizationStatus] != kCLAuthorizationStatusNotDetermined) {
+		[self.locationManager startUpdatingLocation];
+	}
+	// Only compile the following code if running iOS 8 or later
 #if __IPHONE_OS_VERSION_MAX_ALLOWED >= 80000
-    else if ([self.locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)]) {
-        [self.locationManager requestWhenInUseAuthorization];
-    }
+	else if ([self.locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)]) {
+		[self.locationManager requestWhenInUseAuthorization];
+	}
 #endif
-    else {
-        [self.locationManager startUpdatingLocation];
-    }
+	else {
+		[self.locationManager startUpdatingLocation];
+	}
 }
 
 - (void)setUpAPIRequests {
@@ -157,37 +162,39 @@ static int const ddLogLevel = LOG_LEVEL_INFO;
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 - (void)positionSunForHour:(NSNumber *)hour hourPercentage:(CGFloat)percentage {
-    CGFloat currentMinuteTime = [hour floatValue] * 60.0 + (percentage * 60.0);
-    // if its not night, position the sun image
-    if (currentMinuteTime > self.astronomy.sunPhase.sunriseStartMinuteTime && currentMinuteTime < self.astronomy.sunPhase.nightStartMinuteTime) {
-        self.sunImageView.hidden = NO;
-        // map the current time to an angle at which to position the sun using the predetermined point and radius
-        CGFloat angleRange = self.startSunAngle - self.endSunAngle;
-        CGFloat timeRange = self.astronomy.sunPhase.nightStartMinuteTime - self.astronomy.sunPhase.sunriseStartMinuteTime;
-        CGFloat adjustedTime = self.astronomy.sunPhase.nightStartMinuteTime - (currentMinuteTime - self.astronomy.sunPhase.sunriseStartMinuteTime);
-        CGFloat currentAngle = (adjustedTime - self.astronomy.sunPhase.sunriseStartMinuteTime) / timeRange * angleRange + self.endSunAngle;
-        
-        // set the position of the sun, keep in mind that Y values decrease as position moves "up" on screen
-        [self.sunImageView setCenter:CGPointMake(self.arcCenter.x + (self.arcRadius * cosf(currentAngle * M_PI / 180)), self.arcCenter.y - (self.arcRadius * sinf(currentAngle * M_PI / 180)))];
-    } else {
-        self.sunImageView.hidden = YES;
-    }
+	CGFloat currentMinuteTime = [hour floatValue] * 60.0 + (percentage * 60.0);
+	// if its not night, position the sun image
+	if (currentMinuteTime > self.astronomy.sunPhase.sunriseStartMinuteTime && currentMinuteTime < self.astronomy.sunPhase.nightStartMinuteTime) {
+		self.sunImageView.hidden = NO;
+		// map the current time to an angle at which to position the sun using the predetermined point and radius
+		CGFloat angleRange = self.startSunAngle - self.endSunAngle;
+		CGFloat timeRange = self.astronomy.sunPhase.nightStartMinuteTime - self.astronomy.sunPhase.sunriseStartMinuteTime;
+		CGFloat adjustedTime = self.astronomy.sunPhase.nightStartMinuteTime - (currentMinuteTime - self.astronomy.sunPhase.sunriseStartMinuteTime);
+		CGFloat currentAngle = (adjustedTime - self.astronomy.sunPhase.sunriseStartMinuteTime) / timeRange * angleRange + self.endSunAngle;
+
+		// set the position of the sun, keep in mind that Y values decrease as position moves "up" on screen
+		[self.sunImageView setCenter:CGPointMake(self.arcCenter.x + (self.arcRadius * cosf(currentAngle * M_PI / 180)), self.arcCenter.y - (self.arcRadius * sinf(currentAngle * M_PI / 180)))];
+		[self.sunImageView setNeedsDisplay];
+	}
+	else {
+		self.sunImageView.hidden = YES;
+	}
 }
 
 - (void)formatLocationLabel {
 #ifdef MOCK_SERVICE
-    self.currentLocationLabel.text = [self.mockServiceLocation capitalizedString];
+	self.currentLocationLabel.text = [self.mockServiceLocation capitalizedString];
 #else
 	self.currentLocationLabel.text = [NSString stringWithFormat:@"%@", self.geolocation];
 #endif
-    self.currentLocationLabel.adjustsFontSizeToFitWidth = YES;
+	self.currentLocationLabel.adjustsFontSizeToFitWidth = YES;
 	self.currentLocationLabel.minimumScaleFactor = 0.3;
 }
 
 - (void)formatViewForWeather {
 	CAEWeatherHour *firstHour = [self.hourlyWeather.weatherHours firstObject];
 	self.view.backgroundColor = [self.astronomy backgroundColorFromWeatherHour:firstHour hourPercentage:0.5];
-    [self formatLocationLabel];
+	[self formatLocationLabel];
 	[self formatTemperatureLabel];
 	[self formatCloudsView];
 	[self formatPrecpitationView];
@@ -196,10 +203,10 @@ static int const ddLogLevel = LOG_LEVEL_INFO;
 
 - (void)formatTemperatureLabel {
 	self.temperatureLabel.text = [NSString stringWithFormat:@"%lu°F", (long)[self.currentConditions.fTemp integerValue]];
-    self.temperatureLabel.layer.shadowOffset = CGSizeMake(1, 1);
-    self.temperatureLabel.layer.shadowColor = [[UIColor grayColor] CGColor];
-    self.temperatureLabel.layer.shadowRadius = 4.0f;
-    self.temperatureLabel.layer.shadowOpacity = 1.00f;
+	self.temperatureLabel.layer.shadowOffset = CGSizeMake(1, 1);
+	self.temperatureLabel.layer.shadowColor = [[UIColor grayColor] CGColor];
+	self.temperatureLabel.layer.shadowRadius = 4.0f;
+	self.temperatureLabel.layer.shadowOpacity = 1.00f;
 }
 
 - (void)formatCloudsView {
@@ -229,7 +236,7 @@ static int const ddLogLevel = LOG_LEVEL_INFO;
 	self.hoursScrollView.dataSource = hoursScrollViewDataSource;
 	self.hoursScrollView.delegate = self;
 	[self.hoursScrollView reload];
-    self.sunImageView.hidden = NO;
+	self.sunImageView.hidden = NO;
 }
 
 - (void)formatViewForFailedLocation {
@@ -300,12 +307,12 @@ static int const ddLogLevel = LOG_LEVEL_INFO;
 }
 
 - (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status {
-    // Only compile the following code if running iOS 8 or later
-    #if __IPHONE_OS_VERSION_MAX_ALLOWED >= 80000
-    if (status == kCLAuthorizationStatusAuthorizedWhenInUse) {
-        [self.locationManager startUpdatingLocation];
-    }
-    #endif
+	// Only compile the following code if running iOS 8 or later
+	#if __IPHONE_OS_VERSION_MAX_ALLOWED >= 80000
+	if (status == kCLAuthorizationStatusAuthorizedWhenInUse) {
+		[self.locationManager startUpdatingLocation];
+	}
+	#endif
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -322,24 +329,24 @@ static int const ddLogLevel = LOG_LEVEL_INFO;
 		                       completionHandler: ^(NSURLResponse *response, NSData *data, NSError *connectionError) {
 		    if ([self.requestsArray indexOfObject:request] == 0) {
 		        self.currentConditionsResponseData = data;
-                NSString *string = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-                DDLogInfo(@"%@", string);
-                // NSLog(@"%@", string);
-                [self parseCurrentWeatherJSON];
+		        NSString *string = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+		        DDLogInfo(@"%@", string);
+		        // NSLog(@"%@", string);
+		        [self parseCurrentWeatherJSON];
 			}
 		    else if ([self.requestsArray indexOfObject:request] == 1) {
 		        self.astronomyResponseData = data;
-                NSString *string = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-                DDLogInfo(@"%@", string);
-                // NSLog(@"%@", string);
-                [self parseAstronomyJSON];
+		        NSString *string = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+		        DDLogInfo(@"%@", string);
+		        // NSLog(@"%@", string);
+		        [self parseAstronomyJSON];
 			}
 		    else if ([self.requestsArray indexOfObject:request] == 2) {
 		        self.hourlyWeatherResponseData = data;
 		        NSString *string = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-                DDLogInfo(@"%@", string);
-                // NSLog(@"%@", string);
-                [self parseHourlyWeatherJSON];
+		        DDLogInfo(@"%@", string);
+		        // NSLog(@"%@", string);
+		        [self parseHourlyWeatherJSON];
 			}
 		    outstandingRequests--;
 		    if (outstandingRequests == 0) [self formatViewForWeather];
@@ -349,12 +356,12 @@ static int const ddLogLevel = LOG_LEVEL_INFO;
 
 - (void)makeCurrentConditionsRequestWithLocation:(NSString *)location {
 #ifdef MOCK_SERVICE
-    // mock service call
-    NSString *jsonPath = [[NSBundle mainBundle] pathForResource:[NSString stringWithFormat:@"%@-current-conditions", self.mockServiceLocation] ofType:@"json"];
-    self.currentConditionsResponseData = [NSData dataWithContentsOfFile:jsonPath];
-    [self parseCurrentWeatherJSON];
+	// mock service call
+	NSString *jsonPath = [[NSBundle mainBundle] pathForResource:[NSString stringWithFormat:@"%@-current-conditions", self.mockServiceLocation] ofType:@"json"];
+	self.currentConditionsResponseData = [NSData dataWithContentsOfFile:jsonPath];
+	[self parseCurrentWeatherJSON];
 #else
-    // encode city search for URL and make URL request
+	// encode city search for URL and make URL request
 	NSString *weatherRequest = [NSString stringWithFormat:@"http://api.wunderground.com/api/f29e980ec760f4cc/conditions/q/%@.json", location];
 	NSLog(@"%@", weatherRequest);
 	NSURL *apiURL = [NSURL URLWithString:weatherRequest];
@@ -365,31 +372,31 @@ static int const ddLogLevel = LOG_LEVEL_INFO;
 
 - (void)makeAstronomyRequestWithLocation:(NSString *)location {
 #ifdef MOCK_SERVICE
-    // mock service
-    NSString *jsonPath = [[NSBundle mainBundle] pathForResource:[NSString stringWithFormat:@"%@-astronomy", self.mockServiceLocation] ofType:@"json"];
-    self.astronomyResponseData = [NSData dataWithContentsOfFile:jsonPath];
-    [self parseAstronomyJSON];
+	// mock service
+	NSString *jsonPath = [[NSBundle mainBundle] pathForResource:[NSString stringWithFormat:@"%@-astronomy", self.mockServiceLocation] ofType:@"json"];
+	self.astronomyResponseData = [NSData dataWithContentsOfFile:jsonPath];
+	[self parseAstronomyJSON];
 #else
-    // encode city search for URL and make URL request
-    NSString *astronomyRequest = [NSString stringWithFormat:@"http://api.wunderground.com/api/f29e980ec760f4cc/astronomy/q/%@.json", location];
-    NSURL *apiURL = [NSURL URLWithString:astronomyRequest];
-    NSURLRequest *request = [[NSURLRequest alloc] initWithURL:apiURL];
-    [self.requestsArray addObject:request];
+	// encode city search for URL and make URL request
+	NSString *astronomyRequest = [NSString stringWithFormat:@"http://api.wunderground.com/api/f29e980ec760f4cc/astronomy/q/%@.json", location];
+	NSURL *apiURL = [NSURL URLWithString:astronomyRequest];
+	NSURLRequest *request = [[NSURLRequest alloc] initWithURL:apiURL];
+	[self.requestsArray addObject:request];
 #endif
 }
 
 - (void)makeHourlyWeatherRequestWithLocation:(NSString *)location {
 #ifdef MOCK_SERVICE
-    // temporary: mock service call
-    NSString *jsonPath = [[NSBundle mainBundle] pathForResource:[NSString stringWithFormat:@"%@-hourly", self.mockServiceLocation]ofType:@"json"];
-    self.hourlyWeatherResponseData = [NSData dataWithContentsOfFile:jsonPath];
-    [self parseHourlyWeatherJSON];
+	// temporary: mock service call
+	NSString *jsonPath = [[NSBundle mainBundle] pathForResource:[NSString stringWithFormat:@"%@-hourly", self.mockServiceLocation] ofType:@"json"];
+	self.hourlyWeatherResponseData = [NSData dataWithContentsOfFile:jsonPath];
+	[self parseHourlyWeatherJSON];
 #else
-    // encode city search for URL and make URL request
-    NSString *hourlyRequest = [NSString stringWithFormat:@"http://api.wunderground.com/api/f29e980ec760f4cc/hourly/q/%@.json", location];
-    NSURL *apiURL = [NSURL URLWithString:hourlyRequest];
-    NSURLRequest *request = [[NSURLRequest alloc] initWithURL:apiURL];
-    [self.requestsArray addObject:request];
+	// encode city search for URL and make URL request
+	NSString *hourlyRequest = [NSString stringWithFormat:@"http://api.wunderground.com/api/f29e980ec760f4cc/hourly/q/%@.json", location];
+	NSURL *apiURL = [NSURL URLWithString:hourlyRequest];
+	NSURLRequest *request = [[NSURLRequest alloc] initWithURL:apiURL];
+	[self.requestsArray addObject:request];
 #endif
 }
 
@@ -465,16 +472,16 @@ static int const ddLogLevel = LOG_LEVEL_INFO;
 
 /** Calculations to determine arc path for sun image */
 - (void)calculateSunAngles {
-    // rectangle containing the desired arc, with endpoints at bottom corners of rect
-    CGRect arcRect = CGRectMake((-2) - self.sunImageView.frame.size.width / 2, self.sunImageView.frame.size.height / 2 + 5, [[UIScreen mainScreen] bounds].size.width + 4 + self.sunImageView.frame.size.width, 100);
-    // radius of circle defined by arc
-    self.arcRadius = (arcRect.size.height / 2) + powf(arcRect.size.width, 2)/(8 * arcRect.size.height);
-    // center of circle defined by arc
-    self.arcCenter = CGPointMake(arcRect.size.width / 2 + arcRect.origin.x, arcRect.origin.y + self.arcRadius);
-    // angle above x-axis for both endpoints of the arc (defines sides of hypothetical sector)
-    CGFloat arcAngle = cosf(arcRect.size.width / 2 / self.arcRadius) * (180 / M_PI);
-    self.startSunAngle = 180 - arcAngle;
-    self.endSunAngle = arcAngle;
+	// rectangle containing the desired arc, with endpoints at bottom corners of rect
+	CGRect arcRect = CGRectMake((-2) - self.sunImageView.frame.size.width / 2, self.sunImageView.frame.size.height / 2 + 5, [[UIScreen mainScreen] bounds].size.width + 4 + self.sunImageView.frame.size.width, 100);
+	// radius of circle defined by arc
+	self.arcRadius = (arcRect.size.height / 2) + powf(arcRect.size.width, 2) / (8 * arcRect.size.height);
+	// center of circle defined by arc
+	self.arcCenter = CGPointMake(arcRect.size.width / 2 + arcRect.origin.x, arcRect.origin.y + self.arcRadius);
+	// angle above x-axis for both endpoints of the arc (defines sides of hypothetical sector)
+	CGFloat arcAngle = cosf(arcRect.size.width / 2 / self.arcRadius) * (180 / M_PI);
+	self.startSunAngle = 180 - arcAngle;
+	self.endSunAngle = arcAngle;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -488,7 +495,7 @@ static int const ddLogLevel = LOG_LEVEL_INFO;
 - (void)scrollViewPercentageAcrossSubview:(CGFloat)percentage {
 	CAEWeatherHour *weatherHour = [self.hourlyWeather.weatherHours objectAtIndex:self.currentHour];
 	self.view.backgroundColor = [self.astronomy backgroundColorFromWeatherHour:weatherHour hourPercentage:percentage];
-    [self positionSunForHour:weatherHour.hour hourPercentage:percentage];
+	[self positionSunForHour:weatherHour.hour hourPercentage:percentage];
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -504,8 +511,9 @@ static int const ddLogLevel = LOG_LEVEL_INFO;
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 - (IBAction)menuButtonPressed:(id)sender {
-    self.sunImageView.hidden = YES;
-    [self.slidingViewController anchorTopViewToRightAnimated:YES];
+	self.sunImageView.hidden = YES;
+	self.hoursScrollView.delegate = nil;
+	[self.slidingViewController anchorTopViewToRightAnimated:YES];
 }
 
 @end
