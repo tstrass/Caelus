@@ -114,6 +114,7 @@ static int const ddLogLevel = LOG_LEVEL_INFO;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:YES];
 	[self calculateSunAngles];
 	self.sunImageView.hidden = YES;
 #ifdef MOCK_SERVICE
@@ -125,8 +126,9 @@ static int const ddLogLevel = LOG_LEVEL_INFO;
 	self.hoursScrollView.delegate = self;
 }
 
-- (void)awakeFromNib {
-	[super awakeFromNib];
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:YES];
+    [self.hoursScrollView reload];
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
