@@ -424,7 +424,6 @@ static int const ddLogLevel = LOG_LEVEL_INFO;
 
 	if (dict) {
 		self.currentConditions = [[CAECurrentConditions alloc] initWithConditionsDict:dict];
-		//[self layoutCurrentConditionsLabel];
 	}
 }
 
@@ -438,7 +437,6 @@ static int const ddLogLevel = LOG_LEVEL_INFO;
 
 	if (dict) {
 		self.astronomy = [[CAEAstronomy alloc] initWithAstronomyDict:dict];
-		//[self layoutAstronomyLabel];
 	}
 }
 
@@ -449,7 +447,6 @@ static int const ddLogLevel = LOG_LEVEL_INFO;
 	                                                       error:&error];
 	if (dict) {
 		self.hourlyWeather = [[CAEHourlyWeather alloc] initWithHourlyDict:dict];
-		//[self layoutHourlyScrollView];
 	}
 }
 

@@ -33,12 +33,12 @@ static const float INDICATOR_HEIGHT = 10.0;
 }
 
 - (id)initWithCoder:(NSCoder *)aDecoder {
-    self = [super initWithCoder:aDecoder];
-    if (self) {
-        [self setUpIndicatorView];
-        [self setUpScrollView];
-    }
-    return self;
+	self = [super initWithCoder:aDecoder];
+	if (self) {
+		[self setUpIndicatorView];
+		[self setUpScrollView];
+	}
+	return self;
 }
 
 - (void)reload {
@@ -66,17 +66,17 @@ static const float INDICATOR_HEIGHT = 10.0;
 		[self.scrollView addSubview:view];
 		xValue += view.frame.size.width + VIEW_PADDING;
 	}
-    
-	[self.scrollView setContentSize:CGSizeMake(xValue + self.xOffset, self.frame.size.height)];
-    [self.scrollView setContentOffset:CGPointMake(0, 0)];
-    [self.delegate scrollViewSubviewDidChange:[self currentViewIndex]];
-    [self.delegate scrollViewPercentageAcrossSubview:[self percentageAcrossSubview]];
+
+	self.scrollView.contentSize = CGSizeMake(xValue + self.xOffset, self.frame.size.height);
+	self.scrollView.contentOffset = CGPointZero;
+	[self.delegate scrollViewSubviewDidChange:[self currentViewIndex]];
+	[self.delegate scrollViewPercentageAcrossSubview:[self percentageAcrossSubview]];
 }
 
 - (void)setUpScrollView {
 	self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
 	self.scrollView.delegate = self;
-    self.scrollView.backgroundColor = [UIColor clearColor];
+	self.scrollView.backgroundColor = [UIColor clearColor];
 	[self addSubview:self.scrollView];
 }
 
@@ -84,10 +84,10 @@ static const float INDICATOR_HEIGHT = 10.0;
 	self.indicatorView = [[UIView alloc] init];
 	self.indicatorView.frame = CGRectMake((self.frame.size.width / 2) - (INDICATOR_WIDTH / 2), self.layer.borderWidth, INDICATOR_WIDTH, INDICATOR_HEIGHT);
 	self.indicatorView.backgroundColor = [UIColor redColor];
-    id bottomIndicator = [NSKeyedUnarchiver unarchiveObjectWithData:[NSKeyedArchiver archivedDataWithRootObject:self.indicatorView]];
-    [bottomIndicator setY:self.frame.size.height - INDICATOR_HEIGHT];
-    [self addSubview:bottomIndicator];
-    
+	id bottomIndicator = [NSKeyedUnarchiver unarchiveObjectWithData:[NSKeyedArchiver archivedDataWithRootObject:self.indicatorView]];
+	[bottomIndicator setY:self.frame.size.height - INDICATOR_HEIGHT];
+	[self addSubview:bottomIndicator];
+
 	[self addSubview:self.indicatorView];
 }
 
@@ -104,9 +104,9 @@ static const float INDICATOR_HEIGHT = 10.0;
 }
 
 - (CGFloat)percentageAcrossSubview {
-    CGFloat xPos = self.scrollView.contentOffset.x + (VIEW_WIDTH / 2) + VIEW_PADDING;
-    CGFloat subviewXPos = fmodf(xPos, VIEW_WIDTH + VIEW_PADDING * 2.0);
-    return subviewXPos / (VIEW_WIDTH + VIEW_PADDING * 2.0);
+	CGFloat xPos = self.scrollView.contentOffset.x + (VIEW_WIDTH / 2) + VIEW_PADDING;
+	CGFloat subviewXPos = fmodf(xPos, VIEW_WIDTH + VIEW_PADDING * 2.0);
+	return subviewXPos / (VIEW_WIDTH + VIEW_PADDING * 2.0);
 }
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
@@ -122,7 +122,7 @@ static const float INDICATOR_HEIGHT = 10.0;
 		self.subviewIndex = [self currentViewIndex];
 		[self.delegate scrollViewSubviewDidChange:self.subviewIndex];
 	}
-    
+
 	[self.delegate scrollViewPercentageAcrossSubview:[self percentageAcrossSubview]];
 }
 
