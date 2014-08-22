@@ -115,6 +115,7 @@ static int const ddLogLevel = LOG_LEVEL_INFO;
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:YES];
+    self.hoursScrollView.delegate = self;
 	[self calculateSunAngles];
 	self.sunImageView.hidden = YES;
 #ifdef MOCK_SERVICE
@@ -123,7 +124,6 @@ static int const ddLogLevel = LOG_LEVEL_INFO;
 #else
 	[self setUpLocationManager];
 #endif
-	self.hoursScrollView.delegate = self;
 }
 
 - (void)viewDidAppear:(BOOL)animated {
