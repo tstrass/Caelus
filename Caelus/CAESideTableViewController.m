@@ -23,6 +23,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    // hide the status bar
     if ([self respondsToSelector:@selector(setNeedsStatusBarAppearanceUpdate)]) {
         // iOS 7
         [self performSelector:@selector(setNeedsStatusBarAppearanceUpdate)];
@@ -32,27 +33,27 @@
         [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationSlide];
     }
 
-    
+    // A promise that the top view controller will be a CAEWeatherViewController. This is determined in the xib
     self.weatherVC = (CAEWeatherViewController *)self.slidingViewController.topViewController;
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
 - (NSArray *)menuItems {
+    // Lazy instantiation
+    
     if (_menuItems) return _menuItems;
     
+    // locations for which mock service returns data
     _menuItems = @[@"Clayton", @"Tufts"];
     
     return _menuItems;
 }
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark - Table view data source
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 2;
+    return [self.menuItems count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
